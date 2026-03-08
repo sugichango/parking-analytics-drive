@@ -97,9 +97,9 @@ def load_data(file_path):
             
     return df
 
-# データファイルのパスを設定 (ローカルとGitHubの両方に対応するため相対パスを使用)
-# 今回は一番容量の軽い 202410.csv をサンプルデータとして読み込みます
-file_path = "202410.csv"
+# データファイルのパスを設定 (容量制限を回避するため、圧縮済みの全件データを読み込みます)
+# read_csv は .gz 拡張子から自動的に解凍処理(gzip)を行います
+file_path = "updated_integrated_data_FY2025.csv.gz"
 
 if os.path.exists(file_path):
     df = load_data(file_path)
