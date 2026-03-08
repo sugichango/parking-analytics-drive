@@ -65,13 +65,17 @@ def load_data(file_path):
     
     try:
         # まずファイルのヘッダーだけ読んで存在するカラムのみ抽出
+        print("DEBUG: Reading header...")
         header_df = pd.read_csv(file_path, nrows=0, encoding='utf-8')
         actual_cols = [c for c in use_cols if c in header_df.columns]
         actual_dtypes = {k: v for k, v in dtypes.items() if k in actual_cols}
         
         # OnTimeを文字列ではなく日付型として直接読み込む(80%以上のメモリ削減)
         parse_dates = ['OnTime'] if 'OnTime' in actual_cols else False
+        
+        print(f"DEBUG: Loading CSV with cols {actual_cols}...")
         df = pd.read_csv(file_path, encoding='utf-8', usecols=actual_cols, dtype=actual_dtypes, parse_dates=parse_dates)
+        print("DEBUG: CSV loading completed successfully.")
     except UnicodeDecodeError:
         try:
             header_df = pd.read_csv(file_path, nrows=0, encoding='cp932')
@@ -121,14 +125,19 @@ def load_data(file_path):
             
     return df
 
+print("DEBUG: App start, checking file...")
+
 # データファイルのパスを設定 (容量制限を回避するため、圧縮済みの全件データを読み込みます)
 # read_csv は .gz 拡張子から自動的に解凍処理(gzip)を行います
 file_path = "updated_integrated_data_FY2025.csv.gz"
 
 if os.path.exists(file_path):
+    print("DEBUG: File found, starting load_data...")
     df = load_data(file_path)
+    print("DEBUG: load_data returned.")
     
     if df is not None:
+        print("DEBUG: Initializing sidebar filters...")
         
         # --- フィルターの設定 ---
         st.sidebar.header("🔍 フィルター設定")
