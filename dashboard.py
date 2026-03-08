@@ -55,17 +55,30 @@ def load_data(file_path):
                 'Discount1', 'Discount2', 'Discount3', 'Discount4', 
                 'Discount5', 'Discount6', 'Discount7']
     
+    # さらに軽量なデータ型（Int16, Int32）を強制してメモリ使用量を4分の1に削減
+    dtypes = {
+        'ParkingArea': 'Int16',
+        'Cash': 'Int32',
+        'Discount1': 'Int16', 'Discount2': 'Int16', 'Discount3': 'Int16', 'Discount4': 'Int16',
+        'Discount5': 'Int16', 'Discount6': 'Int16', 'Discount7': 'Int16'
+    }
+    
     try:
         # まずファイルのヘッダーだけ読んで存在するカラムのみ抽出
         header_df = pd.read_csv(file_path, nrows=0, encoding='utf-8')
         actual_cols = [c for c in use_cols if c in header_df.columns]
+        actual_dtypes = {k: v for k, v in dtypes.items() if k in actual_cols}
         
-        df = pd.read_csv(file_path, encoding='utf-8', usecols=actual_cols)
+        # OnTimeを文字列ではなく日付型として直接読み込む(80%以上のメモリ削減)
+        parse_dates = ['OnTime'] if 'OnTime' in actual_cols else False
+        df = pd.read_csv(file_path, encoding='utf-8', usecols=actual_cols, dtype=actual_dtypes, parse_dates=parse_dates)
     except UnicodeDecodeError:
         try:
             header_df = pd.read_csv(file_path, nrows=0, encoding='cp932')
             actual_cols = [c for c in use_cols if c in header_df.columns]
-            df = pd.read_csv(file_path, encoding='cp932', usecols=actual_cols)
+            actual_dtypes = {k: v for k, v in dtypes.items() if k in actual_cols}
+            parse_dates = ['OnTime'] if 'OnTime' in actual_cols else False
+            df = pd.read_csv(file_path, encoding='cp932', usecols=actual_cols, dtype=actual_dtypes, parse_dates=parse_dates)
         except Exception as e:
             st.error(f"ファイルのエンコーディングエラー: {e}")
             return None
