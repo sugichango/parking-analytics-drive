@@ -49,12 +49,23 @@ if not check_password():
 
 @st.cache_data
 def load_data(file_path):
-    """CSVデータを読み込む関数（キャッシュ化して高速化）"""
+    """CSVデータを読み込む関数（キャッシュ化とメモリ削減で高速化）"""
+    # メモリ節約のため必要なカラムだけを読み込むように指定
+    use_cols = ['ParkingArea', 'OnTime', 'Cash',
+                'Discount1', 'Discount2', 'Discount3', 'Discount4', 
+                'Discount5', 'Discount6', 'Discount7']
+    
     try:
-        df = pd.read_csv(file_path, encoding='utf-8')
+        # まずファイルのヘッダーだけ読んで存在するカラムのみ抽出
+        header_df = pd.read_csv(file_path, nrows=0, encoding='utf-8')
+        actual_cols = [c for c in use_cols if c in header_df.columns]
+        
+        df = pd.read_csv(file_path, encoding='utf-8', usecols=actual_cols)
     except UnicodeDecodeError:
         try:
-            df = pd.read_csv(file_path, encoding='cp932')
+            header_df = pd.read_csv(file_path, nrows=0, encoding='cp932')
+            actual_cols = [c for c in use_cols if c in header_df.columns]
+            df = pd.read_csv(file_path, encoding='cp932', usecols=actual_cols)
         except Exception as e:
             st.error(f"ファイルのエンコーディングエラー: {e}")
             return None
