@@ -1,0 +1,64 @@
+==================================================
+START 2025/12/20 14:16:54.69  (start_watcher.cmd) 
+==================================================
+WATCHING (polling): C:\Users\sugitamasahiko\n8n\n8n-data\trigger
+MOVED: DONE_test.txt -> DONE_test_20251220_141819.txt
+OK: copy_and_notify.cmd started
+^C==================================================
+START 2025/12/20 15:45:40.19  (start_watcher.cmd) 
+==================================================
+WATCHING (polling): C:\Users\sugitamasahiko\n8n\n8n-data\trigger
+MOVED: DONE_from_n8n_20251220_063504.txt -> DONE_from_n8n_20251220_063504_20251220_154541.txt
+OK: copy_and_notify.cmd started
+MOVED: DONE_from_n8n_20251220_063809.txt -> DONE_from_n8n_20251220_063809_20251220_154541.txt
+OK: copy_and_notify.cmd started
+^C==================================================
+START 2025/12/20 15:59:35.56  (start_watcher.cmd) 
+==================================================
+WATCHING (polling): C:\Users\sugitamasahiko\n8n\n8n-data\trigger
+MOVED: DONE_test_1.txt -> DONE_test_1_20251220_160010.txt
+OK: copy_and_notify.cmd started
+^C==================================================
+START 2025/12/20 20:51:06.16  (start_watcher.cmd) 
+==================================================
+[PRE] ensure_docker_n8n.ps1 START 2025/12/20 20:51:06.17 
+[2025-12-20 20:51:06] === ensure_docker_n8n START ===
+[2025-12-20 20:51:08] Docker Engine is ready. (try=1)
+[2025-12-20 20:51:08] Running: docker compose up -d
+ Container n8n-python-runner-1  Running
+ Container n8n-postgres-1  Running
+ Container n8n-n8n-1  Running
+[2025-12-20 20:51:09] Running: docker compose ps
+[2025-12-20 20:51:09] NAME                  IMAGE                         COMMAND                  SERVICE         CREATED      STATUS        PORTS
+[2025-12-20 20:51:09] n8n-n8n-1             n8n-custom:1.122.4            "tini -- /docker-ent…"   n8n             6 days ago   Up 17 hours   0.0.0.0:5678->5678/tcp, [::]:5678->5678/tcp
+[2025-12-20 20:51:09] n8n-postgres-1        postgres:14                   "docker-entrypoint.s…"   postgres        6 days ago   Up 17 hours   5432/tcp
+[2025-12-20 20:51:09] n8n-python-runner-1   python-runner-custom:1.49.0   "tail -f /dev/null"      python-runner   6 days ago   Up 6 hours    
+[2025-12-20 20:51:10] python-runner check OK: PY_OK
+[2025-12-20 20:51:10] === ensure_docker_n8n END (OK) ===
+[PRE] ensure_docker_n8n.ps1 OK 2025/12/20 20:51:10.26 
+WATCHING (polling): C:\Users\sugitamasahiko\n8n\n8n-data\trigger
+==================================================
+START 2025/12/20 20:57:06.61  (start_watcher.cmd) 
+==================================================
+[PRE] ensure_docker_n8n.ps1 START 2025/12/20 20:57:06.61 
+[2025-12-20 20:57:12] === ensure_docker_n8n START ===
+[2025-12-20 20:57:17] Docker Engine not ready. Trying to start Docker Desktop...
+[2025-12-20 20:57:30] Docker Engine is ready. (try=2)
+[2025-12-20 20:57:30] Running: docker compose up -d
+ Container n8n-postgres-1  Running
+ Container n8n-n8n-1  Running
+ Container n8n-python-runner-1  Starting
+ Container n8n-python-runner-1  Started
+[2025-12-20 20:57:38] Running: docker compose ps
+[2025-12-20 20:57:38] NAME                  IMAGE                         COMMAND                  SERVICE         CREATED      STATUS                  PORTS
+[2025-12-20 20:57:38] n8n-n8n-1             n8n-custom:1.122.4            "tini -- /docker-ent…"   n8n             6 days ago   Up 9 seconds            0.0.0.0:5678->5678/tcp, [::]:5678->5678/tcp
+[2025-12-20 20:57:38] n8n-postgres-1        postgres:14                   "docker-entrypoint.s…"   postgres        6 days ago   Up 9 seconds            5432/tcp
+[2025-12-20 20:57:38] n8n-python-runner-1   python-runner-custom:1.49.0   "tail -f /dev/null"      python-runner   6 days ago   Up Less than a second   
+[2025-12-20 20:57:38] python-runner check OK: PY_OK
+[2025-12-20 20:57:38] === ensure_docker_n8n END (OK) ===
+[PRE] ensure_docker_n8n.ps1 OK 2025/12/20 20:57:39.08 
+WATCHING (polling): C:\Users\sugitamasahiko\n8n\n8n-data\trigger
+MOVED: DONE_test_after_reboot.txt -> DONE_test_after_reboot_20251220_212700.txt
+OK: copy_and_notify.cmd started
+MOVED: DONE_from_n8n_test.txt -> DONE_from_n8n_test_20251220_213613.txt
+OK: copy_and_notify.cmd started

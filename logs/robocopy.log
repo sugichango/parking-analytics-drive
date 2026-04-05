@@ -1,0 +1,2195 @@
+
+-------------------------------------------------------------------------------
+   ROBOCOPY     ::     Windows の堅牢性の高いファイル コピー                              
+-------------------------------------------------------------------------------
+
+  開始: 2025年12月21日 4:57:55
+2025/12/21 04:57:57 エラー 67 (0x00000043) コピー先のファイル システムの種類を取得しています \\10.0.1.113\蜈ｱ騾喀interlock_data\
+ネットワーク名が見つかりません。
+
+   コピー元 : C:\Users\sugitamasahiko\Documents\parking_system\downloads\
+     コピー先 = \\10.0.1.113\蜈ｱ騾喀interlock_data\
+
+    ファイル: *.*
+	    
+  オプション: *.* /TEE /S /E /DCOPY:DA /COPY:DAT /NP /R:3 /W:10 
+
+------------------------------------------------------------------------------
+
+2025/12/21 04:57:58 エラー 67 (0x00000043) コピー先ディレクトリを作成しています \\10.0.1.113\蜈ｱ騾喀interlock_data\
+ネットワーク名が見つかりません。
+---------------------------------------------- 
+[2025/12/21  7:16:59.58] START robocopy 
+SRC  = C:\Users\sugitamasahiko\Documents\parking_system\downloads 
+DEST = \\10.0.1.113\共通\interlock_data 
+
+-------------------------------------------------------------------------------
+   ROBOCOPY     ::     Windows の堅牢性の高いファイル コピー                              
+-------------------------------------------------------------------------------
+
+  開始: 2025年12月21日 7:16:59
+   コピー元 : C:\Users\sugitamasahiko\Documents\parking_system\downloads\
+     コピー先 : \\10.0.1.113\共通\interlock_data\
+
+    ファイル: *.*
+	    
+  オプション: *.* /TEE /S /E /DCOPY:DA /COPY:DAT /NP /R:3 /W:10 
+
+------------------------------------------------------------------------------
+
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\converted\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\
+	*EXTRA Dir        -1	\\10.0.1.113\共通\interlock_data\csv\_trigger\
+	                 279	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202404\
+	                 288	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202405\
+	                 279	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202406\
+	                 288	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202407\
+	                 288	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202408\
+	                 279	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202409\
+	                 288	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202410\
+	                 279	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202411\
+	                 288	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202412\
+	                 288	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202501\
+	                 261	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202502\
+	                 288	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202503\
+	                 279	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202504\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202504\graphs\
+	                 288	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202505\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202505\graphs\
+	                 279	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202506\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202506\graphs\
+	                 288	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202507\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202507\graphs\
+	                 288	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202508\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202508\graphs\
+	                 279	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202509\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202509\graphs\
+	                 288	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202510\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202510\graphs\
+	新しいディレクトリ     279	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202511\
+	  新しいファイル		    2425	20251101_全駐車場.csv
+	  新しいファイル		    2257	20251101_北1駐車場.csv
+	  新しいファイル		    2159	20251101_北2駐車場.csv
+	  新しいファイル		    2122	20251101_北3駐車場.csv
+	  新しいファイル		    2331	20251101_南1駐車場.csv
+	  新しいファイル		    2281	20251101_南2駐車場.csv
+	  新しいファイル		    2246	20251101_南3駐車場.csv
+	  新しいファイル		    2025	20251101_南4B駐車場.csv
+	  新しいファイル		    2282	20251101_南4駐車場.csv
+	  新しいファイル		    2417	20251102_全駐車場.csv
+	  新しいファイル		    2255	20251102_北1駐車場.csv
+	  新しいファイル		    2178	20251102_北2駐車場.csv
+	  新しいファイル		    2124	20251102_北3駐車場.csv
+	  新しいファイル		    2326	20251102_南1駐車場.csv
+	  新しいファイル		    2258	20251102_南2駐車場.csv
+	  新しいファイル		    2248	20251102_南3駐車場.csv
+	  新しいファイル		    2025	20251102_南4B駐車場.csv
+	  新しいファイル		    2266	20251102_南4駐車場.csv
+	  新しいファイル		    2407	20251103_全駐車場.csv
+	  新しいファイル		    2247	20251103_北1駐車場.csv
+	  新しいファイル		    2165	20251103_北2駐車場.csv
+	  新しいファイル		    2128	20251103_北3駐車場.csv
+	  新しいファイル		    2317	20251103_南1駐車場.csv
+	  新しいファイル		    2253	20251103_南2駐車場.csv
+	  新しいファイル		    2210	20251103_南3駐車場.csv
+	  新しいファイル		    2025	20251103_南4B駐車場.csv
+	  新しいファイル		    2225	20251103_南4駐車場.csv
+	  新しいファイル		    2430	20251104_全駐車場.csv
+	  新しいファイル		    2273	20251104_北1駐車場.csv
+	  新しいファイル		    2182	20251104_北2駐車場.csv
+	  新しいファイル		    2165	20251104_北3駐車場.csv
+	  新しいファイル		    2333	20251104_南1駐車場.csv
+	  新しいファイル		    2259	20251104_南2駐車場.csv
+	  新しいファイル		    2272	20251104_南3駐車場.csv
+	  新しいファイル		    2025	20251104_南4B駐車場.csv
+	  新しいファイル		    2250	20251104_南4駐車場.csv
+	  新しいファイル		    2443	20251105_全駐車場.csv
+	  新しいファイル		    2275	20251105_北1駐車場.csv
+	  新しいファイル		    2201	20251105_北2駐車場.csv
+	  新しいファイル		    2193	20251105_北3駐車場.csv
+	  新しいファイル		    2338	20251105_南1駐車場.csv
+	  新しいファイル		    2274	20251105_南2駐車場.csv
+	  新しいファイル		    2258	20251105_南3駐車場.csv
+	  新しいファイル		    2025	20251105_南4B駐車場.csv
+	  新しいファイル		    2236	20251105_南4駐車場.csv
+	  新しいファイル		    2450	20251106_全駐車場.csv
+	  新しいファイル		    2276	20251106_北1駐車場.csv
+	  新しいファイル		    2198	20251106_北2駐車場.csv
+	  新しいファイル		    2180	20251106_北3駐車場.csv
+	  新しいファイル		    2333	20251106_南1駐車場.csv
+	  新しいファイル		    2271	20251106_南2駐車場.csv
+	  新しいファイル		    2264	20251106_南3駐車場.csv
+	  新しいファイル		    2025	20251106_南4B駐車場.csv
+	  新しいファイル		    2247	20251106_南4駐車場.csv
+	  新しいファイル		    2456	20251107_全駐車場.csv
+	  新しいファイル		    2287	20251107_北1駐車場.csv
+	  新しいファイル		    2196	20251107_北2駐車場.csv
+	  新しいファイル		    2183	20251107_北3駐車場.csv
+	  新しいファイル		    2343	20251107_南1駐車場.csv
+	  新しいファイル		    2298	20251107_南2駐車場.csv
+	  新しいファイル		    2263	20251107_南3駐車場.csv
+	  新しいファイル		    2025	20251107_南4B駐車場.csv
+	  新しいファイル		    2266	20251107_南4駐車場.csv
+	  新しいファイル		    2430	20251108_全駐車場.csv
+	  新しいファイル		    2289	20251108_北1駐車場.csv
+	  新しいファイル		    2178	20251108_北2駐車場.csv
+	  新しいファイル		    2121	20251108_北3駐車場.csv
+	  新しいファイル		    2333	20251108_南1駐車場.csv
+	  新しいファイル		    2298	20251108_南2駐車場.csv
+	  新しいファイル		    2242	20251108_南3駐車場.csv
+	  新しいファイル		    2025	20251108_南4B駐車場.csv
+	  新しいファイル		    2257	20251108_南4駐車場.csv
+	  新しいファイル		    2417	20251109_全駐車場.csv
+	  新しいファイル		    2237	20251109_北1駐車場.csv
+	  新しいファイル		    2163	20251109_北2駐車場.csv
+	  新しいファイル		    2117	20251109_北3駐車場.csv
+	  新しいファイル		    2326	20251109_南1駐車場.csv
+	  新しいファイル		    2272	20251109_南2駐車場.csv
+	  新しいファイル		    2206	20251109_南3駐車場.csv
+	  新しいファイル		    2025	20251109_南4B駐車場.csv
+	  新しいファイル		    2243	20251109_南4駐車場.csv
+	  新しいファイル		    2443	20251110_全駐車場.csv
+	  新しいファイル		    2281	20251110_北1駐車場.csv
+	  新しいファイル		    2181	20251110_北2駐車場.csv
+	  新しいファイル		    2182	20251110_北3駐車場.csv
+	  新しいファイル		    2329	20251110_南1駐車場.csv
+	  新しいファイル		    2268	20251110_南2駐車場.csv
+	  新しいファイル		    2267	20251110_南3駐車場.csv
+	  新しいファイル		    2025	20251110_南4B駐車場.csv
+	  新しいファイル		    2242	20251110_南4駐車場.csv
+	  新しいファイル		    2443	20251111_全駐車場.csv
+	  新しいファイル		    2278	20251111_北1駐車場.csv
+	  新しいファイル		    2190	20251111_北2駐車場.csv
+	  新しいファイル		    2183	20251111_北3駐車場.csv
+	  新しいファイル		    2337	20251111_南1駐車場.csv
+	  新しいファイル		    2263	20251111_南2駐車場.csv
+	  新しいファイル		    2260	20251111_南3駐車場.csv
+	  新しいファイル		    2025	20251111_南4B駐車場.csv
+	  新しいファイル		    2251	20251111_南4駐車場.csv
+	  新しいファイル		    2445	20251112_全駐車場.csv
+	  新しいファイル		    2280	20251112_北1駐車場.csv
+	  新しいファイル		    2196	20251112_北2駐車場.csv
+	  新しいファイル		    2182	20251112_北3駐車場.csv
+	  新しいファイル		    2331	20251112_南1駐車場.csv
+	  新しいファイル		    2271	20251112_南2駐車場.csv
+	  新しいファイル		    2260	20251112_南3駐車場.csv
+	  新しいファイル		    2025	20251112_南4B駐車場.csv
+	  新しいファイル		    2259	20251112_南4駐車場.csv
+	  新しいファイル		    2446	20251113_全駐車場.csv
+	  新しいファイル		    2274	20251113_北1駐車場.csv
+	  新しいファイル		    2195	20251113_北2駐車場.csv
+	  新しいファイル		    2163	20251113_北3駐車場.csv
+	  新しいファイル		    2341	20251113_南1駐車場.csv
+	  新しいファイル		    2277	20251113_南2駐車場.csv
+	  新しいファイル		    2263	20251113_南3駐車場.csv
+	  新しいファイル		    2025	20251113_南4B駐車場.csv
+	  新しいファイル		    2249	20251113_南4駐車場.csv
+	  新しいファイル		    2446	20251114_全駐車場.csv
+	  新しいファイル		    2287	20251114_北1駐車場.csv
+	  新しいファイル		    2210	20251114_北2駐車場.csv
+	  新しいファイル		    2178	20251114_北3駐車場.csv
+	  新しいファイル		    2345	20251114_南1駐車場.csv
+	  新しいファイル		    2297	20251114_南2駐車場.csv
+	  新しいファイル		    2269	20251114_南3駐車場.csv
+	  新しいファイル		    2025	20251114_南4B駐車場.csv
+	  新しいファイル		    2252	20251114_南4駐車場.csv
+	  新しいファイル		    2432	20251115_全駐車場.csv
+	  新しいファイル		    2260	20251115_北1駐車場.csv
+	  新しいファイル		    2169	20251115_北2駐車場.csv
+	  新しいファイル		    2117	20251115_北3駐車場.csv
+	  新しいファイル		    2327	20251115_南1駐車場.csv
+	  新しいファイル		    2279	20251115_南2駐車場.csv
+	  新しいファイル		    2245	20251115_南3駐車場.csv
+	  新しいファイル		    2025	20251115_南4B駐車場.csv
+	  新しいファイル		    2247	20251115_南4駐車場.csv
+	  新しいファイル		    2421	20251116_全駐車場.csv
+	  新しいファイル		    2268	20251116_北1駐車場.csv
+	  新しいファイル		    2180	20251116_北2駐車場.csv
+	  新しいファイル		    2124	20251116_北3駐車場.csv
+	  新しいファイル		    2321	20251116_南1駐車場.csv
+	  新しいファイル		    2275	20251116_南2駐車場.csv
+	  新しいファイル		    2209	20251116_南3駐車場.csv
+	  新しいファイル		    2025	20251116_南4B駐車場.csv
+	  新しいファイル		    2253	20251116_南4駐車場.csv
+	  新しいファイル		    2441	20251117_全駐車場.csv
+	  新しいファイル		    2273	20251117_北1駐車場.csv
+	  新しいファイル		    2169	20251117_北2駐車場.csv
+	  新しいファイル		    2186	20251117_北3駐車場.csv
+	  新しいファイル		    2331	20251117_南1駐車場.csv
+	  新しいファイル		    2262	20251117_南2駐車場.csv
+	  新しいファイル		    2267	20251117_南3駐車場.csv
+	  新しいファイル		    2025	20251117_南4B駐車場.csv
+	  新しいファイル		    2239	20251117_南4駐車場.csv
+	  新しいファイル		    2456	20251118_全駐車場.csv
+	  新しいファイル		    2285	20251118_北1駐車場.csv
+	  新しいファイル		    2192	20251118_北2駐車場.csv
+	  新しいファイル		    2181	20251118_北3駐車場.csv
+	  新しいファイル		    2343	20251118_南1駐車場.csv
+	  新しいファイル		    2274	20251118_南2駐車場.csv
+	  新しいファイル		    2267	20251118_南3駐車場.csv
+	  新しいファイル		    2025	20251118_南4B駐車場.csv
+	  新しいファイル		    2270	20251118_南4駐車場.csv
+	  新しいファイル		    2452	20251119_全駐車場.csv
+	  新しいファイル		    2277	20251119_北1駐車場.csv
+	  新しいファイル		    2200	20251119_北2駐車場.csv
+	  新しいファイル		    2185	20251119_北3駐車場.csv
+	  新しいファイル		    2333	20251119_南1駐車場.csv
+	  新しいファイル		    2287	20251119_南2駐車場.csv
+	  新しいファイル		    2258	20251119_南3駐車場.csv
+	  新しいファイル		    2025	20251119_南4B駐車場.csv
+	  新しいファイル		    2251	20251119_南4駐車場.csv
+	  新しいファイル		    2452	20251120_全駐車場.csv
+	  新しいファイル		    2278	20251120_北1駐車場.csv
+	  新しいファイル		    2194	20251120_北2駐車場.csv
+	  新しいファイル		    2186	20251120_北3駐車場.csv
+	  新しいファイル		    2340	20251120_南1駐車場.csv
+	  新しいファイル		    2285	20251120_南2駐車場.csv
+	  新しいファイル		    2259	20251120_南3駐車場.csv
+	  新しいファイル		    2025	20251120_南4B駐車場.csv
+	  新しいファイル		    2248	20251120_南4駐車場.csv
+	  新しいファイル		    2214	20251121_全駐車場.csv
+	  新しいファイル		    2136	20251121_北1駐車場.csv
+	  新しいファイル		    2096	20251121_北2駐車場.csv
+	  新しいファイル		    2085	20251121_北3駐車場.csv
+	  新しいファイル		    2157	20251121_南1駐車場.csv
+	  新しいファイル		    2141	20251121_南2駐車場.csv
+	  新しいファイル		    2131	20251121_南3駐車場.csv
+	  新しいファイル		    2025	20251121_南4B駐車場.csv
+	  新しいファイル		    2123	20251121_南4駐車場.csv
+	  新しいファイル		    2432	20251122_全駐車場.csv
+	  新しいファイル		    2246	20251122_北1駐車場.csv
+	  新しいファイル		    2160	20251122_北2駐車場.csv
+	  新しいファイル		    2124	20251122_北3駐車場.csv
+	  新しいファイル		    2325	20251122_南1駐車場.csv
+	  新しいファイル		    2264	20251122_南2駐車場.csv
+	  新しいファイル		    2230	20251122_南3駐車場.csv
+	  新しいファイル		    2025	20251122_南4B駐車場.csv
+	  新しいファイル		    2266	20251122_南4駐車場.csv
+	  新しいファイル		    2409	20251123_全駐車場.csv
+	  新しいファイル		    2242	20251123_北1駐車場.csv
+	  新しいファイル		    2193	20251123_北2駐車場.csv
+	  新しいファイル		    2121	20251123_北3駐車場.csv
+	  新しいファイル		    2315	20251123_南1駐車場.csv
+	  新しいファイル		    2251	20251123_南2駐車場.csv
+	  新しいファイル		    2218	20251123_南3駐車場.csv
+	  新しいファイル		    2025	20251123_南4B駐車場.csv
+	  新しいファイル		    2248	20251123_南4駐車場.csv
+	  新しいファイル		    2408	20251124_全駐車場.csv
+	  新しいファイル		    2237	20251124_北1駐車場.csv
+	  新しいファイル		    2163	20251124_北2駐車場.csv
+	  新しいファイル		    2122	20251124_北3駐車場.csv
+	  新しいファイル		    2312	20251124_南1駐車場.csv
+	  新しいファイル		    2235	20251124_南2駐車場.csv
+	  新しいファイル		    2198	20251124_南3駐車場.csv
+	  新しいファイル		    2025	20251124_南4B駐車場.csv
+	  新しいファイル		    2238	20251124_南4駐車場.csv
+	  新しいファイル		    2447	20251125_全駐車場.csv
+	  新しいファイル		    2274	20251125_北1駐車場.csv
+	  新しいファイル		    2177	20251125_北2駐車場.csv
+	  新しいファイル		    2169	20251125_北3駐車場.csv
+	  新しいファイル		    2336	20251125_南1駐車場.csv
+	  新しいファイル		    2261	20251125_南2駐車場.csv
+	  新しいファイル		    2274	20251125_南3駐車場.csv
+	  新しいファイル		    2025	20251125_南4B駐車場.csv
+	  新しいファイル		    2241	20251125_南4駐車場.csv
+	  新しいファイル		    2455	20251126_全駐車場.csv
+	  新しいファイル		    2283	20251126_北1駐車場.csv
+	  新しいファイル		    2211	20251126_北2駐車場.csv
+	  新しいファイル		    2191	20251126_北3駐車場.csv
+	  新しいファイル		    2331	20251126_南1駐車場.csv
+	  新しいファイル		    2279	20251126_南2駐車場.csv
+	  新しいファイル		    2262	20251126_南3駐車場.csv
+	  新しいファイル		    2025	20251126_南4B駐車場.csv
+	  新しいファイル		    2240	20251126_南4駐車場.csv
+	  新しいファイル		    2452	20251127_全駐車場.csv
+	  新しいファイル		    2280	20251127_北1駐車場.csv
+	  新しいファイル		    2202	20251127_北2駐車場.csv
+	  新しいファイル		    2195	20251127_北3駐車場.csv
+	  新しいファイル		    2336	20251127_南1駐車場.csv
+	  新しいファイル		    2273	20251127_南2駐車場.csv
+	  新しいファイル		    2269	20251127_南3駐車場.csv
+	  新しいファイル		    2025	20251127_南4B駐車場.csv
+	  新しいファイル		    2264	20251127_南4駐車場.csv
+	  新しいファイル		    2457	20251128_全駐車場.csv
+	  新しいファイル		    2290	20251128_北1駐車場.csv
+	  新しいファイル		    2194	20251128_北2駐車場.csv
+	  新しいファイル		    2192	20251128_北3駐車場.csv
+	  新しいファイル		    2346	20251128_南1駐車場.csv
+	  新しいファイル		    2281	20251128_南2駐車場.csv
+	  新しいファイル		    2265	20251128_南3駐車場.csv
+	  新しいファイル		    2025	20251128_南4B駐車場.csv
+	  新しいファイル		    2270	20251128_南4駐車場.csv
+	  新しいファイル		    2431	20251129_全駐車場.csv
+	  新しいファイル		    2253	20251129_北1駐車場.csv
+	  新しいファイル		    2175	20251129_北2駐車場.csv
+	  新しいファイル		    2123	20251129_北3駐車場.csv
+	  新しいファイル		    2334	20251129_南1駐車場.csv
+	  新しいファイル		    2273	20251129_南2駐車場.csv
+	  新しいファイル		    2240	20251129_南3駐車場.csv
+	  新しいファイル		    2025	20251129_南4B駐車場.csv
+	  新しいファイル		    2257	20251129_南4駐車場.csv
+	  新しいファイル		    2426	20251130_全駐車場.csv
+	  新しいファイル		    2249	20251130_北1駐車場.csv
+	  新しいファイル		    2169	20251130_北2駐車場.csv
+	  新しいファイル		    2124	20251130_北3駐車場.csv
+	  新しいファイル		    2313	20251130_南1駐車場.csv
+	  新しいファイル		    2254	20251130_南2駐車場.csv
+	  新しいファイル		    2231	20251130_南3駐車場.csv
+	  新しいファイル		    2025	20251130_南4B駐車場.csv
+	  新しいファイル		    2260	20251130_南4駐車場.csv
+	  新しいファイル		    2357	全駐車場all202511.csv
+	  新しいファイル		    1958	北1all202511.csv
+	  新しいファイル		    1872	北2all202511.csv
+	  新しいファイル		    1806	北3all202511.csv
+	  新しいファイル		    2083	南1all202511.csv
+	  新しいファイル		    1965	南2all202511.csv
+	  新しいファイル		    1939	南3all202511.csv
+	  新しいファイル		    1912	南4all202511.csv
+	  新しいファイル		    1657	南4Ball202511.csv
+	                  45	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202512\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv_multi_202404_202503\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv_multi_202404_202511\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv_multi_202504_202510\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv_multi_202504_202511\
+	        新しい		   18180	全駐車場all202504_202511.csv
+	        新しい		   14788	北1all202504_202511.csv
+	        新しい		   14217	北2all202504_202511.csv
+	        新しい		   13697	北3all202504_202511.csv
+	        新しい		   15978	南1all202504_202511.csv
+	        新しい		   14924	南2all202504_202511.csv
+	        新しい		   14775	南3all202504_202511.csv
+	        新しい		   14321	南4all202504_202511.csv
+	        新しい		   12493	南4Ball202504_202511.csv
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\excel202404\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\excel202404_with_avg\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\excel202405_with_avg\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\excel202406_with_avg\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\excel202504_with_avg\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\excel202505_with_avg\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\excel202506_with_avg\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\excel202507_with_avg\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\excel202508_with_avg\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\excel202509_with_avg\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\excel202510_with_avg\
+	新しいディレクトリ       9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\excel202511_with_avg\
+	  新しいファイル		  119402	202511_全駐車場_with_avg.xlsx
+	  新しいファイル		  114417	202511_北1駐車場_with_avg.xlsx
+	  新しいファイル		  110583	202511_北2駐車場_with_avg.xlsx
+	  新しいファイル		  110084	202511_北3駐車場_with_avg.xlsx
+	  新しいファイル		  115117	202511_南1駐車場_with_avg.xlsx
+	  新しいファイル		  113845	202511_南2駐車場_with_avg.xlsx
+	  新しいファイル		  112555	202511_南3駐車場_with_avg.xlsx
+	  新しいファイル		   97835	202511_南4B駐車場_with_avg.xlsx
+	  新しいファイル		  112886	202511_南4駐車場_with_avg.xlsx
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202404_202503\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202404_202503\全駐車場all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202404_202503\北1all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202404_202503\北2all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202404_202503\北3all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202404_202503\南1all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202404_202503\南2all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202404_202503\南3all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202404_202503\南4all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202404_202503\南4Ball\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202510\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202510\全駐車場all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202510\北1all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202510\北2all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202510\北3all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202510\南1all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202510\南2all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202510\南3all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202510\南4all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202510\南4Ball\
+	新しいディレクトリ       0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202511\
+	新しいディレクトリ       1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202511\全駐車場all\
+	  新しいファイル		   34828	全駐車場all202504_202511_graph.xlsx
+	新しいディレクトリ       1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202511\北1all\
+	  新しいファイル		   32685	北1all202504_202511_graph.xlsx
+	新しいディレクトリ       1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202511\北2all\
+	  新しいファイル		   31862	北2all202504_202511_graph.xlsx
+	新しいディレクトリ       1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202511\北3all\
+	  新しいファイル		   31260	北3all202504_202511_graph.xlsx
+	新しいディレクトリ       1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202511\南1all\
+	  新しいファイル		   33389	南1all202504_202511_graph.xlsx
+	新しいディレクトリ       1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202511\南2all\
+	  新しいファイル		   32870	南2all202504_202511_graph.xlsx
+	新しいディレクトリ       1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202511\南3all\
+	  新しいファイル		   32501	南3all202504_202511_graph.xlsx
+	新しいディレクトリ       1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202511\南4all\
+	  新しいファイル		   32205	南4all202504_202511_graph.xlsx
+	新しいディレクトリ       1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202511\南4Ball\
+	  新しいファイル		   24006	南4Ball202504_202511_graph.xlsx
+	                 270	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\
+	        新しい		    8197	20251101_全駐車場.xlsx
+	        新しい		    8047	20251101_北1駐車場.xlsx
+	        新しい		    7938	20251101_北2駐車場.xlsx
+	        新しい		    7908	20251101_北3駐車場.xlsx
+	        新しい		    8084	20251101_南1駐車場.xlsx
+	        新しい		    8036	20251101_南2駐車場.xlsx
+	        新しい		    8000	20251101_南3駐車場.xlsx
+	        新しい		    7538	20251101_南4B駐車場.xlsx
+	        新しい		    8024	20251101_南4駐車場.xlsx
+	        新しい		    8189	20251102_全駐車場.xlsx
+	        新しい		    8062	20251102_北1駐車場.xlsx
+	        新しい		    7941	20251102_北2駐車場.xlsx
+	        新しい		    7876	20251102_北3駐車場.xlsx
+	        新しい		    8089	20251102_南1駐車場.xlsx
+	        新しい		    8029	20251102_南2駐車場.xlsx
+	        新しい		    7986	20251102_南3駐車場.xlsx
+	        新しい		    7539	20251102_南4B駐車場.xlsx
+	        新しい		    8026	20251102_南4駐車場.xlsx
+	        新しい		    8169	20251103_全駐車場.xlsx
+	        新しい		    8040	20251103_北1駐車場.xlsx
+	        新しい		    7934	20251103_北2駐車場.xlsx
+	        新しい		    7877	20251103_北3駐車場.xlsx
+	        新しい		    8064	20251103_南1駐車場.xlsx
+	        新しい		    8015	20251103_南2駐車場.xlsx
+	        新しい		    7960	20251103_南3駐車場.xlsx
+	        新しい		    7538	20251103_南4B駐車場.xlsx
+	        新しい		    7972	20251103_南4駐車場.xlsx
+	        新しい		    8187	20251104_全駐車場.xlsx
+	        新しい		    8050	20251104_北1駐車場.xlsx
+	        新しい		    7902	20251104_北2駐車場.xlsx
+	        新しい		    7939	20251104_北3駐車場.xlsx
+	        新しい		    8072	20251104_南1駐車場.xlsx
+	        新しい		    8005	20251104_南2駐車場.xlsx
+	        新しい		    8019	20251104_南3駐車場.xlsx
+	        新しい		    7539	20251104_南4B駐車場.xlsx
+	        新しい		    7988	20251104_南4駐車場.xlsx
+	        新しい		    8201	20251105_全駐車場.xlsx
+	        新しい		    8051	20251105_北1駐車場.xlsx
+	        新しい		    7937	20251105_北2駐車場.xlsx
+	        新しい		    7971	20251105_北3駐車場.xlsx
+	        新しい		    8081	20251105_南1駐車場.xlsx
+	        新しい		    8034	20251105_南2駐車場.xlsx
+	        新しい		    7986	20251105_南3駐車場.xlsx
+	        新しい		    7538	20251105_南4B駐車場.xlsx
+	        新しい		    7994	20251105_南4駐車場.xlsx
+	        新しい		    8195	20251106_全駐車場.xlsx
+	        新しい		    8040	20251106_北1駐車場.xlsx
+	        新しい		    7931	20251106_北2駐車場.xlsx
+	        新しい		    7948	20251106_北3駐車場.xlsx
+	        新しい		    8094	20251106_南1駐車場.xlsx
+	        新しい		    8037	20251106_南2駐車場.xlsx
+	        新しい		    7998	20251106_南3駐車場.xlsx
+	        新しい		    7537	20251106_南4B駐車場.xlsx
+	        新しい		    8011	20251106_南4駐車場.xlsx
+	        新しい		    8195	20251107_全駐車場.xlsx
+	        新しい		    8058	20251107_北1駐車場.xlsx
+	        新しい		    7947	20251107_北2駐車場.xlsx
+	        新しい		    7960	20251107_北3駐車場.xlsx
+	        新しい		    8072	20251107_南1駐車場.xlsx
+	        新しい		    8063	20251107_南2駐車場.xlsx
+	        新しい		    7984	20251107_南3駐車場.xlsx
+	        新しい		    7538	20251107_南4B駐車場.xlsx
+	        新しい		    8013	20251107_南4駐車場.xlsx
+	        新しい		    8195	20251108_全駐車場.xlsx
+	        新しい		    8080	20251108_北1駐車場.xlsx
+	        新しい		    7948	20251108_北2駐車場.xlsx
+	        新しい		    7898	20251108_北3駐車場.xlsx
+	        新しい		    8087	20251108_南1駐車場.xlsx
+	        新しい		    8061	20251108_南2駐車場.xlsx
+	        新しい		    7979	20251108_南3駐車場.xlsx
+	        新しい		    7538	20251108_南4B駐車場.xlsx
+	        新しい		    8023	20251108_南4駐車場.xlsx
+	        新しい		    8189	20251109_全駐車場.xlsx
+	        新しい		    8056	20251109_北1駐車場.xlsx
+	        新しい		    7897	20251109_北2駐車場.xlsx
+	        新しい		    7872	20251109_北3駐車場.xlsx
+	        新しい		    8069	20251109_南1駐車場.xlsx
+	        新しい		    8025	20251109_南2駐車場.xlsx
+	        新しい		    7962	20251109_南3駐車場.xlsx
+	        新しい		    7537	20251109_南4B駐車場.xlsx
+	        新しい		    8002	20251109_南4駐車場.xlsx
+	        新しい		    8194	20251110_全駐車場.xlsx
+	        新しい		    8051	20251110_北1駐車場.xlsx
+	        新しい		    7930	20251110_北2駐車場.xlsx
+	        新しい		    7950	20251110_北3駐車場.xlsx
+	        新しい		    8051	20251110_南1駐車場.xlsx
+	        新しい		    8033	20251110_南2駐車場.xlsx
+	        新しい		    8016	20251110_南3駐車場.xlsx
+	        新しい		    7537	20251110_南4B駐車場.xlsx
+	        新しい		    7987	20251110_南4駐車場.xlsx
+	        新しい		    8189	20251111_全駐車場.xlsx
+	        新しい		    8059	20251111_北1駐車場.xlsx
+	        新しい		    7930	20251111_北2駐車場.xlsx
+	        新しい		    7937	20251111_北3駐車場.xlsx
+	        新しい		    8083	20251111_南1駐車場.xlsx
+	        新しい		    8049	20251111_南2駐車場.xlsx
+	        新しい		    8022	20251111_南3駐車場.xlsx
+	        新しい		    7539	20251111_南4B駐車場.xlsx
+	        新しい		    8010	20251111_南4駐車場.xlsx
+	        新しい		    8207	20251112_全駐車場.xlsx
+	        新しい		    8048	20251112_北1駐車場.xlsx
+	        新しい		    7938	20251112_北2駐車場.xlsx
+	        新しい		    7953	20251112_北3駐車場.xlsx
+	        新しい		    8058	20251112_南1駐車場.xlsx
+	        新しい		    8050	20251112_南2駐車場.xlsx
+	        新しい		    8005	20251112_南3駐車場.xlsx
+	        新しい		    7537	20251112_南4B駐車場.xlsx
+	        新しい		    8017	20251112_南4駐車場.xlsx
+	        新しい		    8200	20251113_全駐車場.xlsx
+	        新しい		    8042	20251113_北1駐車場.xlsx
+	        新しい		    7941	20251113_北2駐車場.xlsx
+	        新しい		    7945	20251113_北3駐車場.xlsx
+	        新しい		    8083	20251113_南1駐車場.xlsx
+	        新しい		    8060	20251113_南2駐車場.xlsx
+	        新しい		    8003	20251113_南3駐車場.xlsx
+	        新しい		    7538	20251113_南4B駐車場.xlsx
+	        新しい		    7985	20251113_南4駐車場.xlsx
+	        新しい		    8210	20251114_全駐車場.xlsx
+	        新しい		    8051	20251114_北1駐車場.xlsx
+	        新しい		    7956	20251114_北2駐車場.xlsx
+	        新しい		    7942	20251114_北3駐車場.xlsx
+	        新しい		    8080	20251114_南1駐車場.xlsx
+	        新しい		    8057	20251114_南2駐車場.xlsx
+	        新しい		    8019	20251114_南3駐車場.xlsx
+	        新しい		    7538	20251114_南4B駐車場.xlsx
+	        新しい		    8009	20251114_南4駐車場.xlsx
+	        新しい		    8186	20251115_全駐車場.xlsx
+	        新しい		    8062	20251115_北1駐車場.xlsx
+	        新しい		    7928	20251115_北2駐車場.xlsx
+	        新しい		    7894	20251115_北3駐車場.xlsx
+	        新しい		    8086	20251115_南1駐車場.xlsx
+	        新しい		    8042	20251115_南2駐車場.xlsx
+	        新しい		    8001	20251115_南3駐車場.xlsx
+	        新しい		    7538	20251115_南4B駐車場.xlsx
+	        新しい		    8012	20251115_南4駐車場.xlsx
+	        新しい		    8180	20251116_全駐車場.xlsx
+	        新しい		    8056	20251116_北1駐車場.xlsx
+	        新しい		    7937	20251116_北2駐車場.xlsx
+	        新しい		    7887	20251116_北3駐車場.xlsx
+	        新しい		    8062	20251116_南1駐車場.xlsx
+	        新しい		    8040	20251116_南2駐車場.xlsx
+	        新しい		    7933	20251116_南3駐車場.xlsx
+	        新しい		    7537	20251116_南4B駐車場.xlsx
+	        新しい		    8018	20251116_南4駐車場.xlsx
+	        新しい		    8184	20251117_全駐車場.xlsx
+	        新しい		    8043	20251117_北1駐車場.xlsx
+	        新しい		    7924	20251117_北2駐車場.xlsx
+	        新しい		    7962	20251117_北3駐車場.xlsx
+	        新しい		    8061	20251117_南1駐車場.xlsx
+	        新しい		    8018	20251117_南2駐車場.xlsx
+	        新しい		    8000	20251117_南3駐車場.xlsx
+	        新しい		    7537	20251117_南4B駐車場.xlsx
+	        新しい		    7998	20251117_南4駐車場.xlsx
+	        新しい		    8201	20251118_全駐車場.xlsx
+	        新しい		    8057	20251118_北1駐車場.xlsx
+	        新しい		    7959	20251118_北2駐車場.xlsx
+	        新しい		    7951	20251118_北3駐車場.xlsx
+	        新しい		    8083	20251118_南1駐車場.xlsx
+	        新しい		    8044	20251118_南2駐車場.xlsx
+	        新しい		    8023	20251118_南3駐車場.xlsx
+	        新しい		    7537	20251118_南4B駐車場.xlsx
+	        新しい		    8025	20251118_南4駐車場.xlsx
+	        新しい		    8209	20251119_全駐車場.xlsx
+	        新しい		    8053	20251119_北1駐車場.xlsx
+	        新しい		    7967	20251119_北2駐車場.xlsx
+	        新しい		    7967	20251119_北3駐車場.xlsx
+	        新しい		    8085	20251119_南1駐車場.xlsx
+	        新しい		    8064	20251119_南2駐車場.xlsx
+	        新しい		    8006	20251119_南3駐車場.xlsx
+	        新しい		    7538	20251119_南4B駐車場.xlsx
+	        新しい		    8001	20251119_南4駐車場.xlsx
+	        新しい		    8206	20251120_全駐車場.xlsx
+	        新しい		    8062	20251120_北1駐車場.xlsx
+	        新しい		    7962	20251120_北2駐車場.xlsx
+	        新しい		    7959	20251120_北3駐車場.xlsx
+	        新しい		    8090	20251120_南1駐車場.xlsx
+	        新しい		    8040	20251120_南2駐車場.xlsx
+	        新しい		    8009	20251120_南3駐車場.xlsx
+	        新しい		    7538	20251120_南4B駐車場.xlsx
+	        新しい		    8005	20251120_南4駐車場.xlsx
+	        新しい		    8209	20251121_全駐車場.xlsx
+	        新しい		    8060	20251121_北1駐車場.xlsx
+	        新しい		    7973	20251121_北2駐車場.xlsx
+	        新しい		    7945	20251121_北3駐車場.xlsx
+	        新しい		    8101	20251121_南1駐車場.xlsx
+	        新しい		    8048	20251121_南2駐車場.xlsx
+	        新しい		    8018	20251121_南3駐車場.xlsx
+	        新しい		    7538	20251121_南4B駐車場.xlsx
+	        新しい		    8002	20251121_南4駐車場.xlsx
+	        新しい		    8185	20251122_全駐車場.xlsx
+	        新しい		    8055	20251122_北1駐車場.xlsx
+	        新しい		    7949	20251122_北2駐車場.xlsx
+	        新しい		    7915	20251122_北3駐車場.xlsx
+	        新しい		    8075	20251122_南1駐車場.xlsx
+	        新しい		    8047	20251122_南2駐車場.xlsx
+	        新しい		    7997	20251122_南3駐車場.xlsx
+	        新しい		    7537	20251122_南4B駐車場.xlsx
+	        新しい		    8022	20251122_南4駐車場.xlsx
+	        新しい		    8183	20251123_全駐車場.xlsx
+	        新しい		    8044	20251123_北1駐車場.xlsx
+	        新しい		    7951	20251123_北2駐車場.xlsx
+	        新しい		    7883	20251123_北3駐車場.xlsx
+	        新しい		    8038	20251123_南1駐車場.xlsx
+	        新しい		    8030	20251123_南2駐車場.xlsx
+	        新しい		    7974	20251123_南3駐車場.xlsx
+	        新しい		    7538	20251123_南4B駐車場.xlsx
+	        新しい		    8000	20251123_南4駐車場.xlsx
+	        新しい		    8169	20251124_全駐車場.xlsx
+	        新しい		    8028	20251124_北1駐車場.xlsx
+	        新しい		    7920	20251124_北2駐車場.xlsx
+	        新しい		    7904	20251124_北3駐車場.xlsx
+	        新しい		    8042	20251124_南1駐車場.xlsx
+	        新しい		    8002	20251124_南2駐車場.xlsx
+	        新しい		    7940	20251124_南3駐車場.xlsx
+	        新しい		    7537	20251124_南4B駐車場.xlsx
+	        新しい		    7990	20251124_南4駐車場.xlsx
+	        新しい		    8194	20251125_全駐車場.xlsx
+	        新しい		    8056	20251125_北1駐車場.xlsx
+	        新しい		    7930	20251125_北2駐車場.xlsx
+	        新しい		    7940	20251125_北3駐車場.xlsx
+	        新しい		    8056	20251125_南1駐車場.xlsx
+	        新しい		    7999	20251125_南2駐車場.xlsx
+	        新しい		    8030	20251125_南3駐車場.xlsx
+	        新しい		    7538	20251125_南4B駐車場.xlsx
+	        新しい		    7984	20251125_南4駐車場.xlsx
+	        新しい		    8210	20251126_全駐車場.xlsx
+	        新しい		    8047	20251126_北1駐車場.xlsx
+	        新しい		    7969	20251126_北2駐車場.xlsx
+	        新しい		    7953	20251126_北3駐車場.xlsx
+	        新しい		    8068	20251126_南1駐車場.xlsx
+	        新しい		    8034	20251126_南2駐車場.xlsx
+	        新しい		    8016	20251126_南3駐車場.xlsx
+	        新しい		    7537	20251126_南4B駐車場.xlsx
+	        新しい		    7989	20251126_南4駐車場.xlsx
+	        新しい		    8181	20251127_全駐車場.xlsx
+	        新しい		    8058	20251127_北1駐車場.xlsx
+	        新しい		    7976	20251127_北2駐車場.xlsx
+	        新しい		    7956	20251127_北3駐車場.xlsx
+	        新しい		    8055	20251127_南1駐車場.xlsx
+	        新しい		    8022	20251127_南2駐車場.xlsx
+	        新しい		    8019	20251127_南3駐車場.xlsx
+	        新しい		    7537	20251127_南4B駐車場.xlsx
+	        新しい		    8019	20251127_南4駐車場.xlsx
+	        新しい		    8198	20251128_全駐車場.xlsx
+	        新しい		    8052	20251128_北1駐車場.xlsx
+	        新しい		    7964	20251128_北2駐車場.xlsx
+	        新しい		    7962	20251128_北3駐車場.xlsx
+	        新しい		    8101	20251128_南1駐車場.xlsx
+	        新しい		    8045	20251128_南2駐車場.xlsx
+	        新しい		    8017	20251128_南3駐車場.xlsx
+	        新しい		    7537	20251128_南4B駐車場.xlsx
+	        新しい		    8039	20251128_南4駐車場.xlsx
+	        新しい		    8199	20251129_全駐車場.xlsx
+	        新しい		    8032	20251129_北1駐車場.xlsx
+	        新しい		    7966	20251129_北2駐車場.xlsx
+	        新しい		    7893	20251129_北3駐車場.xlsx
+	        新しい		    8080	20251129_南1駐車場.xlsx
+	        新しい		    8038	20251129_南2駐車場.xlsx
+	        新しい		    7995	20251129_南3駐車場.xlsx
+	        新しい		    7537	20251129_南4B駐車場.xlsx
+	        新しい		    8013	20251129_南4駐車場.xlsx
+	        新しい		    8189	20251130_全駐車場.xlsx
+	        新しい		    8049	20251130_北1駐車場.xlsx
+	        新しい		    7933	20251130_北2駐車場.xlsx
+	        新しい		    7882	20251130_北3駐車場.xlsx
+	        新しい		    8064	20251130_南1駐車場.xlsx
+	        新しい		    8019	20251130_南2駐車場.xlsx
+	        新しい		    7969	20251130_南3駐車場.xlsx
+	        新しい		    7539	20251130_南4B駐車場.xlsx
+	        新しい		    8026	20251130_南4駐車場.xlsx
+	                 270	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202404\
+	                 279	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202405\
+	                 270	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202406\
+	                 279	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202407\
+	                 279	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202408\
+	                 270	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202409\
+	                 279	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202410\
+	                 270	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202411\
+	                 279	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202412\
+	                 279	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202501\
+	                 252	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202502\
+	                 279	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202503\
+	                 270	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202504\
+	                 279	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202505\
+	                 270	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202506\
+	                 279	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202507\
+	                 279	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202508\
+	                 270	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202509\
+	                 279	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202510\
+	                 270	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202511\
+	                  45	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202512\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202404\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202405\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202406\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202407\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202408\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202409\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202410\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202411\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202412\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202501\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202502\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202503\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202504\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202505\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202506\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202507\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202508\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202509\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202510\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202511\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202512\
+
+------------------------------------------------------------------------------
+
+                  合計     コピー済み      スキップ       不一致        失敗    Extras
+   ディレクトリ:       121        12       109         0         0         1
+     ファイル:     11736       576     11160         0         0         0
+      バイト:   70.37 m    4.00 m   66.36 m         0         0         0
+       時刻:   0:01:34   0:01:28                       0:00:00   0:00:05
+
+
+       速度:              47,235 バイト/秒
+       速度:               2.703 MB/分
+   終了: 2025年12月21日 7:18:34
+
+[2025/12/21  7:18:34.14] robocopy exit code = 3 
+---------------------------------------------- 
+---------------------------------------------- 
+[2025/12/21 10:20:28.28] START robocopy 
+SRC  = C:\Users\sugitamasahiko\Documents\parking_system\downloads 
+DEST = \\10.0.1.113\・ｽ・ｽ・ｽ・ｽ\interlock_data 
+
+-------------------------------------------------------------------------------
+   ROBOCOPY     ::     Windows の堅牢性の高いファイル コピー                              
+-------------------------------------------------------------------------------
+
+  開始: 2025年12月21日 10:20:28
+2025/12/21 10:20:30 エラー 67 (0x00000043) コピー先のファイル システムの種類を取得しています \\10.0.1.113\・ｽ・ｽ・ｽ・ｽ\interlock_data\
+ネットワーク名が見つかりません。
+
+   コピー元 : C:\Users\sugitamasahiko\Documents\parking_system\downloads\
+     コピー先 = \\10.0.1.113\・ｽ・ｽ・ｽ・ｽ\interlock_data\
+
+    ファイル: *.*
+	    
+  オプション: *.* /TEE /S /E /DCOPY:DA /COPY:DAT /NP /R:3 /W:10 
+
+------------------------------------------------------------------------------
+
+2025/12/21 10:20:31 エラー 67 (0x00000043) コピー先ディレクトリを作成しています \\10.0.1.113\・ｽ・ｽ・ｽ・ｽ\interlock_data\
+ネットワーク名が見つかりません。
+[2025/12/21 10:20:31.67] robocopy exit code = 16 
+---------------------------------------------- 
+---------------------------------------------- 
+[2025/12/21 19:25:07.46] START robocopy 
+SRC  = C:\Users\sugitamasahiko\Documents\parking_system\downloads 
+DEST = \\10.0.1.113\共通\interlock_data 
+
+-------------------------------------------------------------------------------
+   ROBOCOPY     ::     Windows の堅牢性の高いファイル コピー                              
+-------------------------------------------------------------------------------
+
+  開始: 2025年12月21日 19:25:07
+   コピー元 : C:\Users\sugitamasahiko\Documents\parking_system\downloads\
+     コピー先 : \\10.0.1.113\共通\interlock_data\
+
+    ファイル: *.*
+	    
+  オプション: *.* /TEE /S /E /DCOPY:DA /COPY:DAT /NP /R:3 /W:10 
+
+------------------------------------------------------------------------------
+
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\converted\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\
+	*EXTRA Dir        -1	\\10.0.1.113\共通\interlock_data\csv\_trigger\
+	                 279	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202404\
+	                 288	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202405\
+	                 279	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202406\
+	                 288	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202407\
+	                 288	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202408\
+	                 279	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202409\
+	                 288	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202410\
+	                 279	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202411\
+	                 288	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202412\
+	                 288	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202501\
+	                 261	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202502\
+	                 288	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202503\
+	                 279	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202504\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202504\graphs\
+	                 288	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202505\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202505\graphs\
+	                 279	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202506\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202506\graphs\
+	                 288	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202507\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202507\graphs\
+	                 288	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202508\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202508\graphs\
+	                 279	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202509\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202509\graphs\
+	                 288	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202510\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202510\graphs\
+	新しいディレクトリ     279	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202511\
+	  新しいファイル		    2425	20251101_全駐車場.csv
+	  新しいファイル		    2257	20251101_北1駐車場.csv
+	  新しいファイル		    2159	20251101_北2駐車場.csv
+	  新しいファイル		    2122	20251101_北3駐車場.csv
+	  新しいファイル		    2331	20251101_南1駐車場.csv
+	  新しいファイル		    2281	20251101_南2駐車場.csv
+	  新しいファイル		    2246	20251101_南3駐車場.csv
+	  新しいファイル		    2025	20251101_南4B駐車場.csv
+	  新しいファイル		    2282	20251101_南4駐車場.csv
+	  新しいファイル		    2417	20251102_全駐車場.csv
+	  新しいファイル		    2255	20251102_北1駐車場.csv
+	  新しいファイル		    2178	20251102_北2駐車場.csv
+	  新しいファイル		    2124	20251102_北3駐車場.csv
+	  新しいファイル		    2326	20251102_南1駐車場.csv
+	  新しいファイル		    2258	20251102_南2駐車場.csv
+	  新しいファイル		    2248	20251102_南3駐車場.csv
+	  新しいファイル		    2025	20251102_南4B駐車場.csv
+	  新しいファイル		    2266	20251102_南4駐車場.csv
+	  新しいファイル		    2407	20251103_全駐車場.csv
+	  新しいファイル		    2247	20251103_北1駐車場.csv
+	  新しいファイル		    2165	20251103_北2駐車場.csv
+	  新しいファイル		    2128	20251103_北3駐車場.csv
+	  新しいファイル		    2317	20251103_南1駐車場.csv
+	  新しいファイル		    2253	20251103_南2駐車場.csv
+	  新しいファイル		    2210	20251103_南3駐車場.csv
+	  新しいファイル		    2025	20251103_南4B駐車場.csv
+	  新しいファイル		    2225	20251103_南4駐車場.csv
+	  新しいファイル		    2430	20251104_全駐車場.csv
+	  新しいファイル		    2273	20251104_北1駐車場.csv
+	  新しいファイル		    2182	20251104_北2駐車場.csv
+	  新しいファイル		    2165	20251104_北3駐車場.csv
+	  新しいファイル		    2333	20251104_南1駐車場.csv
+	  新しいファイル		    2259	20251104_南2駐車場.csv
+	  新しいファイル		    2272	20251104_南3駐車場.csv
+	  新しいファイル		    2025	20251104_南4B駐車場.csv
+	  新しいファイル		    2250	20251104_南4駐車場.csv
+	  新しいファイル		    2443	20251105_全駐車場.csv
+	  新しいファイル		    2275	20251105_北1駐車場.csv
+	  新しいファイル		    2201	20251105_北2駐車場.csv
+	  新しいファイル		    2193	20251105_北3駐車場.csv
+	  新しいファイル		    2338	20251105_南1駐車場.csv
+	  新しいファイル		    2274	20251105_南2駐車場.csv
+	  新しいファイル		    2258	20251105_南3駐車場.csv
+	  新しいファイル		    2025	20251105_南4B駐車場.csv
+	  新しいファイル		    2236	20251105_南4駐車場.csv
+	  新しいファイル		    2450	20251106_全駐車場.csv
+	  新しいファイル		    2276	20251106_北1駐車場.csv
+	  新しいファイル		    2198	20251106_北2駐車場.csv
+	  新しいファイル		    2180	20251106_北3駐車場.csv
+	  新しいファイル		    2333	20251106_南1駐車場.csv
+	  新しいファイル		    2271	20251106_南2駐車場.csv
+	  新しいファイル		    2264	20251106_南3駐車場.csv
+	  新しいファイル		    2025	20251106_南4B駐車場.csv
+	  新しいファイル		    2247	20251106_南4駐車場.csv
+	  新しいファイル		    2456	20251107_全駐車場.csv
+	  新しいファイル		    2287	20251107_北1駐車場.csv
+	  新しいファイル		    2196	20251107_北2駐車場.csv
+	  新しいファイル		    2183	20251107_北3駐車場.csv
+	  新しいファイル		    2343	20251107_南1駐車場.csv
+	  新しいファイル		    2298	20251107_南2駐車場.csv
+	  新しいファイル		    2263	20251107_南3駐車場.csv
+	  新しいファイル		    2025	20251107_南4B駐車場.csv
+	  新しいファイル		    2266	20251107_南4駐車場.csv
+	  新しいファイル		    2430	20251108_全駐車場.csv
+	  新しいファイル		    2289	20251108_北1駐車場.csv
+	  新しいファイル		    2178	20251108_北2駐車場.csv
+	  新しいファイル		    2121	20251108_北3駐車場.csv
+	  新しいファイル		    2333	20251108_南1駐車場.csv
+	  新しいファイル		    2298	20251108_南2駐車場.csv
+	  新しいファイル		    2242	20251108_南3駐車場.csv
+	  新しいファイル		    2025	20251108_南4B駐車場.csv
+	  新しいファイル		    2257	20251108_南4駐車場.csv
+	  新しいファイル		    2417	20251109_全駐車場.csv
+	  新しいファイル		    2237	20251109_北1駐車場.csv
+	  新しいファイル		    2163	20251109_北2駐車場.csv
+	  新しいファイル		    2117	20251109_北3駐車場.csv
+	  新しいファイル		    2326	20251109_南1駐車場.csv
+	  新しいファイル		    2272	20251109_南2駐車場.csv
+	  新しいファイル		    2206	20251109_南3駐車場.csv
+	  新しいファイル		    2025	20251109_南4B駐車場.csv
+	  新しいファイル		    2243	20251109_南4駐車場.csv
+	  新しいファイル		    2443	20251110_全駐車場.csv
+	  新しいファイル		    2281	20251110_北1駐車場.csv
+	  新しいファイル		    2181	20251110_北2駐車場.csv
+	  新しいファイル		    2182	20251110_北3駐車場.csv
+	  新しいファイル		    2329	20251110_南1駐車場.csv
+	  新しいファイル		    2268	20251110_南2駐車場.csv
+	  新しいファイル		    2267	20251110_南3駐車場.csv
+	  新しいファイル		    2025	20251110_南4B駐車場.csv
+	  新しいファイル		    2242	20251110_南4駐車場.csv
+	  新しいファイル		    2443	20251111_全駐車場.csv
+	  新しいファイル		    2278	20251111_北1駐車場.csv
+	  新しいファイル		    2190	20251111_北2駐車場.csv
+	  新しいファイル		    2183	20251111_北3駐車場.csv
+	  新しいファイル		    2337	20251111_南1駐車場.csv
+	  新しいファイル		    2263	20251111_南2駐車場.csv
+	  新しいファイル		    2260	20251111_南3駐車場.csv
+	  新しいファイル		    2025	20251111_南4B駐車場.csv
+	  新しいファイル		    2251	20251111_南4駐車場.csv
+	  新しいファイル		    2445	20251112_全駐車場.csv
+	  新しいファイル		    2280	20251112_北1駐車場.csv
+	  新しいファイル		    2196	20251112_北2駐車場.csv
+	  新しいファイル		    2182	20251112_北3駐車場.csv
+	  新しいファイル		    2331	20251112_南1駐車場.csv
+	  新しいファイル		    2271	20251112_南2駐車場.csv
+	  新しいファイル		    2260	20251112_南3駐車場.csv
+	  新しいファイル		    2025	20251112_南4B駐車場.csv
+	  新しいファイル		    2259	20251112_南4駐車場.csv
+	  新しいファイル		    2446	20251113_全駐車場.csv
+	  新しいファイル		    2274	20251113_北1駐車場.csv
+	  新しいファイル		    2195	20251113_北2駐車場.csv
+	  新しいファイル		    2163	20251113_北3駐車場.csv
+	  新しいファイル		    2341	20251113_南1駐車場.csv
+	  新しいファイル		    2277	20251113_南2駐車場.csv
+	  新しいファイル		    2263	20251113_南3駐車場.csv
+	  新しいファイル		    2025	20251113_南4B駐車場.csv
+	  新しいファイル		    2249	20251113_南4駐車場.csv
+	  新しいファイル		    2446	20251114_全駐車場.csv
+	  新しいファイル		    2287	20251114_北1駐車場.csv
+	  新しいファイル		    2210	20251114_北2駐車場.csv
+	  新しいファイル		    2178	20251114_北3駐車場.csv
+	  新しいファイル		    2345	20251114_南1駐車場.csv
+	  新しいファイル		    2297	20251114_南2駐車場.csv
+	  新しいファイル		    2269	20251114_南3駐車場.csv
+	  新しいファイル		    2025	20251114_南4B駐車場.csv
+	  新しいファイル		    2252	20251114_南4駐車場.csv
+	  新しいファイル		    2432	20251115_全駐車場.csv
+	  新しいファイル		    2260	20251115_北1駐車場.csv
+	  新しいファイル		    2169	20251115_北2駐車場.csv
+	  新しいファイル		    2117	20251115_北3駐車場.csv
+	  新しいファイル		    2327	20251115_南1駐車場.csv
+	  新しいファイル		    2279	20251115_南2駐車場.csv
+	  新しいファイル		    2245	20251115_南3駐車場.csv
+	  新しいファイル		    2025	20251115_南4B駐車場.csv
+	  新しいファイル		    2247	20251115_南4駐車場.csv
+	  新しいファイル		    2421	20251116_全駐車場.csv
+	  新しいファイル		    2268	20251116_北1駐車場.csv
+	  新しいファイル		    2180	20251116_北2駐車場.csv
+	  新しいファイル		    2124	20251116_北3駐車場.csv
+	  新しいファイル		    2321	20251116_南1駐車場.csv
+	  新しいファイル		    2275	20251116_南2駐車場.csv
+	  新しいファイル		    2209	20251116_南3駐車場.csv
+	  新しいファイル		    2025	20251116_南4B駐車場.csv
+	  新しいファイル		    2253	20251116_南4駐車場.csv
+	  新しいファイル		    2441	20251117_全駐車場.csv
+	  新しいファイル		    2273	20251117_北1駐車場.csv
+	  新しいファイル		    2169	20251117_北2駐車場.csv
+	  新しいファイル		    2186	20251117_北3駐車場.csv
+	  新しいファイル		    2331	20251117_南1駐車場.csv
+	  新しいファイル		    2262	20251117_南2駐車場.csv
+	  新しいファイル		    2267	20251117_南3駐車場.csv
+	  新しいファイル		    2025	20251117_南4B駐車場.csv
+	  新しいファイル		    2239	20251117_南4駐車場.csv
+	  新しいファイル		    2456	20251118_全駐車場.csv
+	  新しいファイル		    2285	20251118_北1駐車場.csv
+	  新しいファイル		    2192	20251118_北2駐車場.csv
+	  新しいファイル		    2181	20251118_北3駐車場.csv
+	  新しいファイル		    2343	20251118_南1駐車場.csv
+	  新しいファイル		    2274	20251118_南2駐車場.csv
+	  新しいファイル		    2267	20251118_南3駐車場.csv
+	  新しいファイル		    2025	20251118_南4B駐車場.csv
+	  新しいファイル		    2270	20251118_南4駐車場.csv
+	  新しいファイル		    2452	20251119_全駐車場.csv
+	  新しいファイル		    2277	20251119_北1駐車場.csv
+	  新しいファイル		    2200	20251119_北2駐車場.csv
+	  新しいファイル		    2185	20251119_北3駐車場.csv
+	  新しいファイル		    2333	20251119_南1駐車場.csv
+	  新しいファイル		    2287	20251119_南2駐車場.csv
+	  新しいファイル		    2258	20251119_南3駐車場.csv
+	  新しいファイル		    2025	20251119_南4B駐車場.csv
+	  新しいファイル		    2251	20251119_南4駐車場.csv
+	  新しいファイル		    2452	20251120_全駐車場.csv
+	  新しいファイル		    2278	20251120_北1駐車場.csv
+	  新しいファイル		    2194	20251120_北2駐車場.csv
+	  新しいファイル		    2186	20251120_北3駐車場.csv
+	  新しいファイル		    2340	20251120_南1駐車場.csv
+	  新しいファイル		    2285	20251120_南2駐車場.csv
+	  新しいファイル		    2259	20251120_南3駐車場.csv
+	  新しいファイル		    2025	20251120_南4B駐車場.csv
+	  新しいファイル		    2248	20251120_南4駐車場.csv
+	  新しいファイル		    2214	20251121_全駐車場.csv
+	  新しいファイル		    2136	20251121_北1駐車場.csv
+	  新しいファイル		    2096	20251121_北2駐車場.csv
+	  新しいファイル		    2085	20251121_北3駐車場.csv
+	  新しいファイル		    2157	20251121_南1駐車場.csv
+	  新しいファイル		    2141	20251121_南2駐車場.csv
+	  新しいファイル		    2131	20251121_南3駐車場.csv
+	  新しいファイル		    2025	20251121_南4B駐車場.csv
+	  新しいファイル		    2123	20251121_南4駐車場.csv
+	  新しいファイル		    2432	20251122_全駐車場.csv
+	  新しいファイル		    2246	20251122_北1駐車場.csv
+	  新しいファイル		    2160	20251122_北2駐車場.csv
+	  新しいファイル		    2124	20251122_北3駐車場.csv
+	  新しいファイル		    2325	20251122_南1駐車場.csv
+	  新しいファイル		    2264	20251122_南2駐車場.csv
+	  新しいファイル		    2230	20251122_南3駐車場.csv
+	  新しいファイル		    2025	20251122_南4B駐車場.csv
+	  新しいファイル		    2266	20251122_南4駐車場.csv
+	  新しいファイル		    2409	20251123_全駐車場.csv
+	  新しいファイル		    2242	20251123_北1駐車場.csv
+	  新しいファイル		    2193	20251123_北2駐車場.csv
+	  新しいファイル		    2121	20251123_北3駐車場.csv
+	  新しいファイル		    2315	20251123_南1駐車場.csv
+	  新しいファイル		    2251	20251123_南2駐車場.csv
+	  新しいファイル		    2218	20251123_南3駐車場.csv
+	  新しいファイル		    2025	20251123_南4B駐車場.csv
+	  新しいファイル		    2248	20251123_南4駐車場.csv
+	  新しいファイル		    2408	20251124_全駐車場.csv
+	  新しいファイル		    2237	20251124_北1駐車場.csv
+	  新しいファイル		    2163	20251124_北2駐車場.csv
+	  新しいファイル		    2122	20251124_北3駐車場.csv
+	  新しいファイル		    2312	20251124_南1駐車場.csv
+	  新しいファイル		    2235	20251124_南2駐車場.csv
+	  新しいファイル		    2198	20251124_南3駐車場.csv
+	  新しいファイル		    2025	20251124_南4B駐車場.csv
+	  新しいファイル		    2238	20251124_南4駐車場.csv
+	  新しいファイル		    2447	20251125_全駐車場.csv
+	  新しいファイル		    2274	20251125_北1駐車場.csv
+	  新しいファイル		    2177	20251125_北2駐車場.csv
+	  新しいファイル		    2169	20251125_北3駐車場.csv
+	  新しいファイル		    2336	20251125_南1駐車場.csv
+	  新しいファイル		    2261	20251125_南2駐車場.csv
+	  新しいファイル		    2274	20251125_南3駐車場.csv
+	  新しいファイル		    2025	20251125_南4B駐車場.csv
+	  新しいファイル		    2241	20251125_南4駐車場.csv
+	  新しいファイル		    2455	20251126_全駐車場.csv
+	  新しいファイル		    2283	20251126_北1駐車場.csv
+	  新しいファイル		    2211	20251126_北2駐車場.csv
+	  新しいファイル		    2191	20251126_北3駐車場.csv
+	  新しいファイル		    2331	20251126_南1駐車場.csv
+	  新しいファイル		    2279	20251126_南2駐車場.csv
+	  新しいファイル		    2262	20251126_南3駐車場.csv
+	  新しいファイル		    2025	20251126_南4B駐車場.csv
+	  新しいファイル		    2240	20251126_南4駐車場.csv
+	  新しいファイル		    2452	20251127_全駐車場.csv
+	  新しいファイル		    2280	20251127_北1駐車場.csv
+	  新しいファイル		    2202	20251127_北2駐車場.csv
+	  新しいファイル		    2195	20251127_北3駐車場.csv
+	  新しいファイル		    2336	20251127_南1駐車場.csv
+	  新しいファイル		    2273	20251127_南2駐車場.csv
+	  新しいファイル		    2269	20251127_南3駐車場.csv
+	  新しいファイル		    2025	20251127_南4B駐車場.csv
+	  新しいファイル		    2264	20251127_南4駐車場.csv
+	  新しいファイル		    2457	20251128_全駐車場.csv
+	  新しいファイル		    2290	20251128_北1駐車場.csv
+	  新しいファイル		    2194	20251128_北2駐車場.csv
+	  新しいファイル		    2192	20251128_北3駐車場.csv
+	  新しいファイル		    2346	20251128_南1駐車場.csv
+	  新しいファイル		    2281	20251128_南2駐車場.csv
+	  新しいファイル		    2265	20251128_南3駐車場.csv
+	  新しいファイル		    2025	20251128_南4B駐車場.csv
+	  新しいファイル		    2270	20251128_南4駐車場.csv
+	  新しいファイル		    2431	20251129_全駐車場.csv
+	  新しいファイル		    2253	20251129_北1駐車場.csv
+	  新しいファイル		    2175	20251129_北2駐車場.csv
+	  新しいファイル		    2123	20251129_北3駐車場.csv
+	  新しいファイル		    2334	20251129_南1駐車場.csv
+	  新しいファイル		    2273	20251129_南2駐車場.csv
+	  新しいファイル		    2240	20251129_南3駐車場.csv
+	  新しいファイル		    2025	20251129_南4B駐車場.csv
+	  新しいファイル		    2257	20251129_南4駐車場.csv
+	  新しいファイル		    2426	20251130_全駐車場.csv
+	  新しいファイル		    2249	20251130_北1駐車場.csv
+	  新しいファイル		    2169	20251130_北2駐車場.csv
+	  新しいファイル		    2124	20251130_北3駐車場.csv
+	  新しいファイル		    2313	20251130_南1駐車場.csv
+	  新しいファイル		    2254	20251130_南2駐車場.csv
+	  新しいファイル		    2231	20251130_南3駐車場.csv
+	  新しいファイル		    2025	20251130_南4B駐車場.csv
+	  新しいファイル		    2260	20251130_南4駐車場.csv
+	  新しいファイル		    2357	全駐車場all202511.csv
+	  新しいファイル		    1958	北1all202511.csv
+	  新しいファイル		    1872	北2all202511.csv
+	  新しいファイル		    1806	北3all202511.csv
+	  新しいファイル		    2083	南1all202511.csv
+	  新しいファイル		    1965	南2all202511.csv
+	  新しいファイル		    1939	南3all202511.csv
+	  新しいファイル		    1912	南4all202511.csv
+	  新しいファイル		    1657	南4Ball202511.csv
+	                  45	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202512\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv_multi_202404_202503\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv_multi_202404_202511\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv_multi_202504_202510\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv_multi_202504_202511\
+	        新しい		   18180	全駐車場all202504_202511.csv
+	        新しい		   14788	北1all202504_202511.csv
+	        新しい		   14217	北2all202504_202511.csv
+	        新しい		   13697	北3all202504_202511.csv
+	        新しい		   15978	南1all202504_202511.csv
+	        新しい		   14924	南2all202504_202511.csv
+	        新しい		   14775	南3all202504_202511.csv
+	        新しい		   14321	南4all202504_202511.csv
+	        新しい		   12493	南4Ball202504_202511.csv
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\excel202404\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\excel202404_with_avg\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\excel202405_with_avg\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\excel202406_with_avg\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\excel202504_with_avg\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\excel202505_with_avg\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\excel202506_with_avg\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\excel202507_with_avg\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\excel202508_with_avg\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\excel202509_with_avg\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\excel202510_with_avg\
+	新しいディレクトリ       9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\excel202511_with_avg\
+	  新しいファイル		  119398	202511_全駐車場_with_avg.xlsx
+	  新しいファイル		  114418	202511_北1駐車場_with_avg.xlsx
+	  新しいファイル		  110580	202511_北2駐車場_with_avg.xlsx
+	  新しいファイル		  110084	202511_北3駐車場_with_avg.xlsx
+	  新しいファイル		  115114	202511_南1駐車場_with_avg.xlsx
+	  新しいファイル		  113841	202511_南2駐車場_with_avg.xlsx
+	  新しいファイル		  112554	202511_南3駐車場_with_avg.xlsx
+	  新しいファイル		   97833	202511_南4B駐車場_with_avg.xlsx
+	  新しいファイル		  112882	202511_南4駐車場_with_avg.xlsx
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202404_202503\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202404_202503\全駐車場all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202404_202503\北1all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202404_202503\北2all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202404_202503\北3all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202404_202503\南1all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202404_202503\南2all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202404_202503\南3all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202404_202503\南4all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202404_202503\南4Ball\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202510\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202510\全駐車場all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202510\北1all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202510\北2all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202510\北3all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202510\南1all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202510\南2all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202510\南3all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202510\南4all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202510\南4Ball\
+	新しいディレクトリ       0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202511\
+	新しいディレクトリ       1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202511\全駐車場all\
+	  新しいファイル		   34828	全駐車場all202504_202511_graph.xlsx
+	新しいディレクトリ       1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202511\北1all\
+	  新しいファイル		   32684	北1all202504_202511_graph.xlsx
+	新しいディレクトリ       1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202511\北2all\
+	  新しいファイル		   31862	北2all202504_202511_graph.xlsx
+	新しいディレクトリ       1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202511\北3all\
+	  新しいファイル		   31255	北3all202504_202511_graph.xlsx
+	新しいディレクトリ       1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202511\南1all\
+	  新しいファイル		   33387	南1all202504_202511_graph.xlsx
+	新しいディレクトリ       1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202511\南2all\
+	  新しいファイル		   32871	南2all202504_202511_graph.xlsx
+	新しいディレクトリ       1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202511\南3all\
+	  新しいファイル		   32501	南3all202504_202511_graph.xlsx
+	新しいディレクトリ       1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202511\南4all\
+	  新しいファイル		   32201	南4all202504_202511_graph.xlsx
+	新しいディレクトリ       1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202511\南4Ball\
+	  新しいファイル		   24006	南4Ball202504_202511_graph.xlsx
+	                 270	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\
+	        新しい		    8197	20251101_全駐車場.xlsx
+	        新しい		    8046	20251101_北1駐車場.xlsx
+	        新しい		    7938	20251101_北2駐車場.xlsx
+	        新しい		    7907	20251101_北3駐車場.xlsx
+	        新しい		    8084	20251101_南1駐車場.xlsx
+	        新しい		    8035	20251101_南2駐車場.xlsx
+	        新しい		    7996	20251101_南3駐車場.xlsx
+	        新しい		    7537	20251101_南4B駐車場.xlsx
+	        新しい		    8022	20251101_南4駐車場.xlsx
+	        新しい		    8188	20251102_全駐車場.xlsx
+	        新しい		    8061	20251102_北1駐車場.xlsx
+	        新しい		    7940	20251102_北2駐車場.xlsx
+	        新しい		    7876	20251102_北3駐車場.xlsx
+	        新しい		    8089	20251102_南1駐車場.xlsx
+	        新しい		    8028	20251102_南2駐車場.xlsx
+	        新しい		    7985	20251102_南3駐車場.xlsx
+	        新しい		    7538	20251102_南4B駐車場.xlsx
+	        新しい		    8026	20251102_南4駐車場.xlsx
+	        新しい		    8169	20251103_全駐車場.xlsx
+	        新しい		    8040	20251103_北1駐車場.xlsx
+	        新しい		    7933	20251103_北2駐車場.xlsx
+	        新しい		    7875	20251103_北3駐車場.xlsx
+	        新しい		    8063	20251103_南1駐車場.xlsx
+	        新しい		    8014	20251103_南2駐車場.xlsx
+	        新しい		    7959	20251103_南3駐車場.xlsx
+	        新しい		    7537	20251103_南4B駐車場.xlsx
+	        新しい		    7973	20251103_南4駐車場.xlsx
+	        新しい		    8186	20251104_全駐車場.xlsx
+	        新しい		    8051	20251104_北1駐車場.xlsx
+	        新しい		    7902	20251104_北2駐車場.xlsx
+	        新しい		    7939	20251104_北3駐車場.xlsx
+	        新しい		    8071	20251104_南1駐車場.xlsx
+	        新しい		    8003	20251104_南2駐車場.xlsx
+	        新しい		    8017	20251104_南3駐車場.xlsx
+	        新しい		    7539	20251104_南4B駐車場.xlsx
+	        新しい		    7989	20251104_南4駐車場.xlsx
+	        新しい		    8201	20251105_全駐車場.xlsx
+	        新しい		    8049	20251105_北1駐車場.xlsx
+	        新しい		    7938	20251105_北2駐車場.xlsx
+	        新しい		    7970	20251105_北3駐車場.xlsx
+	        新しい		    8081	20251105_南1駐車場.xlsx
+	        新しい		    8034	20251105_南2駐車場.xlsx
+	        新しい		    7987	20251105_南3駐車場.xlsx
+	        新しい		    7538	20251105_南4B駐車場.xlsx
+	        新しい		    7992	20251105_南4駐車場.xlsx
+	        新しい		    8195	20251106_全駐車場.xlsx
+	        新しい		    8042	20251106_北1駐車場.xlsx
+	        新しい		    7934	20251106_北2駐車場.xlsx
+	        新しい		    7950	20251106_北3駐車場.xlsx
+	        新しい		    8093	20251106_南1駐車場.xlsx
+	        新しい		    8035	20251106_南2駐車場.xlsx
+	        新しい		    7997	20251106_南3駐車場.xlsx
+	        新しい		    7539	20251106_南4B駐車場.xlsx
+	        新しい		    8012	20251106_南4駐車場.xlsx
+	        新しい		    8195	20251107_全駐車場.xlsx
+	        新しい		    8059	20251107_北1駐車場.xlsx
+	        新しい		    7946	20251107_北2駐車場.xlsx
+	        新しい		    7962	20251107_北3駐車場.xlsx
+	        新しい		    8073	20251107_南1駐車場.xlsx
+	        新しい		    8063	20251107_南2駐車場.xlsx
+	        新しい		    7984	20251107_南3駐車場.xlsx
+	        新しい		    7539	20251107_南4B駐車場.xlsx
+	        新しい		    8014	20251107_南4駐車場.xlsx
+	        新しい		    8197	20251108_全駐車場.xlsx
+	        新しい		    8081	20251108_北1駐車場.xlsx
+	        新しい		    7947	20251108_北2駐車場.xlsx
+	        新しい		    7897	20251108_北3駐車場.xlsx
+	        新しい		    8087	20251108_南1駐車場.xlsx
+	        新しい		    8061	20251108_南2駐車場.xlsx
+	        新しい		    7978	20251108_南3駐車場.xlsx
+	        新しい		    7538	20251108_南4B駐車場.xlsx
+	        新しい		    8023	20251108_南4駐車場.xlsx
+	        新しい		    8187	20251109_全駐車場.xlsx
+	        新しい		    8056	20251109_北1駐車場.xlsx
+	        新しい		    7897	20251109_北2駐車場.xlsx
+	        新しい		    7873	20251109_北3駐車場.xlsx
+	        新しい		    8068	20251109_南1駐車場.xlsx
+	        新しい		    8025	20251109_南2駐車場.xlsx
+	        新しい		    7962	20251109_南3駐車場.xlsx
+	        新しい		    7537	20251109_南4B駐車場.xlsx
+	        新しい		    8002	20251109_南4駐車場.xlsx
+	        新しい		    8195	20251110_全駐車場.xlsx
+	        新しい		    8049	20251110_北1駐車場.xlsx
+	        新しい		    7928	20251110_北2駐車場.xlsx
+	        新しい		    7949	20251110_北3駐車場.xlsx
+	        新しい		    8048	20251110_南1駐車場.xlsx
+	        新しい		    8031	20251110_南2駐車場.xlsx
+	        新しい		    8015	20251110_南3駐車場.xlsx
+	        新しい		    7536	20251110_南4B駐車場.xlsx
+	        新しい		    7985	20251110_南4駐車場.xlsx
+	        新しい		    8188	20251111_全駐車場.xlsx
+	        新しい		    8057	20251111_北1駐車場.xlsx
+	        新しい		    7929	20251111_北2駐車場.xlsx
+	        新しい		    7935	20251111_北3駐車場.xlsx
+	        新しい		    8083	20251111_南1駐車場.xlsx
+	        新しい		    8047	20251111_南2駐車場.xlsx
+	        新しい		    8020	20251111_南3駐車場.xlsx
+	        新しい		    7538	20251111_南4B駐車場.xlsx
+	        新しい		    8008	20251111_南4駐車場.xlsx
+	        新しい		    8206	20251112_全駐車場.xlsx
+	        新しい		    8046	20251112_北1駐車場.xlsx
+	        新しい		    7939	20251112_北2駐車場.xlsx
+	        新しい		    7952	20251112_北3駐車場.xlsx
+	        新しい		    8058	20251112_南1駐車場.xlsx
+	        新しい		    8049	20251112_南2駐車場.xlsx
+	        新しい		    8005	20251112_南3駐車場.xlsx
+	        新しい		    7536	20251112_南4B駐車場.xlsx
+	        新しい		    8016	20251112_南4駐車場.xlsx
+	        新しい		    8199	20251113_全駐車場.xlsx
+	        新しい		    8040	20251113_北1駐車場.xlsx
+	        新しい		    7940	20251113_北2駐車場.xlsx
+	        新しい		    7944	20251113_北3駐車場.xlsx
+	        新しい		    8082	20251113_南1駐車場.xlsx
+	        新しい		    8061	20251113_南2駐車場.xlsx
+	        新しい		    8002	20251113_南3駐車場.xlsx
+	        新しい		    7536	20251113_南4B駐車場.xlsx
+	        新しい		    7984	20251113_南4駐車場.xlsx
+	        新しい		    8209	20251114_全駐車場.xlsx
+	        新しい		    8049	20251114_北1駐車場.xlsx
+	        新しい		    7956	20251114_北2駐車場.xlsx
+	        新しい		    7941	20251114_北3駐車場.xlsx
+	        新しい		    8078	20251114_南1駐車場.xlsx
+	        新しい		    8056	20251114_南2駐車場.xlsx
+	        新しい		    8020	20251114_南3駐車場.xlsx
+	        新しい		    7538	20251114_南4B駐車場.xlsx
+	        新しい		    8008	20251114_南4駐車場.xlsx
+	        新しい		    8185	20251115_全駐車場.xlsx
+	        新しい		    8061	20251115_北1駐車場.xlsx
+	        新しい		    7925	20251115_北2駐車場.xlsx
+	        新しい		    7893	20251115_北3駐車場.xlsx
+	        新しい		    8086	20251115_南1駐車場.xlsx
+	        新しい		    8042	20251115_南2駐車場.xlsx
+	        新しい		    8000	20251115_南3駐車場.xlsx
+	        新しい		    7537	20251115_南4B駐車場.xlsx
+	        新しい		    8011	20251115_南4駐車場.xlsx
+	        新しい		    8178	20251116_全駐車場.xlsx
+	        新しい		    8054	20251116_北1駐車場.xlsx
+	        新しい		    7937	20251116_北2駐車場.xlsx
+	        新しい		    7887	20251116_北3駐車場.xlsx
+	        新しい		    8062	20251116_南1駐車場.xlsx
+	        新しい		    8040	20251116_南2駐車場.xlsx
+	        新しい		    7933	20251116_南3駐車場.xlsx
+	        新しい		    7537	20251116_南4B駐車場.xlsx
+	        新しい		    8018	20251116_南4駐車場.xlsx
+	        新しい		    8183	20251117_全駐車場.xlsx
+	        新しい		    8043	20251117_北1駐車場.xlsx
+	        新しい		    7922	20251117_北2駐車場.xlsx
+	        新しい		    7963	20251117_北3駐車場.xlsx
+	        新しい		    8062	20251117_南1駐車場.xlsx
+	        新しい		    8017	20251117_南2駐車場.xlsx
+	        新しい		    8000	20251117_南3駐車場.xlsx
+	        新しい		    7536	20251117_南4B駐車場.xlsx
+	        新しい		    7999	20251117_南4駐車場.xlsx
+	        新しい		    8198	20251118_全駐車場.xlsx
+	        新しい		    8057	20251118_北1駐車場.xlsx
+	        新しい		    7958	20251118_北2駐車場.xlsx
+	        新しい		    7950	20251118_北3駐車場.xlsx
+	        新しい		    8084	20251118_南1駐車場.xlsx
+	        新しい		    8043	20251118_南2駐車場.xlsx
+	        新しい		    8023	20251118_南3駐車場.xlsx
+	        新しい		    7536	20251118_南4B駐車場.xlsx
+	        新しい		    8026	20251118_南4駐車場.xlsx
+	        新しい		    8208	20251119_全駐車場.xlsx
+	        新しい		    8054	20251119_北1駐車場.xlsx
+	        新しい		    7965	20251119_北2駐車場.xlsx
+	        新しい		    7968	20251119_北3駐車場.xlsx
+	        新しい		    8085	20251119_南1駐車場.xlsx
+	        新しい		    8063	20251119_南2駐車場.xlsx
+	        新しい		    8006	20251119_南3駐車場.xlsx
+	        新しい		    7537	20251119_南4B駐車場.xlsx
+	        新しい		    8001	20251119_南4駐車場.xlsx
+	        新しい		    8207	20251120_全駐車場.xlsx
+	        新しい		    8061	20251120_北1駐車場.xlsx
+	        新しい		    7961	20251120_北2駐車場.xlsx
+	        新しい		    7958	20251120_北3駐車場.xlsx
+	        新しい		    8090	20251120_南1駐車場.xlsx
+	        新しい		    8039	20251120_南2駐車場.xlsx
+	        新しい		    8008	20251120_南3駐車場.xlsx
+	        新しい		    7536	20251120_南4B駐車場.xlsx
+	        新しい		    8005	20251120_南4駐車場.xlsx
+	        新しい		    8208	20251121_全駐車場.xlsx
+	        新しい		    8059	20251121_北1駐車場.xlsx
+	        新しい		    7972	20251121_北2駐車場.xlsx
+	        新しい		    7943	20251121_北3駐車場.xlsx
+	        新しい		    8099	20251121_南1駐車場.xlsx
+	        新しい		    8047	20251121_南2駐車場.xlsx
+	        新しい		    8018	20251121_南3駐車場.xlsx
+	        新しい		    7536	20251121_南4B駐車場.xlsx
+	        新しい		    8000	20251121_南4駐車場.xlsx
+	        新しい		    8184	20251122_全駐車場.xlsx
+	        新しい		    8053	20251122_北1駐車場.xlsx
+	        新しい		    7949	20251122_北2駐車場.xlsx
+	        新しい		    7915	20251122_北3駐車場.xlsx
+	        新しい		    8073	20251122_南1駐車場.xlsx
+	        新しい		    8045	20251122_南2駐車場.xlsx
+	        新しい		    7997	20251122_南3駐車場.xlsx
+	        新しい		    7537	20251122_南4B駐車場.xlsx
+	        新しい		    8022	20251122_南4駐車場.xlsx
+	        新しい		    8181	20251123_全駐車場.xlsx
+	        新しい		    8042	20251123_北1駐車場.xlsx
+	        新しい		    7949	20251123_北2駐車場.xlsx
+	        新しい		    7882	20251123_北3駐車場.xlsx
+	        新しい		    8036	20251123_南1駐車場.xlsx
+	        新しい		    8028	20251123_南2駐車場.xlsx
+	        新しい		    7974	20251123_南3駐車場.xlsx
+	        新しい		    7537	20251123_南4B駐車場.xlsx
+	        新しい		    7997	20251123_南4駐車場.xlsx
+	        新しい		    8168	20251124_全駐車場.xlsx
+	        新しい		    8026	20251124_北1駐車場.xlsx
+	        新しい		    7918	20251124_北2駐車場.xlsx
+	        新しい		    7902	20251124_北3駐車場.xlsx
+	        新しい		    8039	20251124_南1駐車場.xlsx
+	        新しい		    7999	20251124_南2駐車場.xlsx
+	        新しい		    7940	20251124_南3駐車場.xlsx
+	        新しい		    7536	20251124_南4B駐車場.xlsx
+	        新しい		    7990	20251124_南4駐車場.xlsx
+	        新しい		    8192	20251125_全駐車場.xlsx
+	        新しい		    8055	20251125_北1駐車場.xlsx
+	        新しい		    7930	20251125_北2駐車場.xlsx
+	        新しい		    7938	20251125_北3駐車場.xlsx
+	        新しい		    8055	20251125_南1駐車場.xlsx
+	        新しい		    7997	20251125_南2駐車場.xlsx
+	        新しい		    8030	20251125_南3駐車場.xlsx
+	        新しい		    7538	20251125_南4B駐車場.xlsx
+	        新しい		    7983	20251125_南4駐車場.xlsx
+	        新しい		    8209	20251126_全駐車場.xlsx
+	        新しい		    8047	20251126_北1駐車場.xlsx
+	        新しい		    7968	20251126_北2駐車場.xlsx
+	        新しい		    7952	20251126_北3駐車場.xlsx
+	        新しい		    8065	20251126_南1駐車場.xlsx
+	        新しい		    8032	20251126_南2駐車場.xlsx
+	        新しい		    8016	20251126_南3駐車場.xlsx
+	        新しい		    7537	20251126_南4B駐車場.xlsx
+	        新しい		    7989	20251126_南4駐車場.xlsx
+	        新しい		    8178	20251127_全駐車場.xlsx
+	        新しい		    8059	20251127_北1駐車場.xlsx
+	        新しい		    7974	20251127_北2駐車場.xlsx
+	        新しい		    7955	20251127_北3駐車場.xlsx
+	        新しい		    8055	20251127_南1駐車場.xlsx
+	        新しい		    8021	20251127_南2駐車場.xlsx
+	        新しい		    8018	20251127_南3駐車場.xlsx
+	        新しい		    7537	20251127_南4B駐車場.xlsx
+	        新しい		    8018	20251127_南4駐車場.xlsx
+	        新しい		    8197	20251128_全駐車場.xlsx
+	        新しい		    8052	20251128_北1駐車場.xlsx
+	        新しい		    7963	20251128_北2駐車場.xlsx
+	        新しい		    7962	20251128_北3駐車場.xlsx
+	        新しい		    8100	20251128_南1駐車場.xlsx
+	        新しい		    8045	20251128_南2駐車場.xlsx
+	        新しい		    8016	20251128_南3駐車場.xlsx
+	        新しい		    7538	20251128_南4B駐車場.xlsx
+	        新しい		    8039	20251128_南4駐車場.xlsx
+	        新しい		    8198	20251129_全駐車場.xlsx
+	        新しい		    8031	20251129_北1駐車場.xlsx
+	        新しい		    7965	20251129_北2駐車場.xlsx
+	        新しい		    7892	20251129_北3駐車場.xlsx
+	        新しい		    8079	20251129_南1駐車場.xlsx
+	        新しい		    8036	20251129_南2駐車場.xlsx
+	        新しい		    7995	20251129_南3駐車場.xlsx
+	        新しい		    7536	20251129_南4B駐車場.xlsx
+	        新しい		    8011	20251129_南4駐車場.xlsx
+	        新しい		    8188	20251130_全駐車場.xlsx
+	        新しい		    8047	20251130_北1駐車場.xlsx
+	        新しい		    7933	20251130_北2駐車場.xlsx
+	        新しい		    7882	20251130_北3駐車場.xlsx
+	        新しい		    8063	20251130_南1駐車場.xlsx
+	        新しい		    8018	20251130_南2駐車場.xlsx
+	        新しい		    7968	20251130_南3駐車場.xlsx
+	        新しい		    7537	20251130_南4B駐車場.xlsx
+	        新しい		    8024	20251130_南4駐車場.xlsx
+	                 270	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202404\
+	                 279	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202405\
+	                 270	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202406\
+	                 279	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202407\
+	                 279	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202408\
+	                 270	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202409\
+	                 279	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202410\
+	                 270	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202411\
+	                 279	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202412\
+	                 279	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202501\
+	                 252	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202502\
+	                 279	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202503\
+	                 270	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202504\
+	                 279	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202505\
+	                 270	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202506\
+	                 279	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202507\
+	                 279	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202508\
+	                 270	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202509\
+	                 279	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202510\
+	                 270	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202511\
+	                  45	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202512\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202404\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202405\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202406\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202407\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202408\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202409\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202410\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202411\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202412\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202501\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202502\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202503\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202504\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202505\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202506\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202507\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202508\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202509\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202510\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202511\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202512\
+
+------------------------------------------------------------------------------
+
+                  合計     コピー済み      スキップ       不一致        失敗    Extras
+   ディレクトリ:       121        12       109         0         0         1
+     ファイル:     11736       576     11160         0         0         0
+      バイト:   70.37 m    4.00 m   66.36 m         0         0         0
+       時刻:   0:01:28   0:01:22                       0:00:00   0:00:05
+
+
+       速度:              50,975 バイト/秒
+       速度:               2.917 MB/分
+   終了: 2025年12月21日 19:26:35
+
+[2025/12/21 19:26:35.86] robocopy exit code = 3 
+---------------------------------------------- 
+---------------------------------------------- 
+[2025/12/21 19:29:53.86] START robocopy 
+SRC  = C:\Users\sugitamasahiko\Documents\parking_system\downloads 
+DEST = \\10.0.1.113\共通\interlock_data 
+
+-------------------------------------------------------------------------------
+   ROBOCOPY     ::     Windows の堅牢性の高いファイル コピー                              
+-------------------------------------------------------------------------------
+
+  開始: 2025年12月21日 19:29:53
+   コピー元 : C:\Users\sugitamasahiko\Documents\parking_system\downloads\
+     コピー先 : \\10.0.1.113\共通\interlock_data\
+
+    ファイル: *.*
+	    
+  オプション: *.* /TEE /S /E /DCOPY:DA /COPY:DAT /NP /R:3 /W:10 
+
+------------------------------------------------------------------------------
+
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\converted\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\
+	*EXTRA Dir        -1	\\10.0.1.113\共通\interlock_data\csv\_trigger\
+	                 279	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202404\
+	                 288	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202405\
+	                 279	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202406\
+	                 288	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202407\
+	                 288	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202408\
+	                 279	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202409\
+	                 288	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202410\
+	                 279	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202411\
+	                 288	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202412\
+	                 288	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202501\
+	                 261	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202502\
+	                 288	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202503\
+	                 279	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202504\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202504\graphs\
+	                 288	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202505\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202505\graphs\
+	                 279	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202506\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202506\graphs\
+	                 288	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202507\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202507\graphs\
+	                 288	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202508\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202508\graphs\
+	                 279	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202509\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202509\graphs\
+	                 288	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202510\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202510\graphs\
+	                 279	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202511\
+	                  45	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202512\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv_multi_202404_202503\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv_multi_202404_202511\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv_multi_202504_202510\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv_multi_202504_202511\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\excel202404\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\excel202404_with_avg\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\excel202405_with_avg\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\excel202406_with_avg\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\excel202504_with_avg\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\excel202505_with_avg\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\excel202506_with_avg\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\excel202507_with_avg\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\excel202508_with_avg\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\excel202509_with_avg\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\excel202510_with_avg\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\excel202511_with_avg\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202404_202503\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202404_202503\全駐車場all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202404_202503\北1all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202404_202503\北2all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202404_202503\北3all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202404_202503\南1all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202404_202503\南2all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202404_202503\南3all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202404_202503\南4all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202404_202503\南4Ball\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202510\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202510\全駐車場all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202510\北1all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202510\北2all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202510\北3all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202510\南1all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202510\南2all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202510\南3all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202510\南4all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202510\南4Ball\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202511\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202511\全駐車場all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202511\北1all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202511\北2all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202511\北3all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202511\南1all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202511\南2all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202511\南3all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202511\南4all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202511\南4Ball\
+	                 270	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\
+	                 270	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202404\
+	                 279	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202405\
+	                 270	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202406\
+	                 279	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202407\
+	                 279	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202408\
+	                 270	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202409\
+	                 279	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202410\
+	                 270	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202411\
+	                 279	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202412\
+	                 279	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202501\
+	                 252	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202502\
+	                 279	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202503\
+	                 270	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202504\
+	                 279	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202505\
+	                 270	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202506\
+	                 279	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202507\
+	                 279	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202508\
+	                 270	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202509\
+	                 279	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202510\
+	                 270	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202511\
+	                  45	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202512\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202404\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202405\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202406\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202407\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202408\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202409\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202410\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202411\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202412\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202501\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202502\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202503\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202504\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202505\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202506\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202507\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202508\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202509\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202510\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202511\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202512\
+
+------------------------------------------------------------------------------
+
+                  合計     コピー済み      スキップ       不一致        失敗    Extras
+   ディレクトリ:       121         0       121         0         0         1
+     ファイル:     11736         0     11736         0         0         0
+      バイト:   70.37 m         0   70.37 m         0         0         0
+       時刻:   0:00:03   0:00:00                       0:00:00   0:00:03
+   終了: 2025年12月21日 19:29:57
+
+[2025/12/21 19:29:57.09] robocopy exit code = 2 
+---------------------------------------------- 
+---------------------------------------------- 
+[2025/12/21 19:36:03.92] START robocopy 
+SRC  = C:\Users\sugitamasahiko\Documents\parking_system\downloads 
+DEST = \\10.0.1.113\共通\interlock_data 
+
+-------------------------------------------------------------------------------
+   ROBOCOPY     ::     Windows の堅牢性の高いファイル コピー                              
+-------------------------------------------------------------------------------
+
+  開始: 2025年12月21日 19:36:04
+   コピー元 : C:\Users\sugitamasahiko\Documents\parking_system\downloads\
+     コピー先 : \\10.0.1.113\共通\interlock_data\
+
+    ファイル: *.*
+	    
+  オプション: *.* /TEE /S /E /DCOPY:DA /COPY:DAT /NP /R:3 /W:10 
+
+------------------------------------------------------------------------------
+
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\converted\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\
+	*EXTRA Dir        -1	\\10.0.1.113\共通\interlock_data\csv\_trigger\
+	                 279	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202404\
+	                 288	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202405\
+	                 279	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202406\
+	                 288	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202407\
+	                 288	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202408\
+	                 279	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202409\
+	                 288	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202410\
+	                 279	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202411\
+	                 288	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202412\
+	                 288	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202501\
+	                 261	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202502\
+	                 288	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202503\
+	                 279	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202504\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202504\graphs\
+	                 288	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202505\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202505\graphs\
+	                 279	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202506\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202506\graphs\
+	                 288	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202507\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202507\graphs\
+	                 288	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202508\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202508\graphs\
+	                 279	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202509\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202509\graphs\
+	                 288	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202510\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202510\graphs\
+	                 279	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202511\
+	                  45	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv202512\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv_multi_202404_202503\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv_multi_202404_202511\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv_multi_202504_202510\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\csv_multi_202504_202511\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\excel202404\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\excel202404_with_avg\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\excel202405_with_avg\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\excel202406_with_avg\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\excel202504_with_avg\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\excel202505_with_avg\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\excel202506_with_avg\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\excel202507_with_avg\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\excel202508_with_avg\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\excel202509_with_avg\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\excel202510_with_avg\
+	                   9	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\excel202511_with_avg\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202404_202503\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202404_202503\全駐車場all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202404_202503\北1all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202404_202503\北2all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202404_202503\北3all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202404_202503\南1all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202404_202503\南2all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202404_202503\南3all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202404_202503\南4all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202404_202503\南4Ball\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202510\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202510\全駐車場all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202510\北1all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202510\北2all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202510\北3all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202510\南1all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202510\南2all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202510\南3all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202510\南4all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202510\南4Ball\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202511\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202511\全駐車場all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202511\北1all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202511\北2all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202511\北3all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202511\南1all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202511\南2all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202511\南3all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202511\南4all\
+	                   1	C:\Users\sugitamasahiko\Documents\parking_system\downloads\csv\graphs_multi_202504_202511\南4Ball\
+	                 270	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\
+	                 270	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202404\
+	                 279	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202405\
+	                 270	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202406\
+	                 279	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202407\
+	                 279	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202408\
+	                 270	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202409\
+	                 279	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202410\
+	                 270	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202411\
+	                 279	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202412\
+	                 279	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202501\
+	                 252	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202502\
+	                 279	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202503\
+	                 270	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202504\
+	                 279	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202505\
+	                 270	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202506\
+	                 279	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202507\
+	                 279	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202508\
+	                 270	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202509\
+	                 279	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202510\
+	                 270	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202511\
+	                  45	C:\Users\sugitamasahiko\Documents\parking_system\downloads\excel\excel202512\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202404\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202405\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202406\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202407\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202408\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202409\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202410\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202411\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202412\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202501\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202502\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202503\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202504\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202505\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202506\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202507\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202508\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202509\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202510\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202511\
+	                   0	C:\Users\sugitamasahiko\Documents\parking_system\downloads\mht\mht202512\
+
+------------------------------------------------------------------------------
+
+                  合計     コピー済み      スキップ       不一致        失敗    Extras
+   ディレクトリ:       121         0       121         0         0         1
+     ファイル:     11736         0     11736         0         0         0
+      バイト:   70.37 m         0   70.37 m         0         0         0
+       時刻:   0:00:03   0:00:00                       0:00:00   0:00:03
+   終了: 2025年12月21日 19:36:07
+
+[2025/12/21 19:36:07.22] robocopy exit code = 2 
+---------------------------------------------- 
+---------------------------------------------- 
+[2025/12/21 19:58:15.11] START robocopy 
+SRC  = C:\Users\sugitamasahiko\Documents\parking_system\downloads 
+DEST = \\10.0.1.113\共通\interlock_data 
+[2025/12/21 19:58:20.61] robocopy exit code = 2 
+---------------------------------------------- 
+---------------------------------------------- 
+[2025/12/21 20:12:24.94] START robocopy 
+SRC  = C:\Users\sugitamasahiko\Documents\parking_system\downloads 
+DEST = \\10.0.1.113\共通\interlock_data 
+[2025/12/21 20:12:30.06] robocopy exit code = 2 
+---------------------------------------------- 
+---------------------------------------------- 
+[2025/12/21 20:22:27.90] START robocopy 
+SRC  = C:\Users\sugitamasahiko\Documents\parking_system\downloads 
+DEST = \\10.0.1.113\共通\interlock_data 
+[2025/12/21 20:22:32.53] robocopy exit code = 2 
+---------------------------------------------- 
+---------------------------------------------- 
+[2025/12/21 20:25:47.00] START robocopy 
+SRC  = C:\Users\sugitamasahiko\Documents\parking_system\downloads 
+DEST = \\10.0.1.113\共通\interlock_data 
+[2025/12/21 20:25:51.42] robocopy exit code = 2 
+---------------------------------------------- 
+---------------------------------------------- 
+[2025/12/21 21:11:34.01] START robocopy 
+SRC  = C:\Users\sugitamasahiko\Documents\parking_system\downloads 
+DEST = \\10.0.1.113\共通\interlock_data 
+[2025/12/21 21:13:04.40] robocopy exit code = 3 
+---------------------------------------------- 
+---------------------------------------------- 
+[2025/12/22 13:36:14.81] START robocopy 
+SRC  = C:\Users\sugitamasahiko\Documents\parking_system\downloads 
+DEST = \\10.0.1.113\共通\interlock_data 
+[2025/12/22 13:37:49.82] robocopy exit code = 3 
+---------------------------------------------- 
+---------------------------------------------- 
+[2025/12/22 14:37:50.47] START robocopy 
+SRC  = C:\Users\sugitamasahiko\Documents\parking_system\downloads 
+DEST = \\10.0.1.113\共通\interlock_data 
+[2025/12/22 14:39:17.46] robocopy exit code = 3 
+---------------------------------------------- 
+---------------------------------------------- 
+[2026/01/01 21:45:12.31] START robocopy 
+SRC  = C:\Users\sugitamasahiko\Documents\parking_system\downloads 
+DEST = \\10.0.1.113\共通\interlock_data 
+[2026/01/01 21:47:36.44] robocopy exit code = 1 
+[2026/01/01 21:47:36.44] START send_smtp_mail.ps1 
+OK: SMTP sent
+[2026/01/01 21:47:38.43] END send_smtp_mail.ps1 (exit=0) 
+---------------------------------------------- 
+---------------------------------------------- 
+[2026/01/01 21:51:06.67] START robocopy 
+SRC  = C:\Users\sugitamasahiko\Documents\parking_system\downloads 
+DEST = \\10.0.1.113\共通\interlock_data 
+[2026/01/01 21:51:11.62] robocopy exit code = 0 
+[2026/01/01 21:51:11.62] START send_smtp_mail.ps1 
+OK: SMTP sent
+[2026/01/01 21:51:12.73] END send_smtp_mail.ps1 (exit=0) 
+---------------------------------------------- 
+---------------------------------------------- 
+[2026/01/01 22:58:10.04] START robocopy 
+SRC  = C:\Users\sugitamasahiko\Documents\parking_system\downloads 
+DEST = \\10.0.1.113\共通\interlock_data 
+[2026/01/01 23:00:09.31] robocopy exit code = 1 
+[2026/01/01 23:00:09.31] START send_smtp_mail.ps1 
+OK: SMTP sent
+[2026/01/01 23:00:11.71] END send_smtp_mail.ps1 (exit=0) 
+---------------------------------------------- 
+---------------------------------------------- 
+[2026/01/02  4:37:45.18] START robocopy 
+SRC  = C:\Users\sugitamasahiko\Documents\parking_system\downloads 
+DEST = \\10.0.1.113\共通\interlock_data 
+[2026/01/02  4:39:44.06] robocopy exit code = 1 
+[2026/01/02  4:39:44.06] START send_smtp_mail.ps1 
+OK: SMTP sent
+[2026/01/02  4:39:46.38] END send_smtp_mail.ps1 (exit=0) 
+---------------------------------------------- 
+---------------------------------------------- 
+[2026/01/02 16:07:53.99] START robocopy 
+SRC  = C:\Users\sugitamasahiko\Documents\parking_system\downloads 
+DEST = \\10.0.1.113\共通\interlock_data 
+[2026/01/02 16:07:58.72] robocopy exit code = 0 
+[2026/01/02 16:07:58.73] START send_smtp_mail.ps1 
+OK: SMTP sent
+[2026/01/02 16:08:00.16] END send_smtp_mail.ps1 (exit=0) 
+---------------------------------------------- 
+---------------------------------------------- 
+[2026/01/02 16:09:46.71] START robocopy 
+SRC  = C:\Users\sugitamasahiko\Documents\parking_system\downloads 
+DEST = \\10.0.1.113\共通\interlock_data 
+[2026/01/02 16:10:46.78] robocopy exit code = 1 
+[2026/01/02 16:10:46.79] START send_smtp_mail.ps1 
+OK: SMTP sent
+[2026/01/02 16:10:47.77] END send_smtp_mail.ps1 (exit=0) 
+---------------------------------------------- 
+---------------------------------------------- 
+[2026/01/02 16:20:13.15] START robocopy 
+SRC  = C:\Users\sugitamasahiko\Documents\parking_system\downloads 
+DEST = \\10.0.1.113\共通\interlock_data 
+[2026/01/02 16:21:12.11] robocopy exit code = 1 
+[2026/01/02 16:21:12.11] START send_smtp_mail.ps1 
+OK: SMTP sent
+[2026/01/02 16:21:13.53] END send_smtp_mail.ps1 (exit=0) 
+---------------------------------------------- 
+---------------------------------------------- 
+[2026/01/03 16:32:58.38] START robocopy 
+SRC  = C:\Users\sugitamasahiko\Documents\parking_system\downloads 
+DEST = \\10.0.1.113\共通\interlock_data 
+[2026/01/03 16:34:02.82] robocopy exit code = 1 
+[2026/01/03 16:34:02.83] START send_smtp_mail.ps1 
+OK: SMTP sent
+[2026/01/03 16:34:04.54] END send_smtp_mail.ps1 (exit=0) 
+---------------------------------------------- 
+---------------------------------------------- 
+[2026/01/03 20:55:30.44] START robocopy 
+SRC  = C:\Users\sugitamasahiko\Documents\parking_system\downloads 
+DEST = \\10.0.1.113\共通\interlock_data 
+[2026/01/03 20:56:30.24] robocopy exit code = 1 
+[2026/01/03 20:56:30.25] START send_smtp_mail.ps1 
+OK: SMTP sent
+[2026/01/03 20:56:31.67] END send_smtp_mail.ps1 (exit=0) 
+---------------------------------------------- 
+---------------------------------------------- 
+[2026/01/03 21:13:20.26] START robocopy 
+SRC  = C:\Users\sugitamasahiko\Documents\parking_system\downloads 
+DEST = \\10.0.1.113\共通\interlock_data 
+[2026/01/03 21:14:18.50] robocopy exit code = 1 
+[2026/01/03 21:14:18.50] START send_smtp_mail.ps1 
+OK: SMTP sent
+[2026/01/03 21:14:20.10] END send_smtp_mail.ps1 (exit=0) 
+---------------------------------------------- 
+---------------------------------------------- 
+[2026/01/03 21:24:28.18] START robocopy 
+SRC  = C:\Users\sugitamasahiko\Documents\parking_system\downloads 
+DEST = \\10.0.1.113\共通\interlock_data 
+[2026/01/03 21:25:28.52] robocopy exit code = 1 
+[2026/01/03 21:25:28.53] START send_smtp_mail.ps1 
+発生場所 C:\Users\sugitamasahiko\Documents\parking_system\send_smtp_mail.ps1:136 文字:2
++ 
+'if' ステートメントの式の後に終わりの ')' が存在しません。
+    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException
+    + FullyQualifiedErrorId : MissingEndParenthesisAfterStatement
+ 
+[2026/01/03 21:25:29.12] END send_smtp_mail.ps1 (exit=1) 
+---------------------------------------------- 
+---------------------------------------------- 
+[2026/01/03 21:35:29.44] START robocopy 
+SRC  = C:\Users\sugitamasahiko\Documents\parking_system\downloads 
+DEST = \\10.0.1.113\共通\interlock_data 
+[2026/01/03 21:35:34.09] robocopy exit code = 0 
+[2026/01/03 21:35:34.10] START send_smtp_mail.ps1 
+発生場所 C:\Users\sugitamasahiko\Documents\parking_system\send_smtp_mail.ps1:77 文字:3
++ ) {
++   ~
+式またはステートメントのトークン '{' を使用できません。
+発生場所 C:\Users\sugitamasahiko\Documents\parking_system\send_smtp_mail.ps1:77 文字:2
++ ) {
++  ~
+式の終わりの ')' が存在しません。
+発生場所 C:\Users\sugitamasahiko\Documents\parking_system\send_smtp_mail.ps1:77 文字:3
++ ) {
++   ~
+'if' ステートメントの式の後に終わりの ')' が存在しません。
+発生場所 C:\Users\sugitamasahiko\Documents\parking_system\send_smtp_mail.ps1:139 文字:2
++ 
+'if' ステートメントの式の後に終わりの ')' が存在しません。
+    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException
+    + FullyQualifiedErrorId : UnexpectedToken
+ 
+[2026/01/03 21:35:34.64] END send_smtp_mail.ps1 (exit=1) 
+---------------------------------------------- 
+---------------------------------------------- 
+[2026/01/03 21:37:39.18] START robocopy 
+SRC  = C:\Users\sugitamasahiko\Documents\parking_system\downloads 
+DEST = \\10.0.1.113\共通\interlock_data 
+[2026/01/03 21:37:44.42] robocopy exit code = 0 
+[2026/01/03 21:37:44.43] START send_smtp_mail.ps1 
+発生場所 C:\Users\sugitamasahiko\Documents\parking_system\send_smtp_mail.ps1:77 文字:3
++ ) {
++   ~
+式またはステートメントのトークン '{' を使用できません。
+発生場所 C:\Users\sugitamasahiko\Documents\parking_system\send_smtp_mail.ps1:77 文字:2
++ ) {
++  ~
+式の終わりの ')' が存在しません。
+発生場所 C:\Users\sugitamasahiko\Documents\parking_system\send_smtp_mail.ps1:77 文字:3
++ ) {
++   ~
+'if' ステートメントの式の後に終わりの ')' が存在しません。
+発生場所 C:\Users\sugitamasahiko\Documents\parking_system\send_smtp_mail.ps1:139 文字:2
++ 
+'if' ステートメントの式の後に終わりの ')' が存在しません。
+    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException
+    + FullyQualifiedErrorId : UnexpectedToken
+ 
+[2026/01/03 21:37:44.99] END send_smtp_mail.ps1 (exit=1) 
+---------------------------------------------- 
+---------------------------------------------- 
+[2026/01/03 21:39:09.01] START robocopy 
+SRC  = C:\Users\sugitamasahiko\Documents\parking_system\downloads 
+DEST = \\10.0.1.113\共通\interlock_data 
+[2026/01/03 21:39:14.20] robocopy exit code = 0 
+[2026/01/03 21:39:14.20] START send_smtp_mail.ps1 
+発生場所 C:\Users\sugitamasahiko\Documents\parking_system\send_smtp_mail.ps1:1 文字:7
++ @echo off
++       ~~~
+式またはステートメントのトークン 'off' を使用できません。
+発生場所 C:\Users\sugitamasahiko\Documents\parking_system\send_smtp_mail.ps1:9 文字:3
++ if not exist "%BASE_DIR%logs" mkdir "%BASE_DIR%logs"
++   ~
+if ステートメントの 'if' の後に '(' が存在しません。
+発生場所 C:\Users\sugitamasahiko\Documents\parking_system\send_smtp_mail.ps1:30 文字:23
++   1>> "%SMTP_LOG%" 2>>&1
++                       ~
+リダイレクト演算子の後にファイルが指定されていません。
+発生場所 C:\Users\sugitamasahiko\Documents\parking_system\send_smtp_mail.ps1:30 文字:23
++   1>> "%SMTP_LOG%" 2>>&1
++                       ~
+式またはステートメントのトークン '&' を使用できません。
+発生場所 C:\Users\sugitamasahiko\Documents\parking_system\send_smtp_mail.ps1:1 文字:1
++ @echo off
++ ~~~~~
+分配演算子 '@' を使用して式で変数を参照することはできません。コマンドの引数として使用できるのは '@echo' だけです。式で変
+数を参照するには、'$echo' を使用してください。
+    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException
+    + FullyQualifiedErrorId : UnexpectedToken
+ 
+[2026/01/03 21:39:14.74] END send_smtp_mail.ps1 (exit=1) 
+---------------------------------------------- 
+---------------------------------------------- 
+[2026/01/03 21:39:36.31] START robocopy 
+SRC  = C:\Users\sugitamasahiko\Documents\parking_system\downloads 
+DEST = \\10.0.1.113\共通\interlock_data 
+[2026/01/03 21:39:41.34] robocopy exit code = 0 
+[2026/01/03 21:39:41.34] START send_smtp_mail.ps1 
+発生場所 C:\Users\sugitamasahiko\Documents\parking_system\send_smtp_mail.ps1:1 文字:7
++ @echo off
++       ~~~
+式またはステートメントのトークン 'off' を使用できません。
+発生場所 C:\Users\sugitamasahiko\Documents\parking_system\send_smtp_mail.ps1:9 文字:3
++ if not exist "%BASE_DIR%logs" mkdir "%BASE_DIR%logs"
++   ~
+if ステートメントの 'if' の後に '(' が存在しません。
+発生場所 C:\Users\sugitamasahiko\Documents\parking_system\send_smtp_mail.ps1:30 文字:23
++   1>> "%SMTP_LOG%" 2>>&1
++                       ~
+リダイレクト演算子の後にファイルが指定されていません。
+発生場所 C:\Users\sugitamasahiko\Documents\parking_system\send_smtp_mail.ps1:30 文字:23
++   1>> "%SMTP_LOG%" 2>>&1
++                       ~
+式またはステートメントのトークン '&' を使用できません。
+発生場所 C:\Users\sugitamasahiko\Documents\parking_system\send_smtp_mail.ps1:1 文字:1
++ @echo off
++ ~~~~~
+分配演算子 '@' を使用して式で変数を参照することはできません。コマンドの引数として使用できるのは '@echo' だけです。式で変
+数を参照するには、'$echo' を使用してください。
+    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException
+    + FullyQualifiedErrorId : UnexpectedToken
+ 
+[2026/01/03 21:39:42.01] END send_smtp_mail.ps1 (exit=1) 
+---------------------------------------------- 
+---------------------------------------------- 
+[2026/01/03 21:41:52.88] START robocopy 
+SRC  = C:\Users\sugitamasahiko\Documents\parking_system\downloads 
+DEST = \\10.0.1.113\共通\interlock_data 
+[2026/01/03 21:41:58.17] robocopy exit code = 0 
+[2026/01/03 21:41:58.18] START send_smtp_mail.ps1 
+発生場所 C:\Users\sugitamasahiko\Documents\parking_system\send_smtp_mail.ps1:7 文字:2
++ + Get-Content .\logs\smtp.log -Tail 80
++  ~
+単項演算子 '+' の後に式が存在しません。
+発生場所 C:\Users\sugitamasahiko\Documents\parking_system\send_smtp_mail.ps1:7 文字:3
++ + Get-Content .\logs\smtp.log -Tail 80
++   ~~~~~~~~~~~
+式またはステートメントのトークン 'Get-Content' を使用できません。
+発生場所 C:\Users\sugitamasahiko\Documents\parking_system\send_smtp_mail.ps1:8 文字:2
++ + ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
++  ~
+単項演算子 '+' の後に式が存在しません。
+発生場所 C:\Users\sugitamasahiko\Documents\parking_system\send_smtp_mail.ps1:8 文字:3
++ + ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
++   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+式またはステートメントのトークン '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~' を使用できません。
+発生場所 C:\Users\sugitamasahiko\Documents\parking_system\send_smtp_mail.ps1:9 文字:6
++     + CategoryInfo          : ObjectNotFound: (C:\Users\sugita...m\lo ...
++      ~
+単項演算子 '+' の後に式が存在しません。
+発生場所 C:\Users\sugitamasahiko\Documents\parking_system\send_smtp_mail.ps1:9 文字:7
++     + CategoryInfo          : ObjectNotFound: (C:\Users\sugita...m\lo ...
++       ~~~~~~~~~~~~
+式またはステートメントのトークン 'CategoryInfo' を使用できません。
+発生場所 C:\Users\sugitamasahiko\Documents\parking_system\send_smtp_mail.ps1:11 文字:6
++     + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Comma ...
++      ~
+単項演算子 '+' の後に式が存在しません。
+発生場所 C:\Users\sugitamasahiko\Documents\parking_system\send_smtp_mail.ps1:11 文字:7
++     + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Comma ...
++       ~~~~~~~~~~~~~~~~~~~~~
+式またはステートメントのトークン 'FullyQualifiedErrorId' を使用できません。
+発生場所 C:\Users\sugitamasahiko\Documents\parking_system\send_smtp_mail.ps1:14 文字:2
++ + ) {
++  ~
+単項演算子 '+' の後に式が存在しません。
+発生場所 C:\Users\sugitamasahiko\Documents\parking_system\send_smtp_mail.ps1:14 文字:3
++ + ) {
++   ~
+式またはステートメントのトークン ')' を使用できません。
+報告されていない解析エラーもあります。報告されたエラーを修正して再試行してください。
+    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException
+    + FullyQualifiedErrorId : MissingExpressionAfterOperator
+ 
+[2026/01/03 21:41:58.66] END send_smtp_mail.ps1 (exit=1) 
+---------------------------------------------- 
+---------------------------------------------- 
+[2026/01/04 17:18:51.16] START robocopy 
+SRC  = C:\Users\sugitamasahiko\Documents\parking_system\downloads 
+DEST = \\10.0.1.113\共通\interlock_data 
+[2026/01/04 17:19:55.18] robocopy exit code = 1 
+[2026/01/04 17:19:55.19] START send_smtp_mail.ps1 
+OK: SMTP sent
+[2026/01/04 17:19:56.87] END send_smtp_mail.ps1 (exit=0) 
+---------------------------------------------- 
+---------------------------------------------- 
+[2026/01/04 17:43:30.84] START robocopy 
+SRC  = C:\Users\sugitamasahiko\Documents\parking_system\downloads 
+DEST = \\10.0.1.113\共通\interlock_data 
+[2026/01/04 17:44:27.79] robocopy exit code = 1 
+[2026/01/04 17:44:27.80] START send_smtp_mail.ps1 
+OK: SMTP sent
+[2026/01/04 17:44:28.95] END send_smtp_mail.ps1 (exit=0) 
+---------------------------------------------- 
+---------------------------------------------- 
+[2026/01/04 17:50:00.75] START robocopy 
+SRC  = C:\Users\sugitamasahiko\Documents\parking_system\downloads 
+DEST = \\10.0.1.113\共通\interlock_data 
+[2026/01/04 17:50:57.70] robocopy exit code = 1 
+[2026/01/04 17:50:57.70] START send_smtp_mail.ps1 
+OK: SMTP sent
+[2026/01/04 17:50:59.59] END send_smtp_mail.ps1 (exit=0) 
+---------------------------------------------- 
+---------------------------------------------- 
+[2026/01/21 21:29:00.63] START robocopy 
+SRC  = C:\Users\sugitamasahiko\Documents\parking_system\downloads 
+DEST = \\10.0.1.113\共通\interlock_data 
+[2026/01/21 21:30:35.46] robocopy exit code = 1 
+[2026/01/21 21:30:35.46] START send_smtp_mail.ps1 
+OK: SMTP sent
+[2026/01/21 21:30:37.91] END send_smtp_mail.ps1 (exit=0) 
+---------------------------------------------- 
+---------------------------------------------- 
+[2026/02/01 14:35:59.11] START robocopy 
+SRC  = C:\Users\sugitamasahiko\Documents\parking_system\downloads 
+DEST = \\10.0.1.113\共通\interlock_data 
+[2026/02/01 14:37:27.64] robocopy exit code = 1 
+[2026/02/01 14:37:27.64] START send_smtp_mail.ps1 
+OK: SMTP sent
+[2026/02/01 14:37:29.73] END send_smtp_mail.ps1 (exit=0) 
+---------------------------------------------- 
+---------------------------------------------- 
+[2026/03/02  8:49:28.70] START robocopy 
+SRC  = C:\Users\sugitamasahiko\Documents\parking_system\downloads 
+DEST = \\10.0.1.113\共通\interlock_data 
+[2026/03/02  8:50:52.24] robocopy exit code = 1 
+[2026/03/02  8:50:52.25] START send_smtp_mail.ps1 
+OK: SMTP sent
+[2026/03/02  8:50:53.61] END send_smtp_mail.ps1 (exit=0) 
+---------------------------------------------- 
+---------------------------------------------- 
+[2026/04/01 14:35:13.26] START robocopy 
+SRC  = C:\Users\sugitamasahiko\Documents\parking_system\downloads 
+DEST = \\10.0.1.113\共通\interlock_data 
+[2026/04/01 14:58:01.70] robocopy exit code = 1 
+[2026/04/01 14:58:01.71] START send_smtp_mail.ps1 
+OK: SMTP sent
+[2026/04/01 14:58:04.00] END send_smtp_mail.ps1 (exit=0) 
+---------------------------------------------- 

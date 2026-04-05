@@ -1,0 +1,171 @@
+﻿
+-------------------------------------------------------------------------------
+   ROBOCOPY     ::     Windows の堅牢性の高いファイル コピー                              
+-------------------------------------------------------------------------------
+
+  開始: 2025年12月17日 6:11:43
+   コピー元 : Z:\interlock_data\
+     コピー先 : Z:\interlock_data\
+
+    ファイル: *.*
+	    
+  オプション: *.* /TEE /S /E /DCOPY:DA /COPY:DAT /NP /R:3 /W:10 
+
+------------------------------------------------------------------------------
+
+	                   0	Z:\interlock_data\
+	                   0	Z:\interlock_data\converted\
+	                   0	Z:\interlock_data\csv\
+	                 279	Z:\interlock_data\csv\csv202404\
+	                 288	Z:\interlock_data\csv\csv202405\
+	                 279	Z:\interlock_data\csv\csv202406\
+	                 288	Z:\interlock_data\csv\csv202407\
+	                 288	Z:\interlock_data\csv\csv202408\
+	                 279	Z:\interlock_data\csv\csv202409\
+	                 288	Z:\interlock_data\csv\csv202410\
+	                 279	Z:\interlock_data\csv\csv202411\
+	                 288	Z:\interlock_data\csv\csv202412\
+	                 288	Z:\interlock_data\csv\csv202501\
+	                 261	Z:\interlock_data\csv\csv202502\
+	                 288	Z:\interlock_data\csv\csv202503\
+	                 279	Z:\interlock_data\csv\csv202504\
+	                   9	Z:\interlock_data\csv\csv202504\graphs\
+	                 288	Z:\interlock_data\csv\csv202505\
+	                   9	Z:\interlock_data\csv\csv202505\graphs\
+	                 279	Z:\interlock_data\csv\csv202506\
+	                   9	Z:\interlock_data\csv\csv202506\graphs\
+	                 288	Z:\interlock_data\csv\csv202507\
+	                   9	Z:\interlock_data\csv\csv202507\graphs\
+	                 288	Z:\interlock_data\csv\csv202508\
+	                   9	Z:\interlock_data\csv\csv202508\graphs\
+	                 279	Z:\interlock_data\csv\csv202509\
+	                   9	Z:\interlock_data\csv\csv202509\graphs\
+	                 288	Z:\interlock_data\csv\csv202510\
+	                   9	Z:\interlock_data\csv\csv202510\graphs\
+	                 279	Z:\interlock_data\csv\csv202511\
+	                   9	Z:\interlock_data\csv\csv202511\graphs\
+	                  45	Z:\interlock_data\csv\csv202512\
+	                   9	Z:\interlock_data\csv\csv_multi_202404_202503\
+	                   9	Z:\interlock_data\csv\csv_multi_202404_202511\
+	                   9	Z:\interlock_data\csv\csv_multi_202504_202510\
+	新しいディレクトリ       9	Z:\interlock_data\csv\csv_multi_202504_202511\
+	  新しいファイル		   18180	全駐車場all202504_202511.csv
+	  新しいファイル		   14788	北1all202504_202511.csv
+	  新しいファイル		   14217	北2all202504_202511.csv
+	  新しいファイル		   13697	北3all202504_202511.csv
+	  新しいファイル		   15978	南1all202504_202511.csv
+	  新しいファイル		   14924	南2all202504_202511.csv
+	  新しいファイル		   14775	南3all202504_202511.csv
+	  新しいファイル		   14321	南4all202504_202511.csv
+	  新しいファイル		   12493	南4Ball202504_202511.csv
+	                   9	Z:\interlock_data\csv\excel202404\
+	                   9	Z:\interlock_data\csv\excel202404_with_avg\
+	                   9	Z:\interlock_data\csv\excel202405_with_avg\
+	                   9	Z:\interlock_data\csv\excel202406_with_avg\
+	                   9	Z:\interlock_data\csv\excel202504_with_avg\
+	                   9	Z:\interlock_data\csv\excel202505_with_avg\
+	                   9	Z:\interlock_data\csv\excel202506_with_avg\
+	                   9	Z:\interlock_data\csv\excel202507_with_avg\
+	                   9	Z:\interlock_data\csv\excel202508_with_avg\
+	                   9	Z:\interlock_data\csv\excel202509_with_avg\
+	                   9	Z:\interlock_data\csv\excel202510_with_avg\
+	                   9	Z:\interlock_data\csv\excel202511_with_avg\
+	                   0	Z:\interlock_data\csv\graphs_multi_202404_202503\
+	                   1	Z:\interlock_data\csv\graphs_multi_202404_202503\全駐車場all\
+	                   1	Z:\interlock_data\csv\graphs_multi_202404_202503\北1all\
+	                   1	Z:\interlock_data\csv\graphs_multi_202404_202503\北2all\
+	                   1	Z:\interlock_data\csv\graphs_multi_202404_202503\北3all\
+	                   1	Z:\interlock_data\csv\graphs_multi_202404_202503\南1all\
+	                   1	Z:\interlock_data\csv\graphs_multi_202404_202503\南2all\
+	                   1	Z:\interlock_data\csv\graphs_multi_202404_202503\南3all\
+	                   1	Z:\interlock_data\csv\graphs_multi_202404_202503\南4all\
+	                   1	Z:\interlock_data\csv\graphs_multi_202404_202503\南4Ball\
+	                   0	Z:\interlock_data\csv\graphs_multi_202404_202511\
+	                   1	Z:\interlock_data\csv\graphs_multi_202404_202511\全駐車場all\
+	                   1	Z:\interlock_data\csv\graphs_multi_202404_202511\北1all\
+	                   1	Z:\interlock_data\csv\graphs_multi_202404_202511\北2all\
+	                   1	Z:\interlock_data\csv\graphs_multi_202404_202511\北3all\
+	                   1	Z:\interlock_data\csv\graphs_multi_202404_202511\南1all\
+	                   1	Z:\interlock_data\csv\graphs_multi_202404_202511\南2all\
+	                   1	Z:\interlock_data\csv\graphs_multi_202404_202511\南3all\
+	                   1	Z:\interlock_data\csv\graphs_multi_202404_202511\南4all\
+	                   1	Z:\interlock_data\csv\graphs_multi_202404_202511\南4Ball\
+	                   0	Z:\interlock_data\csv\graphs_multi_202504_202510\
+	                   1	Z:\interlock_data\csv\graphs_multi_202504_202510\全駐車場all\
+	                   1	Z:\interlock_data\csv\graphs_multi_202504_202510\北1all\
+	                   1	Z:\interlock_data\csv\graphs_multi_202504_202510\北2all\
+	                   1	Z:\interlock_data\csv\graphs_multi_202504_202510\北3all\
+	                   1	Z:\interlock_data\csv\graphs_multi_202504_202510\南1all\
+	                   1	Z:\interlock_data\csv\graphs_multi_202504_202510\南2all\
+	                   1	Z:\interlock_data\csv\graphs_multi_202504_202510\南3all\
+	                   1	Z:\interlock_data\csv\graphs_multi_202504_202510\南4all\
+	                   1	Z:\interlock_data\csv\graphs_multi_202504_202510\南4Ball\
+	                   0	Z:\interlock_data\csv\graphs_multi_202504_202511\
+	                   1	Z:\interlock_data\csv\graphs_multi_202504_202511\全駐車場all\
+	                   1	Z:\interlock_data\csv\graphs_multi_202504_202511\北1all\
+	                   1	Z:\interlock_data\csv\graphs_multi_202504_202511\北2all\
+	                   1	Z:\interlock_data\csv\graphs_multi_202504_202511\北3all\
+	                   1	Z:\interlock_data\csv\graphs_multi_202504_202511\南1all\
+	                   1	Z:\interlock_data\csv\graphs_multi_202504_202511\南2all\
+	                   1	Z:\interlock_data\csv\graphs_multi_202504_202511\南3all\
+	                   1	Z:\interlock_data\csv\graphs_multi_202504_202511\南4all\
+	                   1	Z:\interlock_data\csv\graphs_multi_202504_202511\南4Ball\
+	                 270	Z:\interlock_data\excel\
+	                 270	Z:\interlock_data\excel\excel202404\
+	                 279	Z:\interlock_data\excel\excel202405\
+	                 270	Z:\interlock_data\excel\excel202406\
+	                 279	Z:\interlock_data\excel\excel202407\
+	                 279	Z:\interlock_data\excel\excel202408\
+	                 270	Z:\interlock_data\excel\excel202409\
+	                 279	Z:\interlock_data\excel\excel202410\
+	                 270	Z:\interlock_data\excel\excel202411\
+	                 279	Z:\interlock_data\excel\excel202412\
+	                 279	Z:\interlock_data\excel\excel202501\
+	                 252	Z:\interlock_data\excel\excel202502\
+	                 279	Z:\interlock_data\excel\excel202503\
+	                 270	Z:\interlock_data\excel\excel202504\
+	                 279	Z:\interlock_data\excel\excel202505\
+	                 270	Z:\interlock_data\excel\excel202506\
+	                 279	Z:\interlock_data\excel\excel202507\
+	                 279	Z:\interlock_data\excel\excel202508\
+	                 270	Z:\interlock_data\excel\excel202509\
+	                 279	Z:\interlock_data\excel\excel202510\
+	                 270	Z:\interlock_data\excel\excel202511\
+	                  45	Z:\interlock_data\excel\excel202512\
+	                   0	Z:\interlock_data\mht\
+	                   0	Z:\interlock_data\mht\mht202404\
+	                   0	Z:\interlock_data\mht\mht202405\
+	                   0	Z:\interlock_data\mht\mht202406\
+	                   0	Z:\interlock_data\mht\mht202407\
+	                   0	Z:\interlock_data\mht\mht202408\
+	                   0	Z:\interlock_data\mht\mht202409\
+	                   0	Z:\interlock_data\mht\mht202410\
+	                   0	Z:\interlock_data\mht\mht202411\
+	                   0	Z:\interlock_data\mht\mht202412\
+	                   0	Z:\interlock_data\mht\mht202501\
+	                   0	Z:\interlock_data\mht\mht202502\
+	                   0	Z:\interlock_data\mht\mht202503\
+	                   0	Z:\interlock_data\mht\mht202504\
+	                   0	Z:\interlock_data\mht\mht202505\
+	                   0	Z:\interlock_data\mht\mht202506\
+	                   0	Z:\interlock_data\mht\mht202507\
+	                   0	Z:\interlock_data\mht\mht202508\
+	                   0	Z:\interlock_data\mht\mht202509\
+	                   0	Z:\interlock_data\mht\mht202510\
+	                   0	Z:\interlock_data\mht\mht202511\
+	                   0	Z:\interlock_data\mht\mht202512\
+
+------------------------------------------------------------------------------
+
+                  合計     コピー済み      スキップ       不一致        失敗    Extras
+   ディレクトリ:       132         1       131         0         0         0
+     ファイル:     11754         9     11745         0         0         0
+      バイト:   71.05 m   130.2 k   70.93 m         0         0         0
+       時刻:   0:00:06   0:00:01                       0:00:00   0:00:05
+
+
+       速度:              90,299 バイト/秒
+       速度:               5.167 MB/分
+   終了: 2025年12月17日 6:11:49
+
+

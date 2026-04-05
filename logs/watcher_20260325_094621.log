@@ -1,0 +1,4 @@
+[2026/03/25  9:46:21.29] start_watcher.cmd START 
+BASE_DIR=C:\Users\sugitamasahiko\Documents\parking_system\ 
+WATCHING (polling): C:\Users\sugitamasahiko\n8n\n8n-data\trigger
+^C

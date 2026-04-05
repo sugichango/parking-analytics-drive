@@ -1,0 +1,22 @@
+[INFO] 出力フォルダ: downloads\csv\excel2025_with_avg
+[INFO] 全駐車場 の処理を開始します...
+[INFO] 作成完了: downloads\csv\excel2025_with_avg\2025_全駐車場_with_avg.xlsx (重み合計: 全日=365日, 平日=246日, 休日=119日)
+[INFO] 北1駐車場 の処理を開始します...
+[INFO] 作成完了: downloads\csv\excel2025_with_avg\2025_北1駐車場_with_avg.xlsx (重み合計: 全日=365日, 平日=246日, 休日=119日)
+[INFO] 北2駐車場 の処理を開始します...
+[INFO] 作成完了: downloads\csv\excel2025_with_avg\2025_北2駐車場_with_avg.xlsx (重み合計: 全日=365日, 平日=246日, 休日=119日)
+[INFO] 北3駐車場 の処理を開始します...
+Traceback (most recent call last):
+  File "C:\Users\sugitamasahiko\Documents\parking_system\make_yearly_excel_by_parking_with_avg.py", line 202, in <module>
+    main()
+    ~~~~^^
+  File "C:\Users\sugitamasahiko\Documents\parking_system\make_yearly_excel_by_parking_with_avg.py", line 159, in main
+    shutil.copy(template_file_path, out_file)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3312.0_x64__qbz5n2kfra8p0\Lib\shutil.py", line 428, in copy
+    copyfile(src, dst, follow_symlinks=follow_symlinks)
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3312.0_x64__qbz5n2kfra8p0\Lib\shutil.py", line 262, in copyfile
+    with open(dst, 'wb') as fdst:
+         ~~~~^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'downloads\\csv\\excel2025_with_avg\\2025_北3駐車場_with_avg.xlsx'
