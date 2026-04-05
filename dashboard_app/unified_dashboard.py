@@ -6,9 +6,10 @@ from plotly.subplots import make_subplots
 import os
 import glob
 
-# ==========================================
 # 0. 共通：初期設定と認証機能
 # ==========================================
+# スクリプトの場所を基準に絶対パスを生成（クラウド・ローカル両対応）
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 st.set_page_config(
     page_title="駐車場 統合アナリティクス",
     page_icon="🅿️",
@@ -117,7 +118,7 @@ def show_login_page():
 
     if st.button("ログイン", key="login_btn"):
         correct_password = st.secrets.get("app_password", st.secrets.get("LOGIN_PASSWORD", "tutc_secure_login"))
-        if not email.endswith("@tutc.or.jp"):
+        if not email.strip().lower().endswith("@tutc.or.jp"):
             st.error("許可されていないドメインです。")
         elif password == correct_password:
             st.session_state["authenticated"] = True
@@ -217,8 +218,8 @@ if "①" in mode:
                 
         return df
 
-    # --- パスを相対パスへ変更し、どこでも動くように ---
-    file_path = r"data/updated_integrated_data_FY2025.csv.gz"
+    # --- スクリプトの場所を基準にした相対パス ---
+    file_path = os.path.join(BASE_DIR, "data", "updated_integrated_data_FY2025.csv.gz")
     
     if os.path.exists(file_path):
         df_d1 = load_data_dashboard1(file_path)
@@ -383,7 +384,7 @@ if "①" in mode:
 # ② 稼動分析プロ (parking_analytics_dashboard.py から完コピ)
 # ==========================================
 else:
-    CSV_BASE_DIR = r"data"
+    CSV_BASE_DIR = os.path.join(BASE_DIR, "data")
     
     NEON_COLORS = {
         "一般在庫": "#22D3EE", "定期在庫": "#F0ABFC", "在庫合計": "#4ADE80",
