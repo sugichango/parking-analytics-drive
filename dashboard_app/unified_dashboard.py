@@ -460,13 +460,24 @@ else:
             with col_c1:
                 target_metric = st.selectbox("比較指標", options=METRIC_OPTIONS, index=0, key="t1_metric")
                 day_type = st.selectbox("曜日区分", options=["月平均", "平日平均", "休日平均"], index=0, key="t1_day")
-                plist = sorted([p for p in df2["駐車場名"].unique() if p != "全駐車場"])
+                
+                # --- 駐車場の表示順を固定 ---
+                PARKING_ORDER = ["南1駐車場", "南2駐車場", "南3駐車場", "南4駐車場", "北1駐車場", "北2駐車場", "北3駐車場"]
+                # 存在する駐車場のみ抽出
+                plist = [p for p in PARKING_ORDER if p in df2["駐車場名"].unique()]
+                # リストにない駐車場があれば末尾に追加
+                extra = sorted([p for p in df2["駐車場名"].unique() if p not in PARKING_ORDER and p != "全駐車場"])
+                plist.extend(extra)
+                
                 is_all = st.checkbox("全ての駐車場を選択", value=True)
                 sel_parkings = st.multiselect("対象駐車場", options=plist, default=plist if is_all else [])
             with col_c2:
-                df_t1 = df_year[(df_year["曜日区分"] == day_type) & (df_year["駐車場名"].isin(sel_parkings))]
+                df_t1 = df_year[(df_year["曜日区分"] == day_type) & (df_year["駐車場名"].isin(sel_parkings))].copy()
                 if not df_t1.empty:
-                    fig1 = px.line(df_t1, x="時間帯", y=target_metric, color="駐車場名", template="plotly_dark", markers=True, line_shape="spline")
+                    # 凡例の順番を固定するためにカテゴリ型へ変換
+                    df_t1["駐車場名"] = pd.Categorical(df_t1["駐車場名"], categories=plist, ordered=True)
+                    
+                    fig1 = px.line(df_t1, x="時間帯", y=target_metric, color="駐車場名", template="plotly_dark", markers=True, line_shape="spline", category_orders={"駐車場名": plist})
                     fig1.update_xaxes(type='category', gridcolor='rgba(255,255,255,0.05)')
                     fig1.update_layout(hovermode="x unified", legend_title="", height=550, paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)')
                     st.plotly_chart(fig1, use_container_width=True)
@@ -626,15 +637,37 @@ else:
                         )
                     )
                 if not df_t5.empty:
-                    fig5 = go.Figure()
-                    fig5.add_trace(go.Bar(x=df_t5["時間帯"], y=df_t5["定期在庫"], name="定期在庫", marker_color="rgba(240, 171, 252, 0.5)"))
-                    fig5.add_trace(go.Bar(x=df_t5["時間帯"], y=df_t5["一般在庫"], name="一般在庫", marker_color="rgba(34, 211, 238, 0.5)"))
-                    fig5.add_trace(go.Scatter(x=df_t5["時間帯"], y=df_t5["一般入庫"], name="一般入庫", mode='lines+markers', line=dict(color=NEON_COLORS["一般入庫"], width=2)))
-                    fig5.add_trace(go.Scatter(x=df_t5["時間帯"], y=df_t5["一般出庫"], name="一般出庫", mode='lines+markers', line=dict(color=NEON_COLORS["一般出庫"], width=2)))
-                    fig5.add_trace(go.Scatter(x=df_t5["時間帯"], y=df_t5["定期入庫"], name="定期入庫", mode='lines+markers', line=dict(color=NEON_COLORS["定期入庫"], width=2)))
-                    fig5.add_trace(go.Scatter(x=df_t5["時間帯"], y=df_t5["定期出庫"], name="定期出庫", mode='lines+markers', line=dict(color=NEON_COLORS["定期出庫"], width=2)))
+                    # --- 2軸グラフへの変更 ---
+                    fig5 = make_subplots(specs=[[{"secondary_y": True}]])
+                    
+                    # 第1軸 (左): 在庫（棒グラフ）
+                    fig5.add_trace(go.Bar(x=df_t5["時間帯"], y=df_t5["定期在庫"], name="定期在庫", marker_color="rgba(240, 171, 252, 0.5)"), secondary_y=False)
+                    fig5.add_trace(go.Bar(x=df_t5["時間帯"], y=df_t5["一般在庫"], name="一般在庫", marker_color="rgba(34, 211, 238, 0.5)"), secondary_y=False)
+                    
+                    # 第2軸 (右): 入出庫（折れ線グラフ）
+                    fig5.add_trace(go.Scatter(x=df_t5["時間帯"], y=df_t5["一般入庫"], name="一般入庫", mode='lines+markers', line=dict(color=NEON_COLORS["一般入庫"], width=2)), secondary_y=True)
+                    fig5.add_trace(go.Scatter(x=df_t5["時間帯"], y=df_t5["一般出庫"], name="一般出庫", mode='lines+markers', line=dict(color=NEON_COLORS["一般出庫"], width=2)), secondary_y=True)
+                    fig5.add_trace(go.Scatter(x=df_t5["時間帯"], y=df_t5["定期入庫"], name="定期入庫", mode='lines+markers', line=dict(color=NEON_COLORS["定期入庫"], width=2)), secondary_y=True)
+                    fig5.add_trace(go.Scatter(x=df_t5["時間帯"], y=df_t5["定期出庫"], name="定期出庫", mode='lines+markers', line=dict(color=NEON_COLORS["定期出庫"], width=2)), secondary_y=True)
+                    
                     cap = PARKING_CAPACITY.get(target_pk_t5, 0)
-                    if cap > 0: fig5.add_hline(y=cap, line_dash="dash", line_color=NEON_COLORS["収容台数"], annotation_text=f"CAP ({cap})")
+                    if cap > 0:
+                        # 収容台数(CAP)ラベルを左側(第1軸)に表示
+                        fig5.add_hline(y=cap, line_dash="dash", line_color=NEON_COLORS["収容台数"], annotation_text=f"CAP ({cap})", annotation_position="left")
+                    
                     fig5.update_xaxes(type='category')
-                    fig5.update_layout(template="plotly_dark", barmode='stack', hovermode="x unified", height=650, paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1))
+                    fig5.update_layout(
+                        template="plotly_dark", 
+                        barmode='stack', 
+                        hovermode="x unified", 
+                        height=650, 
+                        paper_bgcolor='rgba(0,0,0,0)', 
+                        plot_bgcolor='rgba(0,0,0,0)', 
+                        legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1)
+                    )
+                    
+                    # 軸ラベルの設定
+                    fig5.update_yaxes(title_text="在庫台数（台）", secondary_y=False, showgrid=True, gridcolor='rgba(255,255,255,0.05)')
+                    fig5.update_yaxes(title_text="入出庫数（台/時）", secondary_y=True, showgrid=False)
+                    
                     st.plotly_chart(fig5, use_container_width=True)
