@@ -238,10 +238,21 @@ if "①" in mode:
         df_d1 = load_data_dashboard1(file_path)
         if df_d1 is not None:
             st.sidebar.header("🔍 フィルター設定")
+            
+            # 駐車場順序と配色の定義 (Tab 1用)
+            PARKING_ORDER = ["南１", "南２", "南３", "南４", "北１", "北２", "北３"]
+            PARKING_COLORS = {
+                "南１": "#00FFFF", "南２": "#FF00FF", "南３": "#39FF14", 
+                "南４": "#FFFF00", "北１": "#FF4500", "北２": "#9D00FF", "北３": "#1E90FF"
+            }
+            
             available_areas = ["全駐車場"]
             if 'ParkingAreaName' in df_d1.columns:
-                areas = sorted([a for a in df_d1['ParkingAreaName'].unique() if a != '不明'])
-                available_areas.extend(areas)
+                # 定義された順序に存在する駐車場のみを追加
+                areas = [p for p in PARKING_ORDER if p in df_d1['ParkingAreaName'].unique()]
+                # その他があれば追加
+                others = sorted([p for p in df_d1['ParkingAreaName'].unique() if p not in PARKING_ORDER and p != '不明' and p != '全駐車場'])
+                available_areas.extend(areas + others)
             selected_area = st.sidebar.selectbox("駐車場名", available_areas, index=0)
 
             selected_day_type = st.sidebar.selectbox("平日/休日", ["すべて", "平日", "休日"], index=0)
@@ -327,13 +338,19 @@ if "①" in mode:
                 fig_bar = make_subplots(specs=[[{"secondary_y": True}]])
                 
                 if color_col:
-                    for idx, cat in enumerate(sorted(bar_counts[color_col].unique())):
+                    # 指示された順序（南1...北3）でトレースを追加。最初に追加されたものが一番「下」になる。
+                    plot_cats = [p for p in PARKING_ORDER if p in bar_counts[color_col].unique()]
+                    # リストにないカテゴリは末尾に追加（凡例は右、グラフは上）
+                    plot_cats.extend([c for c in sorted(bar_counts[color_col].unique()) if c not in PARKING_ORDER])
+                    
+                    for cat in plot_cats:
                         d = bar_counts[bar_counts[color_col] == cat]
+                        color = PARKING_COLORS.get(cat, "#FFFFFF")
                         fig_bar.add_trace(
                             go.Bar(
                                 x=d[x_col], y=d['利用台数'], name=str(cat), text=d['text'],
                                 textposition='inside', insidetextanchor='middle',
-                                marker_color=neon_colors[idx % len(neon_colors)]
+                                marker_color=color
                             ), secondary_y=False)
                     fig_bar.update_layout(barmode='stack')
                     for i, row in total_counts.iterrows():
@@ -365,7 +382,7 @@ if "①" in mode:
                     area_counts = filtered_df.groupby('ParkingAreaName').agg({'OnTime': 'size', 'Cash': 'sum'}).rename(columns={'OnTime': '利用台数', 'Cash': '現金収入'}).reset_index()
                     total_parked = area_counts['利用台数'].sum()
                     total_cash = area_counts['現金収入'].sum()
-                    parking_colors = {area: neon_colors[i % len(neon_colors)] for i, area in enumerate(sorted(filtered_df['ParkingAreaName'].unique()) if 'ParkingAreaName' in filtered_df.columns else [])}
+                    parking_colors = {area: PARKING_COLORS.get(area, "#FFFFFF") for area in filtered_df['ParkingAreaName'].unique()}
 
                     if show_by_payment_type:
                         st.subheader("🍩 駐車場別 利用内訳（サンバースト図）")
