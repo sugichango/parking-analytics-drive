@@ -138,6 +138,19 @@ with st.sidebar:
     st.markdown("---")
     st.subheader("🛠️ ツール切替")
     mode = st.radio("表示メニュー", ["① 一般利用台数推移分析", "② 24時間稼働状況分析"], key="sys_mode")
+    
+    # 使い方マニュアルのダウンロードボタン
+    manual_file = os.path.join(BASE_DIR, "README_user.txt")
+    if os.path.exists(manual_file):
+        with open(manual_file, "rb") as f:
+            st.download_button(
+                label="📖 使い方マニュアルを保存",
+                data=f,
+                file_name="駐車場データダッシュボード_使い方マニュアル.txt",
+                mime="text/plain",
+                key="dl_manual"
+            )
+
     if st.button("ログアウト", key="logout_act"):
         st.session_state["authenticated"] = False
         st.rerun()
