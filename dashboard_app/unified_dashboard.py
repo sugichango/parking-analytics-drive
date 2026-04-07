@@ -338,20 +338,30 @@ if "①" in mode:
                 fig_bar = make_subplots(specs=[[{"secondary_y": True}]])
                 
                 if color_col:
-                    # 指示された順序（南1...北3）でトレースを追加。最初に追加されたものが一番「下」になる。
-                    plot_cats = [p for p in PARKING_ORDER if p in bar_counts[color_col].unique()]
-                    # リストにないカテゴリは末尾に追加（凡例は右、グラフは上）
-                    plot_cats.extend([c for c in sorted(bar_counts[color_col].unique()) if c not in PARKING_ORDER])
-                    
-                    for cat in plot_cats:
-                        d = bar_counts[bar_counts[color_col] == cat]
-                        color = PARKING_COLORS.get(cat, "#FFFFFF")
-                        fig_bar.add_trace(
-                            go.Bar(
-                                x=d[x_col], y=d['利用台数'], name=str(cat), text=d['text'],
-                                textposition='inside', insidetextanchor='middle',
-                                marker_color=color
-                            ), secondary_y=False)
+                    if color_col == 'ParkingAreaName':
+                        # 指示された駐車場順序（南1...北3）でトレースを追加。
+                        plot_cats = [p for p in PARKING_ORDER if p in bar_counts[color_col].unique()]
+                        plot_cats.extend([c for c in sorted(bar_counts[color_col].unique()) if c not in PARKING_ORDER])
+                        
+                        for cat in plot_cats:
+                            d = bar_counts[bar_counts[color_col] == cat]
+                            color = PARKING_COLORS.get(cat, "#FFFFFF")
+                            fig_bar.add_trace(
+                                go.Bar(
+                                    x=d[x_col], y=d['利用台数'], name=str(cat), text=d['text'],
+                                    textposition='inside', insidetextanchor='middle',
+                                    marker_color=color
+                                ), secondary_y=False)
+                    else:
+                        # 支払い種別などの場合は元通りのネオンカラーを使用
+                        for idx, cat in enumerate(sorted(bar_counts[color_col].unique())):
+                            d = bar_counts[bar_counts[color_col] == cat]
+                            fig_bar.add_trace(
+                                go.Bar(
+                                    x=d[x_col], y=d['利用台数'], name=str(cat), text=d['text'],
+                                    textposition='inside', insidetextanchor='middle',
+                                    marker_color=neon_colors[idx % len(neon_colors)]
+                                ), secondary_y=False)
                     fig_bar.update_layout(barmode='stack')
                     for i, row in total_counts.iterrows():
                         fig_bar.add_annotation(
@@ -369,7 +379,7 @@ if "①" in mode:
                     **common_layout,
                     title=dict(text=f"{x_title} 利用台数と現金収入推移", font=dict(size=18, color="#00FFFF")),
                     xaxis_title=x_title,
-                    legend=dict(orientation="h", yanchor="top", y=-0.2, xanchor="center", x=0.5, font=dict(color="#E0E0E0"))
+                    legend=dict(orientation="h", yanchor="top", y=-0.2, xanchor="center", x=0.5, font=dict(color="#E0E0E0"), traceorder="normal")
                 )
                 fig_bar.update_xaxes(showgrid=True, gridcolor='rgba(255,255,255,0.1)', type='category') # X軸の西暦誤認防止！
                 fig_bar.update_yaxes(title_text="利用台数（台）", secondary_y=False, rangemode='tozero', showgrid=True, gridcolor='rgba(255,255,255,0.1)')
