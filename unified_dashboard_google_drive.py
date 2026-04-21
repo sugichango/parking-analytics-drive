@@ -24,7 +24,10 @@ def get_drive_service():
         service = build('drive', 'v3', credentials=credentials)
         return service
     except Exception as e:
-        st.error(f"Google Drive連携エラー: {e}")
+        if "gcp_service_account" not in st.secrets:
+            st.error("Streamlit Secrets に 'gcp_service_account' が設定されていません。")
+        else:
+            st.error(f"Google Drive連携エラー: {e}")
         return None
 
 def download_file_from_drive(file_id):
@@ -226,9 +229,13 @@ if "①" in mode:
         """Google DriveからCSVを取得し原本と同じロジックで加工"""
         q = f"name = '{file_name}' and trashed = false"
         files = search_files_in_drive(q)
-        if not files: return None
+        if not files:
+            st.error(f"ファイルが見つかりません: {file_name}")
+            return None
         fh = download_file_from_drive(files[0]['id'])
-        if not fh: return None
+        if not fh:
+            st.error(f"ファイルのダウンロードに失敗しました: {file_name}")
+            return None
         
         use_cols = ['ParkingArea', 'OnTime', 'Cash', 'Discount1', 'Discount2', 'Discount3', 'Discount4', 'Discount5', 'Discount6', 'Discount7']
         dtypes = {'ParkingArea': 'Int16', 'Cash': 'Int32', 'Discount1': 'Int16', 'Discount2': 'Int16', 'Discount3': 'Int16', 'Discount4': 'Int16', 'Discount5': 'Int16', 'Discount6': 'Int16', 'Discount7': 'Int16'}
