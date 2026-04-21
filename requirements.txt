@@ -1,8 +1,6 @@
-streamlit==1.32.0
-pandas==2.2.1
-openpyxl==3.1.2
-plotly==5.19.0
-google-api-python-client
-google-auth-httplib2
-google-auth-oauthlib
+streamlit
+pandas
+plotly
+openpyxl
 google-auth
+google-api-python-client
