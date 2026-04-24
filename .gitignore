@@ -1,5 +1,9 @@
-updated_integrated_data_FY2025.csv
+.streamlit/
+__pycache__/
 *.xlsx
 *.ipynb
 .ipynb_checkpoints/
-__pycache__/
+.env
+# updated_integrated_data_FY2025.csv は容量が大きすぎるため無視（圧縮版 .gz を使用）
+updated_integrated_data_FY2025.csv
+
