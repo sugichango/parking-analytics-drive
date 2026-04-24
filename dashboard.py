@@ -48,8 +48,9 @@ if not check_password():
     st.stop()
 
 @st.cache_data
-def load_data(file_path):
-    """CSVデータを読み込む関数（キャッシュ化とメモリ削減で高速化）"""
+def load_data(file_path, mtime):
+    """CSVデータを読み込む関数（mtimeを引数に含めることで、ファイル更新時にキャッシュを自動更新）"""
+
     # メモリ節約のため必要なカラムだけを読み込むように指定
     use_cols = ['ParkingArea', 'OnTime', 'Cash',
                 'Discount1', 'Discount2', 'Discount3', 'Discount4', 
@@ -152,8 +153,11 @@ else:
 
 if os.path.exists(file_path):
     print("DEBUG: File found, starting load_data...")
-    df = load_data(file_path)
+    # ファイルの更新日時を取得してキャッシュキーにする
+    mtime = os.path.getmtime(file_path)
+    df = load_data(file_path, mtime)
     print("DEBUG: load_data returned.")
+
     
     if df is not None:
         print("DEBUG: Initializing sidebar filters...")
@@ -185,6 +189,12 @@ if os.path.exists(file_path):
             months = sorted(df[df['Month'] != 'NaT']['Month'].unique().tolist())
             available_months.extend(months)
         selected_month = st.sidebar.selectbox("対象月", available_months, index=0)
+        
+        st.sidebar.markdown("---")
+        if st.sidebar.button("🔄 キャッシュをクリアして更新", key="clear_cache_root"):
+            st.cache_data.clear()
+            st.rerun()
+
 
         # --- データのフィルタリング適用 ---
         filtered_df = df.copy()

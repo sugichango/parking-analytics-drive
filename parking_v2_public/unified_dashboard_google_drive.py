@@ -52,10 +52,11 @@ def search_files_in_drive(query):
     try:
         results = service.files().list(
             q=query, 
-            fields="files(id, name, parents)",
+            fields="files(id, name, parents, modifiedTime)",
             supportsAllDrives=True,
             includeItemsFromAllDrives=True
         ).execute()
+
         return results.get('files', [])
     except Exception: return []
 
@@ -216,7 +217,14 @@ with st.sidebar:
     if st.button("ログアウト", key="logout_act"):
         st.session_state["authenticated"] = False
         st.rerun()
+    
     st.markdown("---")
+    if st.button("🔄 キャッシュをクリアして更新", key="clear_cache_btn"):
+        st.cache_data.clear()
+        st.success("キャッシュをクリアしました。最新データを再読み込みします。")
+        st.rerun()
+    st.markdown("---")
+
 
 # ==========================================
 # ① 一般利用台数推移分析 (原本ロジック完全再現)
@@ -225,8 +233,9 @@ if "①" in mode:
     st.title("📊 ① 一般利用台数推移分析")
 
     @st.cache_data(show_spinner=True)
-    def load_data_dashboard1_drive(file_name):
-        """Google DriveからCSVを取得し原本と同じロジックで加工"""
+    def load_data_dashboard1_drive(file_name, modified_time):
+        """Google DriveからCSVを取得し原本と同じロジックで加工（modified_timeでキャッシュ自動更新）"""
+
         q = f"name = '{file_name}' and trashed = false"
         files = search_files_in_drive(q)
         if not files:
@@ -283,10 +292,15 @@ if "①" in mode:
         default_idx = years_drive.index("2025") if "2025" in years_drive else len(years_drive) - 1
         selected_year_drive = st.sidebar.selectbox("分析対象年度 (一般利用)", years_drive, index=default_idx, key="drive_year_select")
         TARGET_CSV = f"updated_integrated_data_FY{selected_year_drive}.csv.gz"
+        # 選択されたファイルの更新日時を取得
+        target_file_info = [f for f in available_drive_files if f['name'] == TARGET_CSV][0]
+        modified_time = target_file_info.get('modifiedTime', '')
     else:
         TARGET_CSV = "updated_integrated_data_FY2025.csv.gz"
+        modified_time = ''
 
-    df_d1 = load_data_dashboard1_drive(TARGET_CSV)
+    df_d1 = load_data_dashboard1_drive(TARGET_CSV, modified_time)
+
 
     
     if df_d1 is not None:

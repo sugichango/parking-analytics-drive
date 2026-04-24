@@ -163,8 +163,9 @@ if "①" in mode:
     st.title("📊 ① 一般利用台数推移分析")
 
     @st.cache_data(show_spinner=True)
-    def load_data_dashboard1(file_path):
-        """CSVデータを読み込む関数（キャッシュ化とメモリ削減で高速化）"""
+    def load_data_dashboard1(file_path, mtime):
+        """CSVデータを読み込む関数（mtimeを引数に含めてキャッシュ自動更新）"""
+
         use_cols = ['ParkingArea', 'OnTime', 'Cash',
                     'Discount1', 'Discount2', 'Discount3', 'Discount4', 
                     'Discount5', 'Discount6', 'Discount7']
@@ -248,7 +249,10 @@ if "①" in mode:
 
     
     if os.path.exists(file_path):
-        df_d1 = load_data_dashboard1(file_path)
+        # ファイルの更新日時をキャッシュキーにする
+        mtime = os.path.getmtime(file_path)
+        df_d1 = load_data_dashboard1(file_path, mtime)
+
         if df_d1 is not None:
             st.sidebar.header("🔍 フィルター設定")
             
@@ -275,6 +279,12 @@ if "①" in mode:
                 months = sorted(df_d1[df_d1['Month'] != 'NaT']['Month'].unique().tolist())
                 available_months.extend(months)
             selected_month = st.sidebar.selectbox("対象月", available_months, index=0)
+        
+        st.sidebar.markdown("---")
+        if st.sidebar.button("🔄 キャッシュをクリアして更新", key="clear_cache_d1_v2"):
+            st.cache_data.clear()
+            st.rerun()
+
 
             filtered_df = df_d1.copy()
 
