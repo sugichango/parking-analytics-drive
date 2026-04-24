@@ -251,7 +251,21 @@ if "①" in mode:
     if os.path.exists(file_path):
         # ファイルの更新日時をキャッシュキーにする
         mtime = os.path.getmtime(file_path)
-        df_d1 = load_data_dashboard1(file_path, mtime)
+        with st.spinner("データを読み込み中..."):
+            df_d1 = load_data_dashboard1(file_path, mtime)
+        
+        if df_d1 is None:
+            st.error(f"データの読み込みに失敗しました: {file_path}")
+        elif df_d1.empty:
+            st.warning(f"データが0件です: {file_path}")
+        else:
+            st.success(f"データを読み込みました: {len(df_d1):,} 件")
+            with st.expander("🛠️ デバッグ：データの中身を確認"):
+                st.write("項目名:", df_d1.columns.tolist())
+                st.write("データ見本:", df_d1.head())
+                if 'OnTime' in df_d1.columns:
+                    st.write("日付の範囲:", df_d1['OnTime'].min(), " ～ ", df_d1['OnTime'].max())
+
 
         if df_d1 is not None:
             st.sidebar.header("🔍 フィルター設定")
@@ -281,9 +295,10 @@ if "①" in mode:
             selected_month = st.sidebar.selectbox("対象月", available_months, index=0)
         
         st.sidebar.markdown("---")
-        if st.sidebar.button("🔄 キャッシュをクリアして更新", key="clear_cache_d1"):
+        if st.sidebar.button("🔄 キャッシュをクリアして更新", key="clear_cache_d1_final"):
             st.cache_data.clear()
             st.rerun()
+
 
 
             filtered_df = df_d1.copy()
