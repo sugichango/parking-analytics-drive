@@ -282,49 +282,73 @@ if "①" in mode:
         return df
 
 
-    # --- 利用可能な年度の検索 (Google Drive) ---
-    # 検索条件を広げて、実際に存在するファイル名を確認します
+    # --- 利用可能な年度の特定ロジック (最強版) ---
     q_years = "name contains 'updated_integrated_data' and trashed = false"
     drive_files = search_files_in_drive(q_years)
     
-    # 【デバッグ用】サイドバーに見つかったファイル名を出す（原因特定のため）
-    if not drive_files:
-        st.sidebar.error("⚠️ Drive上に 'updated_integrated_data' を含むファイルが見つかりません。")
-    else:
-        with st.sidebar.expander("📁 Drive上のファイル名を確認"):
-            for f in drive_files: st.write(f"- {f['name']}")
-
+    # 候補となる年度リスト
+    candidate_years = []
+    
+    # 1. ファイル名から抽出を試みる
     if drive_files:
-        # ファイル名から年度(2023, 2024, 2025等)を柔軟に抽出
-        years_list = []
+        import re
         for f in drive_files:
-            import re
-            m = re.search(r'202[0-9]', f['name']) # 202x という4桁数字を探す
-            if m: years_list.append(m.group())
-        
-        years_list = sorted(list(set(years_list))) # 重複排除してソート
-        
-        if years_list:
-            default_idx = years_list.index("2025") if "2025" in years_list else len(years_list) - 1
-            st.sidebar.markdown("---")
-            selected_year_d1 = st.sidebar.selectbox("分析対象年度 (一般利用)", years_list, index=default_idx, key="d1_year_select")
-            
-            # 選択された年度を含むファイルを探す
-            target_f = [f for f in drive_files if selected_year_d1 in f['name'] and f['name'].endswith(".csv.gz")]
-            if target_f:
-                TARGET_CSV = target_f[0]['name']
-                modified_time = target_f[0].get('modifiedTime', '')
-            else:
-                TARGET_CSV = "updated_integrated_data.csv.gz"
-                modified_time = ''
+            m = re.search(r'202[0-9]', f['name'])
+            if m: candidate_years.append(m.group())
+
+    # ひとまずファイル名ベースの年度があれば表示
+    available_years = sorted(list(set(candidate_years)), reverse=True)
+    
+    # サイドバーに年度選択を配置
+    st.sidebar.markdown("---")
+    st.sidebar.subheader("📅 年度選択")
+    
+    # もしファイル名に年度がなければ、「全年度(統合)」として一度読み込み、中身から抽出する
+    if not available_years:
+        available_years = ["全年度(統合)"]
+        selected_year_d1 = st.sidebar.selectbox("分析対象年度 (一般利用)", available_years, index=0, key="d1_year_select")
+        TARGET_CSV = "updated_integrated_data.csv.gz"
+        modified_time = drive_files[0].get('modifiedTime', '') if drive_files else ''
+    else:
+        selected_year_d1 = st.sidebar.selectbox("分析対象年度 (一般利用)", available_years, index=0, key="d1_year_select")
+        # 選択された年度に対応するファイル名を作成（または検索）
+        target_f = [f for f in drive_files if selected_year_d1 in f['name'] and f['name'].endswith(".csv.gz")]
+        if target_f:
+            TARGET_CSV = target_f[0]['name']
+            modified_time = target_f[0].get('modifiedTime', '')
         else:
             TARGET_CSV = "updated_integrated_data.csv.gz"
             modified_time = ''
-    else:
-        TARGET_CSV = "updated_integrated_data.csv.gz"
-        modified_time = ''
 
+    # データの読み込み
     with st.spinner(f"{TARGET_CSV} を読み込み中..."):
+        df_d1 = load_data_dashboard1_drive(TARGET_CSV, modified_time)
+    
+    # 2. データの中身からさらに年度を抽出（ファイル名に年度がなかった場合の補完）
+    if df_d1 is not None and not df_d1.empty:
+        # 日付列を探す
+        date_col = None
+        for col in ['OnTime', 'ontime', '日付', 'Datetime']:
+            if col in df_d1.columns:
+                date_col = col; break
+        
+        if date_col:
+            df_d1[date_col] = pd.to_datetime(df_d1[date_col], errors='coerce')
+            extracted_years = sorted(df_d1[date_col].dt.year.dropna().unique().astype(int).astype(str), reverse=True)
+            
+            # もし「全年度(統合)」モードで、中身に複数年度あった場合、再度選択させる
+            if selected_year_d1 == "全年度(統合)" and len(extracted_years) > 1:
+                selected_year_d1 = st.sidebar.selectbox("分析対象年度を選択してください", extracted_years, index=0, key="d1_year_reselect")
+                df_d1 = df_d1[df_d1[date_col].dt.year.astype(str) == selected_year_d1]
+            elif selected_year_d1 == "全年度(統合)" and len(extracted_years) == 1:
+                selected_year_d1 = extracted_years[0]
+        
+    # --- サイドバー診断情報 (非表示の展開メニュー) ---
+    with st.sidebar.expander("🔍 診断情報 (ボタンが出ない場合用)"):
+        st.write(f"読み込みファイル: {TARGET_CSV}")
+        if drive_files: st.write(f"Drive上のファイル数: {len(drive_files)}")
+        if df_d1 is not None: st.write(f"データ行数: {len(df_d1)}")
+        if df_d1 is not None: st.write(f"カラム一覧: {df_d1.columns.tolist()}")
         df_d1 = load_data_dashboard1_drive(TARGET_CSV, modified_time)
     
     if df_d1 is None:
