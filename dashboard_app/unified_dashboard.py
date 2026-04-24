@@ -418,7 +418,7 @@ if "①" in mode:
                 xaxis_title=x_title,
                 legend=dict(orientation="h", yanchor="top", y=-0.2, xanchor="center", x=0.5, font=dict(color="#E0E0E0"), traceorder="normal")
             )
-            fig_bar.update_xaxes(showgrid=True, gridcolor='rgba(255,255,255,0.1)', type='category') # X軸の西暦誤認防止！
+            fig_bar.update_xaxes(showgrid=True, gridcolor='rgba(255,255,255,0.1)', type='category', categoryorder='category ascending') # X軸の西暦誤認防止！
             fig_bar.update_yaxes(title_text="利用台数（台）", secondary_y=False, rangemode='tozero', showgrid=True, gridcolor='rgba(255,255,255,0.1)')
             fig_bar.update_yaxes(title_text="現金収入（円）", secondary_y=True, rangemode='tozero', showgrid=False)
             

@@ -419,7 +419,7 @@ if "①" in mode:
                     xaxis_title=x_title,
                     legend=dict(orientation="h", yanchor="top", y=-0.2, xanchor="center", x=0.5, font=dict(color="#E0E0E0"), traceorder="normal")
                 )
-                fig_bar.update_xaxes(showgrid=True, gridcolor='rgba(255,255,255,0.1)', type='category') # X軸の西暦誤認防止！
+                fig_bar.update_xaxes(showgrid=True, gridcolor='rgba(255,255,255,0.1)', type='category', categoryorder='category ascending') # X軸の西暦誤認防止！
                 fig_bar.update_yaxes(title_text="利用台数（台）", secondary_y=False, rangemode='tozero', showgrid=True, gridcolor='rgba(255,255,255,0.1)')
                 fig_bar.update_yaxes(title_text="現金収入（円）", secondary_y=True, rangemode='tozero', showgrid=False)
                 
@@ -556,7 +556,7 @@ else:
                     df_t1["駐車場名"] = pd.Categorical(df_t1["駐車場名"], categories=plist, ordered=True)
                     
                     fig1 = px.line(df_t1, x="時間帯", y=target_metric, color="駐車場名", template="plotly_dark", markers=True, line_shape="spline", category_orders={"駐車場名": plist})
-                    fig1.update_xaxes(type='category', gridcolor='rgba(255,255,255,0.05)')
+                    fig1.update_xaxes(type='category', categoryorder='category ascending', gridcolor='rgba(255,255,255,0.05)')
                     fig1.update_layout(hovermode="x unified", legend_title="", height=550, paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)')
                     st.plotly_chart(fig1, use_container_width=True)
 
@@ -595,7 +595,7 @@ else:
                     if "在庫" in metric_t2:
                         cap = PARKING_CAPACITY.get(target_pk_t2, 0)
                         if cap > 0: fig2.add_hline(y=cap, line_dash="dash", line_color=NEON_COLORS["収容台数"], annotation_text="CAPACITY")
-                    fig2.update_xaxes(type='category', gridcolor='rgba(255,255,255,0.05)')
+                    fig2.update_xaxes(type='category', categoryorder='category ascending', gridcolor='rgba(255,255,255,0.05)')
                     fig2.update_layout(hovermode="x unified", height=500, paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)')
                     st.plotly_chart(fig2, use_container_width=True)
 
@@ -635,7 +635,7 @@ else:
                     fig3 = go.Figure()
                     fig3.add_trace(go.Scatter(x=df_t3["時間帯"], y=df_t3["定期在庫"] if "在庫" in mod_t3 else (df_t3["定期入庫"] if "入庫" in mod_t3 else df_t3["定期出庫"]), name="定期 (Magenta)", mode='lines+markers', line=dict(color=NEON_COLORS["定期在庫"], width=3)))
                     fig3.add_trace(go.Scatter(x=df_t3["時間帯"], y=df_t3["一般在庫"] if "在庫" in mod_t3 else (df_t3["一般入庫"] if "入庫" in mod_t3 else df_t3["一般出庫"]), name="一般 (Cyan)", mode='lines+markers', line=dict(color=NEON_COLORS["一般在庫"], width=3)))
-                    fig3.update_xaxes(type='category', gridcolor='rgba(255,255,255,0.05)')
+                    fig3.update_xaxes(type='category', categoryorder='category ascending', gridcolor='rgba(255,255,255,0.05)')
                     fig3.update_layout(template="plotly_dark", hovermode="x unified", height=500, paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)')
                     st.plotly_chart(fig3, use_container_width=True)
 
@@ -650,7 +650,7 @@ else:
                 df_t4 = df2[(df2["駐車場名"] == target_pk_t4) & (df2["曜日区分"] == day_t4)]
                 if not df_t4.empty:
                     fig4 = px.line(df_t4, x="時間帯", y=metric_t4, color="年度", template="plotly_dark", markers=True, line_shape="spline")
-                    fig4.update_xaxes(type='category')
+                    fig4.update_xaxes(type='category', categoryorder='category ascending')
                     fig4.update_layout(hovermode="x unified", height=500, paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)')
                     st.plotly_chart(fig4, use_container_width=True)
 
@@ -733,7 +733,7 @@ else:
                         # 収容台数(CAP)ラベルを左側(第1軸)に表示
                         fig5.add_hline(y=cap, line_dash="dash", line_color=NEON_COLORS["収容台数"], annotation_text=f"CAP ({cap})", annotation_position="left")
                     
-                    fig5.update_xaxes(type='category')
+                    fig5.update_xaxes(type='category', categoryorder='category ascending')
                     fig5.update_layout(
                         template="plotly_dark", 
                         barmode='stack', 
