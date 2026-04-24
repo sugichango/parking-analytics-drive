@@ -282,28 +282,28 @@ if "①" in mode:
         return df
 
 
-    # --- 利用可能なデータの読み込み (Google Drive) ---
-    # 旧ダッシュボードの仕様に基づき、統合された一つのファイルを読み込みます
-    TARGET_CSV = "updated_integrated_data.csv.gz"
+    # --- 利用可能な年度の検索 (Google Drive) ---
+    # 旧ダッシュボードと同様に、ファイル名から年度を特定して先にボタンを出します
+    q_years = "name contains 'updated_integrated_data_FY' and name contains '.csv.gz' and trashed = false"
+    drive_files = search_files_in_drive(q_years)
     
-    # ファイルの更新日時を取得（キャッシュキー用）
-    available_drive_files = search_files_in_drive(f"name = '{TARGET_CSV}' and trashed = false")
-    modified_time = available_drive_files[0].get('modifiedTime', '') if available_drive_files else ''
+    if drive_files:
+        years_list = sorted([f['name'].replace("updated_integrated_data_FY", "").replace(".csv.gz", "") for f in drive_files])
+        default_idx = years_list.index("2025") if "2025" in years_list else len(years_list) - 1
+        st.sidebar.markdown("---")
+        selected_year_d1 = st.sidebar.selectbox("分析対象年度 (一般利用)", years_list, index=default_idx, key="d1_year_select")
+        TARGET_CSV = f"updated_integrated_data_FY{selected_year_d1}.csv.gz"
+        
+        # 選択されたファイルの更新日時を取得
+        target_info = [f for f in drive_files if f['name'] == TARGET_CSV]
+        modified_time = target_info[0].get('modifiedTime', '') if target_info else ''
+    else:
+        # 万が一ファイルが見つからない場合のフォールバック
+        TARGET_CSV = "updated_integrated_data.csv.gz"
+        modified_time = ''
 
-    with st.spinner("データを読み込み中..."):
+    with st.spinner(f"{TARGET_CSV} を読み込み中..."):
         df_d1 = load_data_dashboard1_drive(TARGET_CSV, modified_time)
-
-    if df_d1 is not None and not df_d1.empty:
-        # 年度を抽出（OnTime列から）
-        if 'OnTime' in df_d1.columns:
-            df_d1['Year'] = df_d1['OnTime'].dt.year.astype(str)
-            available_years = sorted(df_d1['Year'].unique(), reverse=True)
-            
-            st.sidebar.markdown("---")
-            selected_year_d1 = st.sidebar.selectbox("分析対象年度 (一般利用)", available_years, index=0, key="d1_year_select")
-            
-            # 選択された年度でフィルタリング
-            df_d1 = df_d1[df_d1['Year'] == selected_year_d1]
     
     if df_d1 is None:
         st.error(f"データの読み込みに失敗しました。ファイル名: {TARGET_CSV}")
@@ -312,6 +312,8 @@ if "①" in mode:
     else:
         st.success(f"データを読み込みました: {len(df_d1):,} 件")
         with st.expander("🛠️ デバッグ：データの中身を確認"):
+            st.write("項目名:", df_d1.columns.tolist())
+            st.write("データ見本:", df_d1.head())
             st.write("項目名:", df_d1.columns.tolist())
             st.write("データ見本:", df_d1.head())
             if 'OnTime' in df_d1.columns:
