@@ -337,118 +337,119 @@ if "①" in mode:
                 
             fig_bar = make_subplots(specs=[[{"secondary_y": True}]])
 
+            if show_by_payment_type and 'PaymentType' in filtered_df.columns:
+                bar_counts = filtered_df.groupby([x_col, 'PaymentType']).size().reset_index(name='利用台数')
+                mapping = {
+                    '現金': '現金（現金のみ）',
+                    '回数券': '回数券（回数券のみ、回数券+現金）',
+                    'RB': 'RB（RBのみ、RB+回数券、RB+現金、RB+回数券+現金）',
+                    'その他': 'その他'
+                }
+                bar_counts['PaymentTypeLegend'] = bar_counts['PaymentType'].map(mapping).fillna(bar_counts['PaymentType'])
+                color_col = 'PaymentTypeLegend'
+            elif selected_area == "全駐車場" and 'ParkingAreaName' in filtered_df.columns:
+                bar_counts = filtered_df.groupby([x_col, 'ParkingAreaName']).size().reset_index(name='利用台数')
+                color_col = 'ParkingAreaName'
+            else:
+                bar_counts = filtered_df.groupby(x_col).size().reset_index(name='利用台数')
+                color_col = None
+            
+            line_counts = filtered_df.groupby(x_col).agg({'Cash': 'sum'}).rename(columns={'Cash': '現金収入'}).reset_index()
                 
-                if show_by_payment_type and 'PaymentType' in filtered_df.columns:
-                    bar_counts = filtered_df.groupby([x_col, 'PaymentType']).size().reset_index(name='利用台数')
-                    mapping = {
-                        '現金': '現金（現金のみ）',
-                        '回数券': '回数券（回数券のみ、回数券+現金）',
-                        'RB': 'RB（RBのみ、RB+回数券、RB+現金、RB+回数券+現金）',
-                        'その他': 'その他'
-                    }
-                    bar_counts['PaymentTypeLegend'] = bar_counts['PaymentType'].map(mapping).fillna(bar_counts['PaymentType'])
-                    color_col = 'PaymentTypeLegend'
-                elif selected_area == "全駐車場" and 'ParkingAreaName' in filtered_df.columns:
-                    bar_counts = filtered_df.groupby([x_col, 'ParkingAreaName']).size().reset_index(name='利用台数')
-                    color_col = 'ParkingAreaName'
-                else:
-                    bar_counts = filtered_df.groupby(x_col).size().reset_index(name='利用台数')
-                    color_col = None
-                
-                line_counts = filtered_df.groupby(x_col).agg({'Cash': 'sum'}).rename(columns={'Cash': '現金収入'}).reset_index()
-                
-                total_counts = bar_counts.groupby(x_col)['利用台数'].sum().reset_index(name='合計台数')
-                if color_col:
-                    bar_counts = pd.merge(bar_counts, total_counts, on=x_col)
-                    bar_counts['割合'] = (bar_counts['利用台数'] / bar_counts['合計台数'] * 100).round(1)
-                    bar_counts['text'] = bar_counts.apply(lambda row: f"{row['割合']}%" if row['割合'] > 0 else "", axis=1)
-                else:
-                    bar_counts['text'] = bar_counts['利用台数'].astype(str)
+            total_counts = bar_counts.groupby(x_col)['利用台数'].sum().reset_index(name='合計台数')
+            if color_col:
+                bar_counts = pd.merge(bar_counts, total_counts, on=x_col)
+                bar_counts['割合'] = (bar_counts['利用台数'] / bar_counts['合計台数'] * 100).round(1)
+                bar_counts['text'] = bar_counts.apply(lambda row: f"{row['割合']}%" if row['割合'] > 0 else "", axis=1)
+            else:
+                bar_counts['text'] = bar_counts['利用台数'].astype(str)
 
-                neon_colors = ['#00FFFF', '#FF00FF', '#39FF14', '#FFEA00', '#FF003C', '#9D00FF', '#00F0FF']
-                common_layout = dict(
-                    font=dict(family="sans-serif", color="#E0E0E0"),
-                    plot_bgcolor="rgba(17, 17, 17, 1)",
-                    paper_bgcolor="rgba(17, 17, 17, 1)",
-                    margin={'l': 30, 'r': 30, 't': 50, 'b': 30}
-                )
+            neon_colors = ['#00FFFF', '#FF00FF', '#39FF14', '#FFEA00', '#FF003C', '#9D00FF', '#00F0FF']
+            common_layout = dict(
+                font=dict(family="sans-serif", color="#E0E0E0"),
+                plot_bgcolor="rgba(17, 17, 17, 1)",
+                paper_bgcolor="rgba(17, 17, 17, 1)",
+                margin={'l': 30, 'r': 30, 't': 50, 'b': 30}
+            )
 
-                fig_bar = make_subplots(specs=[[{"secondary_y": True}]])
-                
-                if color_col:
-                    if color_col == 'ParkingAreaName':
-                        # 指示された駐車場順序（南1...北3）でトレースを追加。
-                        plot_cats = [p for p in PARKING_ORDER if p in bar_counts[color_col].unique()]
-                        plot_cats.extend([c for c in sorted(bar_counts[color_col].unique()) if c not in PARKING_ORDER])
-                        
-                        for cat in plot_cats:
-                            d = bar_counts[bar_counts[color_col] == cat]
-                            color = PARKING_COLORS.get(cat, "#FFFFFF")
-                            fig_bar.add_trace(
-                                go.Bar(
-                                    x=d[x_col], y=d['利用台数'], name=str(cat), text=d['text'],
-                                    textposition='inside', insidetextanchor='middle',
-                                    marker_color=color
-                                ), secondary_y=False)
-                    else:
-                        # 支払い種別などの場合は元通りのネオンカラーを使用
-                        for idx, cat in enumerate(sorted(bar_counts[color_col].unique())):
-                            d = bar_counts[bar_counts[color_col] == cat]
-                            fig_bar.add_trace(
-                                go.Bar(
-                                    x=d[x_col], y=d['利用台数'], name=str(cat), text=d['text'],
-                                    textposition='inside', insidetextanchor='middle',
-                                    marker_color=neon_colors[idx % len(neon_colors)]
-                                ), secondary_y=False)
-                    fig_bar.update_layout(barmode='stack')
-                    for i, row in total_counts.iterrows():
-                        fig_bar.add_annotation(
-                            x=row[x_col], y=row['合計台数'], text=str(row['合計台数']),
-                            showarrow=False, yshift=10, font=dict(color="#00FFFF", size=13, family="sans-serif"), yref="y"
-                        )
-                else:
-                    fig_bar.add_trace(
-                        go.Bar(x=bar_counts[x_col], y=bar_counts['利用台数'], name="利用台数", marker_color=neon_colors[0], text=bar_counts['text'], textposition='auto', textfont=dict(color="black")),
-                        secondary_y=False)
+            fig_bar = make_subplots(specs=[[{"secondary_y": True}]])
+            
+            if color_col:
+                if color_col == 'ParkingAreaName':
+                    # 指示された駐車場順序（南1...北3）でトレースを追加。
+                    plot_cats = [p for p in PARKING_ORDER if p in bar_counts[color_col].unique()]
+                    plot_cats.extend([c for c in sorted(bar_counts[color_col].unique()) if c not in PARKING_ORDER])
                     
-                line_color = '#FFFFFF'
-                fig_bar.add_trace(go.Scatter(x=line_counts[x_col], y=line_counts['現金収入'], name="現金収入(全体)", mode='lines+markers', line={'color': line_color, 'width': 3}), secondary_y=True)
-                fig_bar.update_layout(
-                    **common_layout,
-                    title=dict(text=f"{x_title} 利用台数と現金収入推移", font=dict(size=18, color="#00FFFF")),
-                    xaxis_title=x_title,
-                    legend=dict(orientation="h", yanchor="top", y=-0.2, xanchor="center", x=0.5, font=dict(color="#E0E0E0"), traceorder="normal")
-                )
-                fig_bar.update_xaxes(showgrid=True, gridcolor='rgba(255,255,255,0.1)', type='category') # X軸の西暦誤認防止！
-                fig_bar.update_yaxes(title_text="利用台数（台）", secondary_y=False, rangemode='tozero', showgrid=True, gridcolor='rgba(255,255,255,0.1)')
-                fig_bar.update_yaxes(title_text="現金収入（円）", secondary_y=True, rangemode='tozero', showgrid=False)
+                    for cat in plot_cats:
+                        d = bar_counts[bar_counts[color_col] == cat]
+                        color = PARKING_COLORS.get(cat, "#FFFFFF")
+                        fig_bar.add_trace(
+                            go.Bar(
+                                x=d[x_col], y=d['利用台数'], name=str(cat), text=d['text'],
+                                textposition='inside', insidetextanchor='middle',
+                                marker_color=color
+                            ), secondary_y=False)
+                else:
+                    # 支払い種別などの場合は元通りのネオンカラーを使用
+                    for idx, cat in enumerate(sorted(bar_counts[color_col].unique())):
+                        d = bar_counts[bar_counts[color_col] == cat]
+                        fig_bar.add_trace(
+                            go.Bar(
+                                x=d[x_col], y=d['利用台数'], name=str(cat), text=d['text'],
+                                textposition='inside', insidetextanchor='middle',
+                                marker_color=neon_colors[idx % len(neon_colors)]
+                            ), secondary_y=False)
+                fig_bar.update_layout(barmode='stack')
+                for i, row in total_counts.iterrows():
+                    fig_bar.add_annotation(
+                        x=row[x_col], y=row['合計台数'], text=str(row['合計台数']),
+                        showarrow=False, yshift=10, font=dict(color="#00FFFF", size=13, family="sans-serif"), yref="y"
+                    )
+            else:
+                fig_bar.add_trace(
+                    go.Bar(x=bar_counts[x_col], y=bar_counts['利用台数'], name="利用台数", marker_color=neon_colors[0], text=bar_counts['text'], textposition='auto', textfont=dict(color="black")),
+                    secondary_y=False)
                 
-                st.plotly_chart(fig_bar, use_container_width=True)
-                st.markdown("---")
+            line_color = '#FFFFFF'
+            fig_bar.add_trace(go.Scatter(x=line_counts[x_col], y=line_counts['現金収入'], name="現金収入(全体)", mode='lines+markers', line={'color': line_color, 'width': 3}), secondary_y=True)
+            fig_bar.update_layout(
+                **common_layout,
+                title=dict(text=f"{x_title} 利用台数と現金収入推移", font=dict(size=18, color="#00FFFF")),
+                xaxis_title=x_title,
+                legend=dict(orientation="h", yanchor="top", y=-0.2, xanchor="center", x=0.5, font=dict(color="#E0E0E0"), traceorder="normal")
+            )
+            fig_bar.update_xaxes(showgrid=True, gridcolor='rgba(255,255,255,0.1)', type='category') # X軸の西暦誤認防止！
+            fig_bar.update_yaxes(title_text="利用台数（台）", secondary_y=False, rangemode='tozero', showgrid=True, gridcolor='rgba(255,255,255,0.1)')
+            fig_bar.update_yaxes(title_text="現金収入（円）", secondary_y=True, rangemode='tozero', showgrid=False)
+            
+            st.plotly_chart(fig_bar, use_container_width=True)
+            st.markdown("---")
                 
-                if 'ParkingAreaName' in filtered_df.columns:
-                    area_counts = filtered_df.groupby('ParkingAreaName').agg({'OnTime': 'size', 'Cash': 'sum'}).rename(columns={'OnTime': '利用台数', 'Cash': '現金収入'}).reset_index()
-                    total_parked = area_counts['利用台数'].sum()
-                    total_cash = area_counts['現金収入'].sum()
-                    parking_colors = {area: PARKING_COLORS.get(area, "#FFFFFF") for area in filtered_df['ParkingAreaName'].unique()}
+            if 'ParkingAreaName' in filtered_df.columns:
+                area_counts = filtered_df.groupby('ParkingAreaName').agg({'OnTime': 'size', 'Cash': 'sum'}).rename(columns={'OnTime': '利用台数', 'Cash': '現金収入'}).reset_index()
+                total_parked = area_counts['利用台数'].sum()
+                total_cash = area_counts['現金収入'].sum()
+                parking_colors = {area: PARKING_COLORS.get(area, "#FFFFFF") for area in filtered_df['ParkingAreaName'].unique()}
 
-                    if show_by_payment_type:
-                        st.subheader("🍩 駐車場別 利用内訳（サンバースト図）")
-                        st.write("※ グラフの要素をクリックすると、その階層を拡大（ドリルダウン）できます。中央をクリックすると元に戻ります。")
-                        if 'PaymentType' in filtered_df.columns:
-                            agg_df = filtered_df.groupby(['ParkingAreaName', 'PaymentType']).agg({'OnTime': 'size', 'Cash': 'sum'}).rename(columns={'OnTime': '利用台数', 'Cash': '現金収入'}).reset_index()
-                            df_target = agg_df[agg_df['利用台数'] > 0]
-                            fig_chart = px.sunburst(df_target, path=['ParkingAreaName', 'PaymentType'], values='利用台数', color='ParkingAreaName', color_discrete_map=parking_colors)
-                            fig_chart.update_traces(texttemplate='%{label}<br>%{value}台<br>%{percentRoot}', hovertemplate='%{label}<br>利用台数: %{value}台<br>割合: %{percentRoot}', insidetextorientation='radial')
-                            fig_chart.update_layout(**common_layout, height=600)
-                    else:
-                        st.subheader("🍩 駐車場別 利用割合 ＆ 現金収入割合")
-                        fig_chart = go.Figure()
-                        inner_domain, middle_domain = [0.15, 0.85], [0.0, 1.0]
-                        inner_hole, middle_hole = 0.55, 0.8
-                        fig_chart.add_trace(go.Pie(labels=area_counts['ParkingAreaName'], values=area_counts['利用台数'], name="利用台数", hole=inner_hole, domain={'x': inner_domain, 'y': inner_domain}, hoverinfo='label+value+percent+name', textinfo='label+value+percent', textposition='inside', direction='clockwise', sort=False, marker=dict(colors=[parking_colors.get(label, '#FFFFFF') for label in area_counts['ParkingAreaName']]), insidetextfont=dict(color="black")))
-                        fig_chart.add_trace(go.Pie(labels=area_counts['ParkingAreaName'], values=area_counts['現金収入'], name="現金収入", hole=middle_hole, domain={'x': middle_domain, 'y': middle_domain}, hoverinfo='label+value+percent+name', textinfo='value+percent', textposition='inside', direction='clockwise', sort=False, marker=dict(colors=[parking_colors.get(label, '#FFFFFF') for label in area_counts['ParkingAreaName']]), insidetextfont=dict(color="black")))
-                        fig_chart.update_layout(**common_layout, title=dict(text="内側: 利用台数 / 外側: 現金収入", font=dict(color="#00FFFF")), annotations=[{"text": f"総台数<br><b style='font_size:20px;'>{total_parked:,}</b><br>台<br><br>総現金<br><b style='font_size:16px;'>{int(total_cash):,}</b><br>円", "x": 0.5, "y": 0.5, "showarrow": False, "font": dict(color="#00FFFF")}], showlegend=True, legend=dict(font=dict(color="#E0E0E0")))
+                if show_by_payment_type:
+                    st.subheader("🍩 駐車場別 利用内訳（サンバースト図）")
+                    st.write("※ グラフの要素をクリックすると、その階層を拡大（ドリルダウン）できます。中央をクリックすると元に戻ります。")
+                    if 'PaymentType' in filtered_df.columns:
+                        agg_df = filtered_df.groupby(['ParkingAreaName', 'PaymentType']).agg({'OnTime': 'size', 'Cash': 'sum'}).rename(columns={'OnTime': '利用台数', 'Cash': '現金収入'}).reset_index()
+                        df_target = agg_df[agg_df['利用台数'] > 0]
+                        fig_chart = px.sunburst(df_target, path=['ParkingAreaName', 'PaymentType'], values='利用台数', color='ParkingAreaName', color_discrete_map=parking_colors)
+                        fig_chart.update_traces(texttemplate='%{label}<br>%{value}台<br>%{percentRoot}', hovertemplate='%{label}<br>利用台数: %{value}台<br>割合: %{percentRoot}', insidetextorientation='radial')
+                        fig_chart.update_layout(**common_layout, height=600)
+                        st.plotly_chart(fig_chart, use_container_width=True)
+                else:
+                    st.subheader("🍩 駐車場別 利用割合 ＆ 現金収入割合")
+                    fig_chart = go.Figure()
+                    inner_domain, middle_domain = [0.15, 0.85], [0.0, 1.0]
+                    inner_hole, middle_hole = 0.55, 0.8
+                    fig_chart.add_trace(go.Pie(labels=area_counts['ParkingAreaName'], values=area_counts['利用台数'], name="利用台数", hole=inner_hole, domain={'x': inner_domain, 'y': inner_domain}, hoverinfo='label+value+percent+name', textinfo='label+value+percent', textposition='inside', direction='clockwise', sort=False, marker=dict(colors=[parking_colors.get(label, '#FFFFFF') for label in area_counts['ParkingAreaName']]), insidetextfont=dict(color="black")))
+                    fig_chart.add_trace(go.Pie(labels=area_counts['ParkingAreaName'], values=area_counts['現金収入'], name="現金収入", hole=middle_hole, domain={'x': middle_domain, 'y': middle_domain}, hoverinfo='label+value+percent+name', textinfo='value+percent', textposition='inside', direction='clockwise', sort=False, marker=dict(colors=[parking_colors.get(label, '#FFFFFF') for label in area_counts['ParkingAreaName']]), insidetextfont=dict(color="black")))
+                    fig_chart.update_layout(**common_layout, title=dict(text="内側: 利用台数 / 外側: 現金収入", font=dict(color="#00FFFF")), annotations=[{"text": f"総台数<br><b style='font_size:20px;'>{total_parked:,}</b><br>台<br><br>総現金<br><b style='font_size:16px;'>{int(total_cash):,}</b><br>円", "x": 0.5, "y": 0.5, "showarrow": False, "font": dict(color="#00FFFF")}], showlegend=True, legend=dict(font=dict(color="#E0E0E0")))
+                    st.plotly_chart(fig_chart, use_container_width=True)
                     st.plotly_chart(fig_chart, use_container_width=True)
                     st.markdown("---")
             else:
