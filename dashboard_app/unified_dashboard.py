@@ -299,44 +299,44 @@ if "①" in mode:
             st.cache_data.clear()
             st.rerun()
 
+        # --- フィルタリングとグラフ表示はボタンの外で行う ---
+        filtered_df = df_d1.copy()
 
+        if selected_area != "全駐車場" and 'ParkingAreaName' in filtered_df.columns:
+            filtered_df = filtered_df[filtered_df['ParkingAreaName'] == selected_area]
 
-            filtered_df = df_d1.copy()
+        if selected_day_type != "すべて" and 'is_holiday' in filtered_df.columns:
+            filtered_df = filtered_df[filtered_df['is_holiday'] == selected_day_type]
 
-            if selected_area != "全駐車場" and 'ParkingAreaName' in filtered_df.columns:
-                filtered_df = filtered_df[filtered_df['ParkingAreaName'] == selected_area]
+        if selected_month != "通年" and 'Month' in filtered_df.columns:
+            filtered_df = filtered_df[filtered_df['Month'] == selected_month]
 
-            if selected_day_type != "すべて" and 'is_holiday' in filtered_df.columns:
-                filtered_df = filtered_df[filtered_df['is_holiday'] == selected_day_type]
+        st.markdown(f"**現在の絞り込み**: 駐車場=`{selected_area}` | 曜日=`{selected_day_type}` | 月=`{selected_month}` (対象データ: {len(filtered_df):,} 件)")
+        
+        st.markdown(
+            '''<div style="border: 2px solid #00FFFF; border-radius: 8px; padding: 12px; margin-top: 20px; margin-bottom: 5px; background: rgba(0, 255, 255, 0.05);">
+            <b style="color: #00FFFF; font-size: 16px;">🔲 内訳表示オプション</b>
+            </div>''', unsafe_allow_html=True
+        )
+        show_by_payment_type = st.checkbox("👉 支払い種別（現金・RB・回数券）で内訳を表示する", value=False)
+        
+        if not filtered_df.empty and 'OnTime' in filtered_df.columns:
+            st.subheader("📈 利用台数推移 (月別または日別)")
+            if 'Cash' in filtered_df.columns:
+                filtered_df['Cash'] = pd.to_numeric(filtered_df['Cash'], errors='coerce').fillna(0)
+            else:
+                filtered_df['Cash'] = 0
 
-            if selected_month != "通年" and 'Month' in filtered_df.columns:
-                filtered_df = filtered_df[filtered_df['Month'] == selected_month]
+            if selected_month == "通年":
+                x_col = 'Month'
+                x_title = '年月'
+            else:
+                filtered_df['Date'] = filtered_df['OnTime'].dt.date.astype(str)
+                x_col = 'Date'
+                x_title = '日付'
+                
+            fig_bar = make_subplots(specs=[[{"secondary_y": True}]])
 
-            st.markdown(f"**現在の絞り込み**: 駐車場=`{selected_area}` | 曜日=`{selected_day_type}` | 月=`{selected_month}` (対象データ: {len(filtered_df):,} 件)")
-            
-            st.markdown(
-                '''<div style="border: 2px solid #00FFFF; border-radius: 8px; padding: 12px; margin-top: 20px; margin-bottom: 5px; background: rgba(0, 255, 255, 0.05);">
-                <b style="color: #00FFFF; font-size: 16px;">🔲 内訳表示オプション</b>
-                </div>''', unsafe_allow_html=True
-            )
-            show_by_payment_type = st.checkbox("👉 支払い種別（現金・RB・回数券）で内訳を表示する", value=False)
-            
-            if not filtered_df.empty and 'OnTime' in filtered_df.columns:
-                st.subheader("📈 利用台数推移 (月別または日別)")
-                if 'Cash' in filtered_df.columns:
-                    filtered_df['Cash'] = pd.to_numeric(filtered_df['Cash'], errors='coerce').fillna(0)
-                else:
-                    filtered_df['Cash'] = 0
-
-                if selected_month == "通年":
-                    x_col = 'Month'
-                    x_title = '年月'
-                else:
-                    filtered_df['Date'] = filtered_df['OnTime'].dt.date.astype(str)
-                    x_col = 'Date'
-                    x_title = '日付'
-                    
-                fig_bar = make_subplots(specs=[[{"secondary_y": True}]])
                 
                 if show_by_payment_type and 'PaymentType' in filtered_df.columns:
                     bar_counts = filtered_df.groupby([x_col, 'PaymentType']).size().reset_index(name='利用台数')
