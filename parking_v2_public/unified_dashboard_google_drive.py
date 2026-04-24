@@ -283,22 +283,44 @@ if "①" in mode:
 
 
     # --- 利用可能な年度の検索 (Google Drive) ---
-    # 旧ダッシュボードと同様に、ファイル名から年度を特定して先にボタンを出します
-    q_years = "name contains 'updated_integrated_data_FY' and name contains '.csv.gz' and trashed = false"
+    # 検索条件を広げて、実際に存在するファイル名を確認します
+    q_years = "name contains 'updated_integrated_data' and trashed = false"
     drive_files = search_files_in_drive(q_years)
     
-    if drive_files:
-        years_list = sorted([f['name'].replace("updated_integrated_data_FY", "").replace(".csv.gz", "") for f in drive_files])
-        default_idx = years_list.index("2025") if "2025" in years_list else len(years_list) - 1
-        st.sidebar.markdown("---")
-        selected_year_d1 = st.sidebar.selectbox("分析対象年度 (一般利用)", years_list, index=default_idx, key="d1_year_select")
-        TARGET_CSV = f"updated_integrated_data_FY{selected_year_d1}.csv.gz"
-        
-        # 選択されたファイルの更新日時を取得
-        target_info = [f for f in drive_files if f['name'] == TARGET_CSV]
-        modified_time = target_info[0].get('modifiedTime', '') if target_info else ''
+    # 【デバッグ用】サイドバーに見つかったファイル名を出す（原因特定のため）
+    if not drive_files:
+        st.sidebar.error("⚠️ Drive上に 'updated_integrated_data' を含むファイルが見つかりません。")
     else:
-        # 万が一ファイルが見つからない場合のフォールバック
+        with st.sidebar.expander("📁 Drive上のファイル名を確認"):
+            for f in drive_files: st.write(f"- {f['name']}")
+
+    if drive_files:
+        # ファイル名から年度(2023, 2024, 2025等)を柔軟に抽出
+        years_list = []
+        for f in drive_files:
+            import re
+            m = re.search(r'202[0-9]', f['name']) # 202x という4桁数字を探す
+            if m: years_list.append(m.group())
+        
+        years_list = sorted(list(set(years_list))) # 重複排除してソート
+        
+        if years_list:
+            default_idx = years_list.index("2025") if "2025" in years_list else len(years_list) - 1
+            st.sidebar.markdown("---")
+            selected_year_d1 = st.sidebar.selectbox("分析対象年度 (一般利用)", years_list, index=default_idx, key="d1_year_select")
+            
+            # 選択された年度を含むファイルを探す
+            target_f = [f for f in drive_files if selected_year_d1 in f['name'] and f['name'].endswith(".csv.gz")]
+            if target_f:
+                TARGET_CSV = target_f[0]['name']
+                modified_time = target_f[0].get('modifiedTime', '')
+            else:
+                TARGET_CSV = "updated_integrated_data.csv.gz"
+                modified_time = ''
+        else:
+            TARGET_CSV = "updated_integrated_data.csv.gz"
+            modified_time = ''
+    else:
         TARGET_CSV = "updated_integrated_data.csv.gz"
         modified_time = ''
 
