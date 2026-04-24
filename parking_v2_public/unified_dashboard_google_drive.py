@@ -24,7 +24,10 @@ def get_drive_service():
         service = build('drive', 'v3', credentials=credentials)
         return service
     except Exception as e:
-        st.error(f"Google Drive連携エラー: {e}")
+        if "gcp_service_account" not in st.secrets:
+            st.error("Streamlit Secrets に 'gcp_service_account' が設定されていません。")
+        else:
+            st.error(f"Google Drive連携エラー: {e}")
         return None
 
 def download_file_from_drive(file_id):
@@ -226,9 +229,13 @@ if "①" in mode:
         """Google DriveからCSVを取得し原本と同じロジックで加工"""
         q = f"name = '{file_name}' and trashed = false"
         files = search_files_in_drive(q)
-        if not files: return None
+        if not files:
+            st.error(f"ファイルが見つかりません: {file_name}")
+            return None
         fh = download_file_from_drive(files[0]['id'])
-        if not fh: return None
+        if not fh:
+            st.error(f"ファイルのダウンロードに失敗しました: {file_name}")
+            return None
         
         use_cols = ['ParkingArea', 'OnTime', 'Cash', 'Discount1', 'Discount2', 'Discount3', 'Discount4', 'Discount5', 'Discount6', 'Discount7']
         dtypes = {'ParkingArea': 'Int16', 'Cash': 'Int32', 'Discount1': 'Int16', 'Discount2': 'Int16', 'Discount3': 'Int16', 'Discount4': 'Int16', 'Discount5': 'Int16', 'Discount6': 'Int16', 'Discount7': 'Int16'}
@@ -265,8 +272,22 @@ if "①" in mode:
                 df['is_holiday'] = df['DayOfWeek'].isin([5, 6]).map({True: '休日', False: '平日'})
         return df
 
-    TARGET_CSV = "updated_integrated_data_FY2025.csv.gz"
+    # --- 利用可能なデータファイルの検索 (Google Drive) ---
+    q_d1 = "name contains 'updated_integrated_data_FY' and name contains '.csv.gz' and trashed = false"
+    available_drive_files = search_files_in_drive(q_d1)
+    
+    if available_drive_files:
+        # ファイル名から年度(2023, 2024, 2025等)を抽出してソート
+        years_drive = sorted([f['name'].replace("updated_integrated_data_FY", "").replace(".csv.gz", "") for f in available_drive_files])
+        # サイドバーに年度選択を追加。デフォルトは 2025。
+        default_idx = years_drive.index("2025") if "2025" in years_drive else len(years_drive) - 1
+        selected_year_drive = st.sidebar.selectbox("分析対象年度 (一般利用)", years_drive, index=default_idx, key="drive_year_select")
+        TARGET_CSV = f"updated_integrated_data_FY{selected_year_drive}.csv.gz"
+    else:
+        TARGET_CSV = "updated_integrated_data_FY2025.csv.gz"
+
     df_d1 = load_data_dashboard1_drive(TARGET_CSV)
+
     
     if df_d1 is not None:
         st.sidebar.header("🔍 フィルター設定")

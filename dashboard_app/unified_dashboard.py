@@ -232,7 +232,20 @@ if "①" in mode:
         return df
 
     # --- スクリプトの場所を基準にした相対パス ---
-    file_path = os.path.join(BASE_DIR, "data", "updated_integrated_data_FY2025.csv.gz")
+    # --- 利用可能なデータファイルの検索 ---
+    data_dir = os.path.join(BASE_DIR, "data")
+    available_files = glob.glob(os.path.join(data_dir, "updated_integrated_data_FY*.csv.gz"))
+    
+    if available_files:
+        # ファイル名から年度(2023, 2024, 2025等)を抽出してソート
+        years = sorted([os.path.basename(f).replace("updated_integrated_data_FY", "").replace(".csv.gz", "") for f in available_files])
+        # サイドバーに年度選択を追加。デフォルトは 2025。
+        default_index = years.index("2025") if "2025" in years else len(years) - 1
+        selected_year_d1 = st.sidebar.selectbox("分析対象年度 (一般利用)", years, index=default_index, key="d1_year_select")
+        file_path = os.path.join(data_dir, f"updated_integrated_data_FY{selected_year_d1}.csv.gz")
+    else:
+        file_path = os.path.join(data_dir, "updated_integrated_data_FY2025.csv.gz")
+
     
     if os.path.exists(file_path):
         df_d1 = load_data_dashboard1(file_path)

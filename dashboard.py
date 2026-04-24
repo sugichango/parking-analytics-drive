@@ -129,7 +129,26 @@ print("DEBUG: App start, checking file...")
 
 # データファイルのパスを設定 (容量制限を回避するため、圧縮済みの全件データを読み込みます)
 # read_csv は .gz 拡張子から自動的に解凍処理(gzip)を行います
-file_path = "updated_integrated_data_FY2025.csv.gz"
+# スクリプトの場所を基準に絶対パスを生成
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+# --- 利用可能なデータファイルの検索 ---
+import glob
+# BASE_DIR を基準にファイルを検索
+search_pattern = os.path.join(BASE_DIR, "updated_integrated_data_FY*.csv.gz")
+available_files = glob.glob(search_pattern)
+
+if available_files:
+    # ファイル名から年度(2023, 2024, 2025等)を抽出してソート
+    years = sorted([os.path.basename(f).replace("updated_integrated_data_FY", "").replace(".csv.gz", "") for f in available_files])
+    # サイドバーに年度選択を追加。デフォルトは 2025。
+    default_index = years.index("2025") if "2025" in years else len(years) - 1
+    selected_year = st.sidebar.selectbox("分析対象年度", years, index=default_index, key="year_select_root")
+    file_path = os.path.join(BASE_DIR, f"updated_integrated_data_FY{selected_year}.csv.gz")
+else:
+    file_path = os.path.join(BASE_DIR, "updated_integrated_data_FY2025.csv.gz")
+
+
 
 if os.path.exists(file_path):
     print("DEBUG: File found, starting load_data...")
