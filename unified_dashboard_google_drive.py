@@ -52,10 +52,11 @@ def search_files_in_drive(query):
     try:
         results = service.files().list(
             q=query, 
-            fields="files(id, name, parents)",
+            fields="files(id, name, parents, modifiedTime)",
             supportsAllDrives=True,
             includeItemsFromAllDrives=True
         ).execute()
+
         return results.get('files', [])
     except Exception: return []
 
@@ -216,7 +217,14 @@ with st.sidebar:
     if st.button("ログアウト", key="logout_act"):
         st.session_state["authenticated"] = False
         st.rerun()
+    
     st.markdown("---")
+    if st.button("🔄 キャッシュをクリアして更新", key="clear_cache_btn"):
+        st.cache_data.clear()
+        st.success("キャッシュをクリアしました。最新データを再読み込みします。")
+        st.rerun()
+    st.markdown("---")
+
 
 # ==========================================
 # ① 一般利用台数推移分析 (原本ロジック完全再現)
@@ -225,8 +233,9 @@ if "①" in mode:
     st.title("📊 ① 一般利用台数推移分析")
 
     @st.cache_data(show_spinner=True)
-    def load_data_dashboard1_drive(file_name):
-        """Google DriveからCSVを取得し原本と同じロジックで加工"""
+    def load_data_dashboard1_drive(file_name, modified_time):
+        """Google DriveからCSVを取得し原本と同じロジックで加工（modified_timeでキャッシュ自動更新）"""
+
         q = f"name = '{file_name}' and trashed = false"
         files = search_files_in_drive(q)
         if not files:
@@ -272,9 +281,90 @@ if "①" in mode:
                 df['is_holiday'] = df['DayOfWeek'].isin([5, 6]).map({True: '休日', False: '平日'})
         return df
 
-    TARGET_CSV = "updated_integrated_data_FY2025.csv.gz"
-    df_d1 = load_data_dashboard1_drive(TARGET_CSV)
+
+    # --- 利用可能な年度の特定ロジック (最強版) ---
+    q_years = "name contains 'updated_integrated_data' and trashed = false"
+    drive_files = search_files_in_drive(q_years)
     
+    # 候補となる年度リスト
+    candidate_years = []
+    
+    # 1. ファイル名から抽出を試みる
+    if drive_files:
+        import re
+        for f in drive_files:
+            m = re.search(r'202[0-9]', f['name'])
+            if m: candidate_years.append(m.group())
+
+    # ひとまずファイル名ベースの年度があれば表示
+    available_years = sorted(list(set(candidate_years)), reverse=True)
+    
+    # サイドバーに年度選択を配置
+    st.sidebar.markdown("---")
+    st.sidebar.subheader("📅 年度選択")
+    
+    # もしファイル名に年度がなければ、「全年度(統合)」として一度読み込み、中身から抽出する
+    if not available_years:
+        available_years = ["全年度(統合)"]
+        selected_year_d1 = st.sidebar.selectbox("分析対象年度 (一般利用)", available_years, index=0, key="d1_year_select")
+        TARGET_CSV = "updated_integrated_data.csv.gz"
+        modified_time = drive_files[0].get('modifiedTime', '') if drive_files else ''
+    else:
+        selected_year_d1 = st.sidebar.selectbox("分析対象年度 (一般利用)", available_years, index=0, key="d1_year_select")
+        # 選択された年度に対応するファイル名を作成（または検索）
+        target_f = [f for f in drive_files if selected_year_d1 in f['name'] and f['name'].endswith(".csv.gz")]
+        if target_f:
+            TARGET_CSV = target_f[0]['name']
+            modified_time = target_f[0].get('modifiedTime', '')
+        else:
+            TARGET_CSV = "updated_integrated_data.csv.gz"
+            modified_time = ''
+
+    # データの読み込み
+    with st.spinner(f"{TARGET_CSV} を読み込み中..."):
+        df_d1 = load_data_dashboard1_drive(TARGET_CSV, modified_time)
+    
+    # 2. データの中身からさらに年度を抽出（ファイル名に年度がなかった場合の補完）
+    if df_d1 is not None and not df_d1.empty:
+        # 日付列を探す
+        date_col = None
+        for col in ['OnTime', 'ontime', '日付', 'Datetime']:
+            if col in df_d1.columns:
+                date_col = col; break
+        
+        if date_col:
+            df_d1[date_col] = pd.to_datetime(df_d1[date_col], errors='coerce')
+            extracted_years = sorted(df_d1[date_col].dt.year.dropna().unique().astype(int).astype(str), reverse=True)
+            
+            # もし「全年度(統合)」モードで、中身に複数年度あった場合、再度選択させる
+            if selected_year_d1 == "全年度(統合)" and len(extracted_years) > 1:
+                selected_year_d1 = st.sidebar.selectbox("分析対象年度を選択してください", extracted_years, index=0, key="d1_year_reselect")
+                df_d1 = df_d1[df_d1[date_col].dt.year.astype(str) == selected_year_d1]
+            elif selected_year_d1 == "全年度(統合)" and len(extracted_years) == 1:
+                selected_year_d1 = extracted_years[0]
+        
+    # --- サイドバー診断情報 (非表示の展開メニュー) ---
+    with st.sidebar.expander("🔍 診断情報 (ボタンが出ない場合用)"):
+        st.write(f"読み込みファイル: {TARGET_CSV}")
+        if drive_files: st.write(f"Drive上のファイル数: {len(drive_files)}")
+        if df_d1 is not None: st.write(f"データ行数: {len(df_d1)}")
+        if df_d1 is not None: st.write(f"カラム一覧: {df_d1.columns.tolist()}")
+        df_d1 = load_data_dashboard1_drive(TARGET_CSV, modified_time)
+    
+    if df_d1 is None:
+        st.error(f"データの読み込みに失敗しました。ファイル名: {TARGET_CSV}")
+    elif df_d1.empty:
+        st.warning(f"読み込まれたデータが0件です。ファイル名: {TARGET_CSV}")
+    else:
+        st.success(f"データを読み込みました: {len(df_d1):,} 件")
+        with st.expander("🛠️ デバッグ：データの中身を確認"):
+            st.write("項目名:", df_d1.columns.tolist())
+            st.write("データ見本:", df_d1.head())
+            st.write("項目名:", df_d1.columns.tolist())
+            st.write("データ見本:", df_d1.head())
+            if 'OnTime' in df_d1.columns:
+                st.write("日付の範囲:", df_d1['OnTime'].min(), " ～ ", df_d1['OnTime'].max())
+
     if df_d1 is not None:
         st.sidebar.header("🔍 フィルター設定")
         PARKING_ORDER = ["南１", "南２", "南３", "南４", "北１", "北２", "北３"]
@@ -283,9 +373,11 @@ if "①" in mode:
         available_areas = ["全駐車場"]
         if 'ParkingAreaName' in df_d1.columns:
             areas = [p for p in PARKING_ORDER if p in df_d1['ParkingAreaName'].unique()]
-            available_areas.extend(areas)
+            others = sorted([p for p in df_d1['ParkingAreaName'].unique() if p not in PARKING_ORDER and p != '不明' and p != '全駐車場'])
+            available_areas.extend(areas + others)
         selected_area = st.sidebar.selectbox("駐車場名", available_areas, index=0)
         selected_day_type = st.sidebar.selectbox("平日/休日", ["すべて", "平日", "休日"], index=0)
+        
         available_months = ["通年"]
         if 'Month' in df_d1.columns:
             months = sorted(df_d1[df_d1['Month'] != 'NaT']['Month'].unique().tolist())
@@ -302,38 +394,50 @@ if "①" in mode:
         st.markdown('''<div style="border: 2px solid #00FFFF; border-radius: 8px; padding: 12px; margin-top: 20px; margin-bottom: 5px; background: rgba(0, 255, 255, 0.05);"><b style="color: #00FFFF; font-size: 16px;">🔲 内訳表示オプション</b></div>''', unsafe_allow_html=True)
         show_by_payment_type = st.checkbox("👉 支払い種別（現金・RB・回数券）で内訳を表示する", value=False)
         
-        if not filtered_df.empty:
+        if not filtered_df.empty and 'OnTime' in filtered_df.columns:
             st.subheader("📈 利用台数推移 (月別または日別)")
+            if 'Cash' in filtered_df.columns:
+                filtered_df['Cash'] = pd.to_numeric(filtered_df['Cash'], errors='coerce').fillna(0)
+            else:
+                filtered_df['Cash'] = 0
+
             if selected_month == "通年": x_col, x_title = 'Month', '年月'
             else: filtered_df['Date'] = filtered_df['OnTime'].dt.date.astype(str); x_col, x_title = 'Date', '日付'
 
-            line_counts = filtered_df.groupby(x_col).agg({'Cash': 'sum'}).rename(columns={'Cash': '現金収入'}).reset_index()
-            neon_colors = ['#00FFFF', '#FF00FF', '#39FF14', '#FFEA00', '#FF003C', '#9D00FF', '#00F0FF']
-            common_layout = dict(font=dict(family="sans-serif", color="#FFFFFF", size=15), plot_bgcolor="rgba(17, 17, 17, 1)", paper_bgcolor="rgba(17, 17, 17, 1)", margin={'l': 30, 'r': 30, 't': 50, 'b': 30})
-
-            fig_bar = make_subplots(specs=[[{"secondary_y": True}]])
-            if show_by_payment_type:
+            if show_by_payment_type and 'PaymentType' in filtered_df.columns:
                 bar_counts = filtered_df.groupby([x_col, 'PaymentType']).size().reset_index(name='利用台数')
                 mapping = {'現金': '現金（現金のみ）', '回数券': '回数券（回数券のみ、回数券+現金）', 'RB': 'RB（RBのみ、RB+回数券、RB+現金、RB+回数券+現金）', 'その他': 'その他'}
                 bar_counts['PaymentTypeLegend'] = bar_counts['PaymentType'].map(mapping).fillna(bar_counts['PaymentType'])
                 color_col = 'PaymentTypeLegend'
-            elif selected_area == "全駐車場":
+            elif selected_area == "全駐車場" and 'ParkingAreaName' in filtered_df.columns:
                 bar_counts = filtered_df.groupby([x_col, 'ParkingAreaName']).size().reset_index(name='利用台数')
                 color_col = 'ParkingAreaName'
             else:
                 bar_counts = filtered_df.groupby(x_col).size().reset_index(name='利用台数')
                 color_col = None
 
+            line_counts = filtered_df.groupby(x_col).agg({'Cash': 'sum'}).rename(columns={'Cash': '現金収入'}).reset_index()
             total_counts = bar_counts.groupby(x_col)['利用台数'].sum().reset_index(name='合計台数')
+            
             if color_col:
                 bar_counts = pd.merge(bar_counts, total_counts, on=x_col)
                 bar_counts['割合'] = (bar_counts['利用台数'] / bar_counts['合計台数'] * 100).round(1)
                 bar_counts['text'] = bar_counts.apply(lambda row: f"{row['割合']}%" if row['割合'] > 0 else "", axis=1)
             else: bar_counts['text'] = bar_counts['利用台数'].astype(str)
 
+            neon_colors = ['#00FFFF', '#FF00FF', '#39FF14', '#FFEA00', '#FF003C', '#9D00FF', '#00F0FF']
+            common_layout = dict(
+                font=dict(family="sans-serif", color="#E0E0E0"),
+                plot_bgcolor="rgba(17, 17, 17, 1)",
+                paper_bgcolor="rgba(17, 17, 17, 1)",
+                margin={'l': 30, 'r': 30, 't': 50, 'b': 30}
+            )
+
+            fig_bar = make_subplots(specs=[[{"secondary_y": True}]])
             if color_col:
                 if color_col == 'ParkingAreaName':
                     plot_cats = [p for p in PARKING_ORDER if p in bar_counts[color_col].unique()]
+                    plot_cats.extend([c for c in sorted(bar_counts[color_col].unique()) if c not in PARKING_ORDER])
                     for cat in plot_cats:
                         d = bar_counts[bar_counts[color_col] == cat]
                         fig_bar.add_trace(go.Bar(x=d[x_col], y=d['利用台数'], name=str(cat), text=d['text'], textposition='inside', insidetextanchor='middle', marker_color=PARKING_COLORS.get(cat, "#FFFFFF")), secondary_y=False)
@@ -343,33 +447,46 @@ if "①" in mode:
                         fig_bar.add_trace(go.Bar(x=d[x_col], y=d['利用台数'], name=str(cat), text=d['text'], textposition='inside', insidetextanchor='middle', marker_color=neon_colors[idx % len(neon_colors)]), secondary_y=False)
                 fig_bar.update_layout(barmode='stack')
                 for i, row in total_counts.iterrows():
-                    fig_bar.add_annotation(x=row[x_col], y=row['合計台数'], text=str(row['合計台数']), showarrow=False, yshift=10, font=dict(color="#00FFFF", size=13), yref="y")
+                    fig_bar.add_annotation(x=row[x_col], y=row['合計台数'], text=str(row['合計台数']), showarrow=False, yshift=10, font=dict(color="#00FFFF", size=13, family="sans-serif"), yref="y")
             else:
                 fig_bar.add_trace(go.Bar(x=bar_counts[x_col], y=bar_counts['利用台数'], name="利用台数", marker_color=neon_colors[0], text=bar_counts['text'], textposition='auto', textfont=dict(color="black")), secondary_y=False)
             
-            fig_bar.add_trace(go.Scatter(x=line_counts[x_col], y=line_counts['現金収入'], name="現金収入(全体)", mode='lines+markers', line={'color': '#FFFFFF', 'width': 3}), secondary_y=True)
-            fig_bar.update_layout(**common_layout, title=dict(text=f"<b>{x_title} 利用台数と現金収入推移</b>", font=dict(size=28, color="#00FFFF")), xaxis_title=x_title, legend=dict(orientation="h", yanchor="top", y=-0.2, xanchor="center", x=0.5, font=dict(color="#FFFFFF", size=18, family="Arial Black"), traceorder="normal"))
-            fig_bar.update_xaxes(showgrid=True, gridcolor='rgba(255,255,255,0.3)', type='category', tickfont=dict(color="#FFFFFF", size=14, family="Arial Black")); fig_bar.update_yaxes(title_text="利用台数（台）", secondary_y=False, rangemode='tozero', showgrid=True, gridcolor='rgba(255,255,255,0.3)', tickfont=dict(color="#FFFFFF", size=14, family="Arial Black")); fig_bar.update_yaxes(title_text="現金収入（円）", secondary_y=True, rangemode='tozero', showgrid=False, tickfont=dict(color="#FFFFFF", size=14, family="Arial Black"))
+            line_color = '#FFFFFF'
+            fig_bar.add_trace(go.Scatter(x=line_counts[x_col], y=line_counts['現金収入'], name="現金収入(全体)", mode='lines+markers', line={'color': line_color, 'width': 3}), secondary_y=True)
+            
+            fig_bar.update_layout(**common_layout, title=dict(text=f"{x_title} 利用台数と現金収入推移", font=dict(size=18, color="#00FFFF")), xaxis_title=x_title, legend=dict(orientation="h", yanchor="top", y=-0.2, xanchor="center", x=0.5, font=dict(color="#E0E0E0"), traceorder="normal"))
+            fig_bar.update_xaxes(showgrid=True, gridcolor='rgba(255,255,255,0.1)', type='category')
+            fig_bar.update_yaxes(title_text="利用台数（台）", secondary_y=False, rangemode='tozero', showgrid=True, gridcolor='rgba(255,255,255,0.1)')
+            fig_bar.update_yaxes(title_text="現金収入（円）", secondary_y=True, rangemode='tozero', showgrid=False)
+            
             st.plotly_chart(fig_bar, use_container_width=True)
             st.markdown("---")
             
             if 'ParkingAreaName' in filtered_df.columns:
                 area_counts = filtered_df.groupby('ParkingAreaName').agg({'OnTime': 'size', 'Cash': 'sum'}).rename(columns={'OnTime': '利用台数', 'Cash': '現金収入'}).reset_index()
+                total_parked = area_counts['利用台数'].sum()
+                total_cash = area_counts['現金収入'].sum()
                 parking_colors = {area: PARKING_COLORS.get(area, "#FFFFFF") for area in filtered_df['ParkingAreaName'].unique()}
+                
                 if show_by_payment_type:
                     st.subheader("🍩 駐車場別 利用内訳（サンバースト図）")
-                    agg_df = filtered_df.groupby(['ParkingAreaName', 'PaymentType']).agg({'OnTime': 'size', 'Cash': 'sum'}).rename(columns={'OnTime': '利用台数', 'Cash': '現金収入'}).reset_index()
-                    fig_chart = px.sunburst(agg_df[agg_df['利用台数']>0], path=['ParkingAreaName', 'PaymentType'], values='利用台数', color='ParkingAreaName', color_discrete_map=parking_colors)
-                    fig_chart.update_traces(texttemplate='%{label}<br>%{value}台<br>%{percentRoot}', hovertemplate='%{label}<br>利用台数: %{value}台<br>割合: %{percentRoot}', insidetextorientation='radial')
-                    fig_chart.update_layout(**common_layout, height=600)
+                    st.write("※ グラフの要素をクリックすると、その階層を拡大（ドリルダウン）できます。中央をクリックすると元に戻ります。")
+                    if 'PaymentType' in filtered_df.columns:
+                        agg_df = filtered_df.groupby(['ParkingAreaName', 'PaymentType']).agg({'OnTime': 'size', 'Cash': 'sum'}).rename(columns={'OnTime': '利用台数', 'Cash': '現金収入'}).reset_index()
+                        fig_chart = px.sunburst(agg_df[agg_df['利用台数']>0], path=['ParkingAreaName', 'PaymentType'], values='利用台数', color='ParkingAreaName', color_discrete_map=parking_colors)
+                        fig_chart.update_traces(texttemplate='%{label}<br>%{value}台<br>%{percentRoot}', hovertemplate='%{label}<br>利用台数: %{value}台<br>割合: %{percentRoot}', insidetextorientation='radial')
+                        fig_chart.update_layout(**common_layout, height=600)
+                        st.plotly_chart(fig_chart, use_container_width=True)
                 else:
                     st.subheader("🍩 駐車場別 利用割合 ＆ 現金収入割合")
                     fig_chart = go.Figure()
-                    total_p = area_counts['利用台数'].sum(); total_c = area_counts['現金収入'].sum()
-                    fig_chart.add_trace(go.Pie(labels=area_counts['ParkingAreaName'], values=area_counts['利用台数'], name="利用台数", hole=0.55, domain={'x': [0.15, 0.85], 'y': [0.15, 0.85]}, sort=False, marker=dict(colors=[parking_colors.get(l, '#FFF') for l in area_counts['ParkingAreaName']])))
-                    fig_chart.add_trace(go.Pie(labels=area_counts['ParkingAreaName'], values=area_counts['現金収入'], name="現金収入", hole=0.8, domain={'x': [0, 1], 'y': [0, 1]}, sort=False, marker=dict(colors=[parking_colors.get(l, '#FFF') for l in area_counts['ParkingAreaName']])))
-                    fig_chart.update_layout(**common_layout, title=dict(text="内側: 利用台数 / 外側: 現金収入", font=dict(color="#00FFFF")), annotations=[{"text": f"総台数<br><b>{total_p:,}</b><br>台<br><br>総現金<br><b>{int(total_c):,}</b><br>円", "x": 0.5, "y": 0.5, "showarrow": False, "font": dict(color="#00FFFF")}], showlegend=True)
-                st.plotly_chart(fig_chart, use_container_width=True)
+                    inner_domain, middle_domain = [0.15, 0.85], [0.0, 1.0]
+                    inner_hole, middle_hole = 0.55, 0.8
+                    fig_chart.add_trace(go.Pie(labels=area_counts['ParkingAreaName'], values=area_counts['利用台数'], name="利用台数", hole=inner_hole, domain={'x': inner_domain, 'y': inner_domain}, hoverinfo='label+value+percent+name', textinfo='label+value+percent', textposition='inside', direction='clockwise', sort=False, marker=dict(colors=[parking_colors.get(label, '#FFFFFF') for label in area_counts['ParkingAreaName']]), insidetextfont=dict(color="black")))
+                    fig_chart.add_trace(go.Pie(labels=area_counts['ParkingAreaName'], values=area_counts['現金収入'], name="現金収入", hole=middle_hole, domain={'x': middle_domain, 'y': middle_domain}, hoverinfo='label+value+percent+name', textinfo='value+percent', textposition='inside', direction='clockwise', sort=False, marker=dict(colors=[parking_colors.get(label, '#FFFFFF') for label in area_counts['ParkingAreaName']]), insidetextfont=dict(color="black")))
+                    fig_chart.update_layout(**common_layout, title=dict(text="内側: 利用台数 / 外側: 現金収入", font=dict(color="#00FFFF")), annotations=[{"text": f"総台数<br><b style='font_size:20px;'>{total_parked:,}</b><br>台<br><br>総現金<br><b style='font_size:16px;'>{int(total_cash):,}</b><br>円", "x": 0.5, "y": 0.5, "showarrow": False, "font": dict(color="#00FFFF")}], showlegend=True, legend=dict(font=dict(color="#E0E0E0")))
+                    st.plotly_chart(fig_chart, use_container_width=True)
+                st.markdown("---")
 
 # ==========================================
 # ② 24時間稼働状況分析 (原本ロジック完全再現)
@@ -454,9 +571,10 @@ else:
             with c2:
                 df_t1 = df_year[(df_year["曜日区分"] == d_type) & (df_year["駐車場名"].isin(sel_p))].copy()
                 if not df_t1.empty:
-                    fig1 = px.line(df_t1, x="時間帯", y=t_met, color="駐車場名", template="plotly_dark", markers=True, line_shape="spline", category_orders={"駐車場名": plist})
-                    fig1.update_xaxes(type='category', gridcolor='rgba(255,255,255,0.25)', tickfont=dict(color="#FFFFFF", size=14, weight='bold'))
-                    fig1.update_layout(font=dict(color="#FFFFFF", size=15), hovermode="x unified", legend=dict(font=dict(color="#FFFFFF", size=16)), height=550, paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)')
+                    fig1 = px.line(df_t1, x="時間帯", y=t_met, color="駐車場名", markers=True, line_shape="spline", category_orders={"駐車場名": plist})
+                    fig1.update_xaxes(type='category', gridcolor='rgba(255,255,255,0.1)', tickfont=dict(color="#E0E0E0", size=12))
+                    fig1.update_layout(**common_layout, hovermode="x unified", height=550)
+                    fig1.update_yaxes(gridcolor='rgba(255,255,255,0.1)', tickfont=dict(color="#E0E0E0", size=12))
                     st.plotly_chart(fig1, use_container_width=True)
 
         with tab2:
@@ -471,17 +589,18 @@ else:
                 k_wd = calculate_kpis(d_wd, t_pk2); k_ho = calculate_kpis(d_ho, t_pk2)
                 if k_wd and k_ho:
                     m1, m2, m3 = st.columns(3); gap = k_ho["max_stock"] / k_wd["max_stock"] if k_wd["max_stock"] > 0 else 0
-                    m1.metric("平日最大稼動率", f"{k_wd['max_occ_rate']:.1f} %", help="【計算式】(平日在庫の最大値 / 収容台数) × 100 \n\n 平日において、その駐車場の収容キャパシティに対して、ピーク時にどれだけの車両が埋まっているかを示します。この値が高い（80〜90%超）場合は、平日のビジネス・通勤需要による満車リスクが高いと判断できます。")
-                    m2.metric("休日最大稼動率", f"{k_ho['max_occ_rate']:.1f} %", help="【計算式】(休日在庫の最大値 / 収容台数) × 100 \n\n 休日（土日祝）において、駐車場の収容キャパシティに対して、ピーク時にどれだけの車両が埋まっているかを示します。平日よりも高い数値を示す場合、商業施設や観光需要などのお出かけ客を主体とした運用特性であることを意味します。")
-                    m3.metric("平日・休日ギャップ", f"{gap:.2f}", help="【計算式】休日最大在庫実数 / 平日最大在庫実数 \n\n 休日のピークと平日のピークの比率です。1.0を超えれば『休日混雑型（商業・レジャー系）』、1.0を大きく下回れば『平日混雑型（ビジネス・都心型拠点）』と分類できます。運営方針や割引施策の対象日を検討する重要な切り分けとなります。")
+                    m1.metric("平日最大稼動率", f"{k_wd['max_occ_rate']:.1f} %")
+                    m2.metric("休日最大稼動率", f"{k_ho['max_occ_rate']:.1f} %")
+                    m3.metric("平日・休日ギャップ", f"{gap:.2f}")
                 df_t2 = pd.concat([d_wd, d_ho])
                 if not df_t2.empty:
-                    fig2 = px.line(df_t2, x="時間帯", y=m_t2, color="曜日区分", template="plotly_dark", markers=True, color_discrete_map={"平日平均": "#00FFFF", "休日平均": "#FF00FF"})
+                    fig2 = px.line(df_t2, x="時間帯", y=m_t2, color="曜日区分", markers=True, color_discrete_map={"平日平均": "#00FFFF", "休日平均": "#FF00FF"})
                     if "在庫" in m_t2:
                         cap = PARKING_CAPACITY.get(t_pk2, 0)
                         if cap > 0: fig2.add_hline(y=cap, line_dash="dash", line_color=NEON_COLORS["収容台数"], annotation_text="CAPACITY")
-                    fig2.update_xaxes(type='category', gridcolor='rgba(255,255,255,0.25)', tickfont=dict(color="#FFFFFF", size=14, weight='bold'))
-                    fig2.update_layout(font=dict(color="#FFFFFF", size=15), hovermode="x unified", legend=dict(font=dict(color="#FFFFFF", size=16)), height=500, paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)')
+                    fig2.update_xaxes(type='category', gridcolor='rgba(255,255,255,0.1)', tickfont=dict(color="#E0E0E0", size=12))
+                    fig2.update_layout(**common_layout, hovermode="x unified", height=500)
+                    fig2.update_yaxes(gridcolor='rgba(255,255,255,0.1)', tickfont=dict(color="#E0E0E0", size=12))
                     st.plotly_chart(fig2, use_container_width=True)
 
         with tab3:
@@ -495,15 +614,16 @@ else:
                 k_t3 = calculate_kpis(df_t3, t_pk3)
                 if k_t3:
                     k1, k2, k3 = st.columns(3)
-                    k1.metric("全体ピーク時刻", k_t3["peak_time"], help="【算出方法】年間平均データのうち、一般+定期の在庫合計が最大となった時刻を表示します。これがその駐車場の『最も注意が必要な時間』となります。")
-                    k2.metric("定期利用依存度", f"{k_t3['reg_dep_rate']:.1f} %", help="【計算式】(ピーク時の定期在庫数 / ピーク時の在庫合計) × 100 \n\n 駐車場が満車に近づく瞬間、その利用者のうち何％が定期券利用者であるかを示します。この数値が高いほど、安定的な月極収入はあるものの、一般利用客を逃している可能性があるため、発行枚数やエリアの調整を検討する材料となります。")
-                    k3.metric("一般回転率", f"{k_t3['traffic_activity']:.2f}", help="【計算式】((一般入庫合計 + 一般出庫合計) ÷ 2) ÷ 収容台数\n\n1台分のスペースが1日に平均何回入れ替わったか（回転率）を示します。数値が「1.0」であれば、1車室につき1日1台の一般客が入れ替わったことを意味します。在庫が少なくてもこの値が高ければ、短時間利用が多く高収益な拠点と言えます。")
+                    k1.metric("全体ピーク時刻", k_t3["peak_time"])
+                    k2.metric("定期利用依存度", f"{k_t3['reg_dep_rate']:.1f} %")
+                    k3.metric("一般回転率", f"{k_t3['traffic_activity']:.2f}")
                 if not df_t3.empty:
                     fig3 = go.Figure()
-                    fig3.add_trace(go.Scatter(x=df_t3["時間帯"], y=df_t3["定期在庫"] if "在庫" in mod_t3 else (df_t3["定期入庫"] if "入庫" in mod_t3 else df_t3["定期出庫"]), name="定期 (Magenta)", mode='lines+markers', line=dict(color=NEON_COLORS["定期在庫"], width=3)))
-                    fig3.add_trace(go.Scatter(x=df_t3["時間帯"], y=df_t3["一般在庫"] if "在庫" in mod_t3 else (df_t3["一般入庫"] if "入庫" in mod_t3 else df_t3["一般出庫"]), name="一般 (Cyan)", mode='lines+markers', line=dict(color=NEON_COLORS["一般在庫"], width=3)))
-                    fig3.update_xaxes(type='category', gridcolor='rgba(255,255,255,0.25)', tickfont=dict(color="#FFFFFF", size=14, weight='bold'))
-                    fig3.update_layout(template="plotly_dark", font=dict(color="#FFFFFF", size=15), hovermode="x unified", legend=dict(font=dict(color="#FFFFFF", size=16)), height=500, paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)')
+                    fig3.add_trace(go.Scatter(x=df_t3["時間帯"], y=df_t3["定期在庫"] if "在庫" in mod_t3 else (df_t3["定期入庫"] if "入庫" in mod_t3 else df_t3["定期出庫"]), name="定期", mode='lines+markers', line=dict(color=NEON_COLORS["定期在庫"], width=3)))
+                    fig3.add_trace(go.Scatter(x=df_t3["時間帯"], y=df_t3["一般在庫"] if "在庫" in mod_t3 else (df_t3["一般入庫"] if "入庫" in mod_t3 else df_t3["一般出庫"]), name="一般", mode='lines+markers', line=dict(color=NEON_COLORS["一般在庫"], width=3)))
+                    fig3.update_xaxes(type='category', gridcolor='rgba(255,255,255,0.1)', tickfont=dict(color="#E0E0E0", size=12))
+                    fig3.update_layout(**common_layout, hovermode="x unified", height=500)
+                    fig3.update_yaxes(gridcolor='rgba(255,255,255,0.1)', tickfont=dict(color="#E0E0E0", size=12))
                     st.plotly_chart(fig3, use_container_width=True)
 
         with tab4:
@@ -516,9 +636,10 @@ else:
             with c8:
                 df_t4 = df2[(df2["駐車場名"] == t_pk4) & (df2["曜日区分"] == d_t4_sel)]
                 if not df_t4.empty:
-                    fig4 = px.line(df_t4, x="時間帯", y=m_t4, color="年度", template="plotly_dark", markers=True, line_shape="spline")
-                    fig4.update_xaxes(type='category', gridcolor='rgba(255,255,255,0.25)', tickfont=dict(color="#FFFFFF", size=14, weight='bold'))
-                    fig4.update_layout(font=dict(color="#FFFFFF", size=15), hovermode="x unified", legend=dict(font=dict(color="#FFFFFF", size=16)), height=500, paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)')
+                    fig4 = px.line(df_t4, x="時間帯", y=m_t4, color="年度", markers=True, line_shape="spline")
+                    fig4.update_xaxes(type='category', gridcolor='rgba(255,255,255,0.1)', tickfont=dict(color="#E0E0E0", size=12))
+                    fig4.update_layout(**common_layout, hovermode="x unified", height=500)
+                    fig4.update_yaxes(gridcolor='rgba(255,255,255,0.1)', tickfont=dict(color="#E0E0E0", size=12))
                     st.plotly_chart(fig4, use_container_width=True)
 
         with tab5:
@@ -531,10 +652,10 @@ else:
                 k_t5 = calculate_kpis(df_t5_data, t_pk5)
                 if k_t5:
                     d1, d2, d3, d4 = st.columns(4)
-                    d1.metric("最大稼動ポテンシャル", f"{k_t5['max_occ_rate']:.1f} %", help="【計算式】(1日の在庫合計の最大値 ÷ 収容台数) × 100\n\n選択した駐車場・年度・曜日区分において、1日のうち最も車が多かった瞬間に、収容キャパシティの何％が埋まっていたかを示します。")
-                    d2.metric("総合ピーク在庫実数", f"{k_t5['max_stock']:,} 台", help="【算出方法】1日の全時間帯のうち「一般在庫＋定期在庫」が最大となった時刻の実際の駐車台数です。")
-                    d3.metric("定期券利用シェア", f"{k_t5['reg_dep_rate']:.1f} %", help="【計算式】(ピーク時の定期在庫台数 ÷ ピーク時の在庫合計台数) × 100\n\n駐車場が最も混雑する瞬間に、駐車している車のうち何％が定期券（月極）利用者かを示します。")
-                    d4.metric("一般回転率", f"{k_t5['traffic_activity']:.2f}", help="【計算式】((1日の一般入庫合計 ＋ 1日の一般出庫合計) ÷ 2) ÷ 収容台数\n\n1日あたりに1つの駐車スペースが何回入れ替わったか（回転率）を示す指標です。")
+                    d1.metric("最大稼動ポテンシャル", f"{k_t5['max_occ_rate']:.1f} %")
+                    d2.metric("総合ピーク在庫実数", f"{k_t5['max_stock']:,} 台")
+                    d3.metric("定期券利用シェア", f"{k_t5['reg_dep_rate']:.1f} %")
+                    d4.metric("一般回転率", f"{k_t5['traffic_activity']:.2f}")
                 if not df_t5_data.empty:
                     fig5 = make_subplots(specs=[[{"secondary_y": True}]])
                     fig5.add_trace(go.Bar(x=df_t5_data["時間帯"], y=df_t5_data["定期在庫"], name="定期在庫", marker_color="rgba(240, 171, 252, 0.5)"), secondary_y=False)
@@ -545,7 +666,8 @@ else:
                     fig5.add_trace(go.Scatter(x=df_t5_data["時間帯"], y=df_t5_data["定期出庫"], name="定期出庫", mode='lines+markers', line=dict(color=NEON_COLORS["定期出庫"], width=2)), secondary_y=True)
                     cap = PARKING_CAPACITY.get(t_pk5, 0)
                     if cap > 0: fig5.add_hline(y=cap, line_dash="dash", line_color=NEON_COLORS["収容台数"], annotation_text=f"CAP ({cap})", annotation_position="left")
-                    fig5.update_xaxes(type='category', gridcolor='rgba(255,255,255,0.3)', tickfont=dict(color="#FFFFFF", size=14, weight='bold'))
-                    fig5.update_layout(template="plotly_dark", barmode='stack', hovermode="x unified", height=650, paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)', legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1, font=dict(color="#FFFFFF", size=16)))
-                    fig5.update_yaxes(title_text="在庫台数（台）", secondary_y=False, showgrid=True, gridcolor='rgba(255,255,255,0.3)', tickfont=dict(color="#FFFFFF", size=14, weight='bold')); fig5.update_yaxes(title_text="入出庫数（台/時）", secondary_y=True, showgrid=False, tickfont=dict(color="#FFFFFF", size=14, weight='bold'))
+                    fig5.update_xaxes(type='category', gridcolor='rgba(255,255,255,0.1)', tickfont=dict(color="#E0E0E0", size=12))
+                    fig5.update_layout(**common_layout, barmode='stack', hovermode="x unified", height=650, legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1))
+                    fig5.update_yaxes(title_text="在庫台数（台）", secondary_y=False, showgrid=True, gridcolor='rgba(255,255,255,0.1)', tickfont=dict(color="#E0E0E0", size=12))
+                    fig5.update_yaxes(title_text="入出庫数（台/時）", secondary_y=True, showgrid=False, tickfont=dict(color="#E0E0E0", size=12))
                     st.plotly_chart(fig5, use_container_width=True)
