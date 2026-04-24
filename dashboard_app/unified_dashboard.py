@@ -450,7 +450,6 @@ if "①" in mode:
                     fig_chart.add_trace(go.Pie(labels=area_counts['ParkingAreaName'], values=area_counts['現金収入'], name="現金収入", hole=middle_hole, domain={'x': middle_domain, 'y': middle_domain}, hoverinfo='label+value+percent+name', textinfo='value+percent', textposition='inside', direction='clockwise', sort=False, marker=dict(colors=[parking_colors.get(label, '#FFFFFF') for label in area_counts['ParkingAreaName']]), insidetextfont=dict(color="black")))
                     fig_chart.update_layout(**common_layout, title=dict(text="内側: 利用台数 / 外側: 現金収入", font=dict(color="#00FFFF")), annotations=[{"text": f"総台数<br><b style='font_size:20px;'>{total_parked:,}</b><br>台<br><br>総現金<br><b style='font_size:16px;'>{int(total_cash):,}</b><br>円", "x": 0.5, "y": 0.5, "showarrow": False, "font": dict(color="#00FFFF")}], showlegend=True, legend=dict(font=dict(color="#E0E0E0")))
                     st.plotly_chart(fig_chart, use_container_width=True)
-                    st.plotly_chart(fig_chart, use_container_width=True)
                     st.markdown("---")
             else:
                 st.warning("選択された条件に該当するデータがありません。フィルター条件を変更してください。")
