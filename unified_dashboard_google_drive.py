@@ -455,7 +455,7 @@ if "①" in mode:
             fig_bar.add_trace(go.Scatter(x=line_counts[x_col], y=line_counts['現金収入'], name="現金収入(全体)", mode='lines+markers', line={'color': line_color, 'width': 3}), secondary_y=True)
             
             fig_bar.update_layout(**common_layout, title=dict(text=f"{x_title} 利用台数と現金収入推移", font=dict(size=18, color="#00FFFF")), xaxis_title=x_title, legend=dict(orientation="h", yanchor="top", y=-0.2, xanchor="center", x=0.5, font=dict(color="#E0E0E0"), traceorder="normal"))
-            fig_bar.update_xaxes(showgrid=True, gridcolor='rgba(255,255,255,0.1)', type='category')
+            fig_bar.update_xaxes(showgrid=True, gridcolor='rgba(255,255,255,0.1)', type='category', categoryorder='category ascending')
             fig_bar.update_yaxes(title_text="利用台数（台）", secondary_y=False, rangemode='tozero', showgrid=True, gridcolor='rgba(255,255,255,0.1)')
             fig_bar.update_yaxes(title_text="現金収入（円）", secondary_y=True, rangemode='tozero', showgrid=False)
             
