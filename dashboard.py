@@ -155,7 +155,22 @@ if os.path.exists(file_path):
     print("DEBUG: File found, starting load_data...")
     # ファイルの更新日時を取得してキャッシュキーにする
     mtime = os.path.getmtime(file_path)
-    df = load_data(file_path, mtime)
+    with st.spinner("データを読み込み中..."):
+        df = load_data(file_path, mtime)
+    
+    if df is None:
+        st.error(f"データの読み込みに失敗しました: {file_path}")
+    elif df.empty:
+        st.warning(f"データが0件です: {file_path}")
+    else:
+        st.success(f"データを読み込みました: {len(df):,} 件")
+        with st.expander("🛠️ デバッグ：データの中身を確認"):
+            st.write("項目名:", df.columns.tolist())
+            st.write("データ見本:", df.head())
+            if 'OnTime' in df.columns:
+                st.write("日付の範囲:", df['OnTime'].min(), " ～ ", df['OnTime'].max())
+
+
     print("DEBUG: load_data returned.")
 
     

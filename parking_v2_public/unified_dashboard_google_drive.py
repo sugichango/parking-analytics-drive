@@ -299,7 +299,22 @@ if "①" in mode:
         TARGET_CSV = "updated_integrated_data_FY2025.csv.gz"
         modified_time = ''
 
-    df_d1 = load_data_dashboard1_drive(TARGET_CSV, modified_time)
+    with st.spinner("データを読み込み中..."):
+        df_d1 = load_data_dashboard1_drive(TARGET_CSV, modified_time)
+    
+    if df_d1 is None:
+        st.error(f"データの読み込みに失敗しました。ファイル名: {TARGET_CSV}")
+    elif df_d1.empty:
+        st.warning(f"読み込まれたデータが0件です。ファイル名: {TARGET_CSV}")
+    else:
+        st.success(f"データを読み込みました: {len(df_d1):,} 件")
+        with st.expander("🛠️ デバッグ：データの中身を確認"):
+            st.write("項目名:", df_d1.columns.tolist())
+            st.write("データ見本:", df_d1.head())
+            if 'OnTime' in df_d1.columns:
+                st.write("日付の範囲:", df_d1['OnTime'].min(), " ～ ", df_d1['OnTime'].max())
+
+
 
 
     
