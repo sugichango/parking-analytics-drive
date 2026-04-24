@@ -282,23 +282,28 @@ if "①" in mode:
         return df
 
 
-    # --- 利用可能なデータファイルの検索 (Google Drive) ---
-    q_d1 = "name contains 'updated_integrated_data_FY' and name contains '.csv.gz' and trashed = false"
-    available_drive_files = search_files_in_drive(q_d1)
+    # --- 利用可能なデータの読み込み (Google Drive) ---
+    # 旧ダッシュボードの仕様に基づき、統合された一つのファイルを読み込みます
+    TARGET_CSV = "updated_integrated_data.csv.gz"
     
-    if available_drive_files:
-        years_drive = sorted([f['name'].replace("updated_integrated_data_FY", "").replace(".csv.gz", "") for f in available_drive_files])
-        default_idx = years_drive.index("2025") if "2025" in years_drive else len(years_drive) - 1
-        selected_year_drive = st.sidebar.selectbox("分析対象年度 (一般利用)", years_drive, index=default_idx, key="drive_year_select")
-        TARGET_CSV = f"updated_integrated_data_FY{selected_year_drive}.csv.gz"
-        target_file_info = [f for f in available_drive_files if f['name'] == TARGET_CSV][0]
-        modified_time = target_file_info.get('modifiedTime', '')
-    else:
-        TARGET_CSV = "updated_integrated_data_FY2025.csv.gz"
-        modified_time = ''
+    # ファイルの更新日時を取得（キャッシュキー用）
+    available_drive_files = search_files_in_drive(f"name = '{TARGET_CSV}' and trashed = false")
+    modified_time = available_drive_files[0].get('modifiedTime', '') if available_drive_files else ''
 
     with st.spinner("データを読み込み中..."):
         df_d1 = load_data_dashboard1_drive(TARGET_CSV, modified_time)
+
+    if df_d1 is not None and not df_d1.empty:
+        # 年度を抽出（OnTime列から）
+        if 'OnTime' in df_d1.columns:
+            df_d1['Year'] = df_d1['OnTime'].dt.year.astype(str)
+            available_years = sorted(df_d1['Year'].unique(), reverse=True)
+            
+            st.sidebar.markdown("---")
+            selected_year_d1 = st.sidebar.selectbox("分析対象年度 (一般利用)", available_years, index=0, key="d1_year_select")
+            
+            # 選択された年度でフィルタリング
+            df_d1 = df_d1[df_d1['Year'] == selected_year_d1]
     
     if df_d1 is None:
         st.error(f"データの読み込みに失敗しました。ファイル名: {TARGET_CSV}")
