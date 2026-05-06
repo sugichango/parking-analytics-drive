@@ -282,6 +282,35 @@ if "①" in mode:
         return df
 
 
+    @st.cache_data(show_spinner=False)
+    def load_comparison_monthly(_file_keys):
+        """全年度ファイルを(fiscal_year, ParkingAreaName, Month)で月次集計して返す。
+        集計済みの小DataFrameだけキャッシュするため高速。"""
+        import re as _re2
+        rows = []
+        for _fname, _mtime in _file_keys:
+            _m = _re2.search(r'(202[0-9])', _fname)
+            if not _m: continue
+            _fy = int(_m.group(1))
+            _df = load_data_dashboard1_drive(_fname, _mtime)
+            if _df is None or _df.empty: continue
+            if 'Month' not in _df.columns or 'ParkingAreaName' not in _df.columns: continue
+            _cash_col = 'Cash' if 'Cash' in _df.columns else None
+            if _cash_col:
+                _agg = _df.groupby(['ParkingAreaName', 'Month']).agg(
+                    利用台数=('OnTime', 'count'), 現金収入=(_cash_col, 'sum')
+                ).reset_index()
+            else:
+                _agg = _df.groupby(['ParkingAreaName', 'Month']).agg(
+                    利用台数=('OnTime', 'count')
+                ).reset_index()
+                _agg['現金収入'] = 0
+            _agg['fiscal_year'] = _fy
+            rows.append(_agg)
+        if not rows:
+            return pd.DataFrame()
+        return pd.concat(rows, ignore_index=True)
+
     # --- 利用可能な年度の特定ロジック (最強版) ---
     q_years = "name contains 'updated_integrated_data' and trashed = false"
     drive_files = search_files_in_drive(q_years)
@@ -455,7 +484,7 @@ if "①" in mode:
             fig_bar.add_trace(go.Scatter(x=line_counts[x_col], y=line_counts['現金収入'], name="現金収入(全体)", mode='lines+markers', line={'color': line_color, 'width': 3}), secondary_y=True)
             
             fig_bar.update_layout(**common_layout, title=dict(text=f"{x_title} 利用台数と現金収入推移", font=dict(size=18, color="#00FFFF")), xaxis_title=x_title, legend=dict(orientation="h", yanchor="top", y=-0.2, xanchor="center", x=0.5, font=dict(color="#E0E0E0"), traceorder="normal"))
-            fig_bar.update_xaxes(showgrid=True, gridcolor='rgba(255,255,255,0.1)', type='category')
+            fig_bar.update_xaxes(showgrid=True, gridcolor='rgba(255,255,255,0.1)', type='category', categoryorder='category ascending')
             fig_bar.update_yaxes(title_text="利用台数（台）", secondary_y=False, rangemode='tozero', showgrid=True, gridcolor='rgba(255,255,255,0.1)')
             fig_bar.update_yaxes(title_text="現金収入（円）", secondary_y=True, rangemode='tozero', showgrid=False)
             
@@ -488,10 +517,219 @@ if "①" in mode:
                     st.plotly_chart(fig_chart, use_container_width=True)
                 st.markdown("---")
 
+        # ==========================================
+        # 年度間比較分析セクション
+        # ==========================================
+        st.subheader("📊 年度間比較分析")
+
+        import re as _re
+        _file_keys = tuple(
+            (_f['name'], _f.get('modifiedTime', ''))
+            for _f in drive_files
+            if _re.search(r'202[0-9]', _f['name']) and _f['name'].endswith('.csv.gz')
+        )
+        df_monthly = load_comparison_monthly(_file_keys)
+
+        if df_monthly.empty:
+            st.warning("比較用の複数年度データが見つかりませんでした。")
+        else:
+            available_fy = sorted(df_monthly['fiscal_year'].unique())
+            fy_colors = {str(y): c for y, c in zip(available_fy, ['#00FFFF', '#FF00FF', '#39FF14', '#FFFF00'])}
+
+            # --- 駐車場・指標セレクタ ---
+            _cmp_col1, _cmp_col2 = st.columns([2, 2])
+            with _cmp_col1:
+                _area_opts = ["全駐車場"] + [p for p in PARKING_ORDER if p in df_monthly['ParkingAreaName'].unique()]
+                cmp_area = st.selectbox("駐車場を選択", _area_opts, key="cmp_area")
+            with _cmp_col2:
+                cmp_metric = st.selectbox("比較指標（グラフ用）", ["利用台数", "現金収入"], key="cmp_metric")
+
+            # フィルター（集計済み小データへの操作なので瞬時）
+            if cmp_area != "全駐車場":
+                df_cmp = df_monthly[df_monthly['ParkingAreaName'] == cmp_area].copy()
+            else:
+                df_cmp = df_monthly.copy()
+
+            # --- KPIパネル（年度合計） ---
+            st.markdown("#### 年度合計 KPI")
+            kpi_cols = st.columns(len(available_fy))
+            kpi_by_year = {}
+            for _fy in available_fy:
+                _dfy = df_cmp[df_cmp['fiscal_year'] == _fy]
+                kpi_by_year[_fy] = {
+                    '台数': int(_dfy['利用台数'].sum()),
+                    '現金収入': int(_dfy['現金収入'].sum())
+                }
+
+            for _i, _fy in enumerate(available_fy):
+                _prev_fy = available_fy[_i - 1] if _i > 0 else None
+                _cnt = kpi_by_year[_fy]['台数']
+                _cash = kpi_by_year[_fy]['現金収入']
+                _fy_color = fy_colors.get(str(_fy), '#00FFFF')
+                with kpi_cols[_i]:
+                    if _prev_fy:
+                        _prev_cnt = kpi_by_year[_prev_fy]['台数']
+                        _prev_cash = kpi_by_year[_prev_fy]['現金収入']
+                        _diff_cnt = ((_cnt - _prev_cnt) / _prev_cnt * 100) if _prev_cnt > 0 else 0
+                        _diff_cash = ((_cash - _prev_cash) / _prev_cash * 100) if _prev_cash > 0 else 0
+                        _ac = "▲" if _diff_cnt >= 0 else "▼"
+                        _ar = "▲" if _diff_cash >= 0 else "▼"
+                        _yoy = (
+                            f'<div style="color:{_fy_color};font-size:16px;font-weight:700;margin-top:8px;">'
+                            f'{_ac} 台数 {abs(_diff_cnt):.1f}%</div>'
+                            f'<div style="color:{_fy_color};font-size:16px;font-weight:700;">'
+                            f'{_ar} 収入 {abs(_diff_cash):.1f}%</div>'
+                            f'<div style="color:#888;font-size:13px;">（前年比）</div>'
+                        )
+                    else:
+                        _yoy = '<div style="color:#888;font-size:16px;margin-top:8px;">— 基準年</div>'
+                    st.markdown(f"""
+<div style="background:rgba(0,255,255,0.07);border:1px solid {_fy_color};border-radius:10px;padding:16px;text-align:center;">
+  <div style="color:{_fy_color};font-size:18px;font-weight:700;">FY{_fy}</div>
+  <div style="color:#FFFFFF;font-size:28px;font-weight:800;text-shadow:0 0 8px {_fy_color};">{_cnt:,} 台</div>
+  <div style="color:#FFFFFF;font-size:28px;font-weight:800;text-shadow:0 0 8px {_fy_color};">¥{_cash:,} 円</div>
+  <div style="color:#AAAAAA;font-size:12px;">（消費税含む）</div>
+  {_yoy}
+</div>""", unsafe_allow_html=True)
+
+            st.markdown("<br>", unsafe_allow_html=True)
+
+            # --- 年度比較折れ線グラフ ---
+            if 'Month' in df_cmp.columns:
+                _val_col = '利用台数' if cmp_metric == "利用台数" else '現金収入'
+                df_cmp_grp = df_cmp.groupby(['fiscal_year', 'Month'])[_val_col].sum().reset_index(name='値')
+                df_cmp_grp['fiscal_year'] = df_cmp_grp['fiscal_year'].astype(str)
+
+                _fy_month_order = [4, 5, 6, 7, 8, 9, 10, 11, 12, 1, 2, 3]
+                _month_label_map = {m: f"{m}月" for m in range(1, 13)}
+                df_cmp_grp['月番号'] = df_cmp_grp['Month'].str[-2:].astype(int)
+                df_cmp_grp['月ラベル'] = df_cmp_grp['月番号'].map(_month_label_map)
+                df_cmp_grp['月順'] = df_cmp_grp['月番号'].map({m: i for i, m in enumerate(_fy_month_order)})
+                _x_labels = [f"{m}月" for m in _fy_month_order]
+
+                fig_cmp = go.Figure()
+                for _fy_s in sorted(df_cmp_grp['fiscal_year'].unique()):
+                    _d = df_cmp_grp[df_cmp_grp['fiscal_year'] == _fy_s].sort_values('月順')
+                    fig_cmp.add_trace(go.Scatter(
+                        x=_d['月ラベル'], y=_d['値'],
+                        name=f"FY{_fy_s}",
+                        mode='lines+markers',
+                        line=dict(color=fy_colors.get(_fy_s, '#FFFFFF'), width=3),
+                        marker=dict(size=8),
+                        hovertemplate=f"FY{_fy_s} %{{x}}<br>{cmp_metric}: %{{y:,}}<extra></extra>"
+                    ))
+
+                _y_label = "利用台数（台）" if cmp_metric == "利用台数" else "現金収入（円）"
+                fig_cmp.update_layout(
+                    title=dict(text=f"月別 {cmp_metric} 年度比較 — {cmp_area}", font=dict(size=18, color="#00FFFF")),
+                    xaxis=dict(title="月", showgrid=True, gridcolor='rgba(255,255,255,0.1)', type='category', categoryorder='array', categoryarray=_x_labels),
+                    yaxis=dict(title=_y_label, showgrid=True, gridcolor='rgba(255,255,255,0.1)', rangemode='normal'),
+                    font=dict(family="sans-serif", color="#E0E0E0"),
+                    plot_bgcolor="rgba(17,17,17,1)",
+                    paper_bgcolor="rgba(17,17,17,1)",
+                    height=550,
+                    margin={'l': 30, 'r': 30, 't': 50, 'b': 30},
+                    legend=dict(orientation="h", yanchor="top", y=-0.2, xanchor="center", x=0.5, font=dict(color="#E0E0E0"))
+                )
+                st.plotly_chart(fig_cmp, use_container_width=True)
+            else:
+                st.info("Month 列が見つからないため、グラフを表示できません。")
+
+            st.markdown("<br>", unsafe_allow_html=True)
+
+            # --- 駐車場別年度比較表 ---
+            st.markdown("#### 駐車場別 年度比較表")
+            st.markdown(
+                '<p style="color:#AAAAAA;font-size:13px;margin-top:-8px;">※ 台数：千台　／　収入：百万円（消費税含む）</p>',
+                unsafe_allow_html=True
+            )
+
+            # 駐車場×年度の年間集計
+            _tbl_grp = df_monthly.groupby(['ParkingAreaName', 'fiscal_year']).agg(
+                利用台数=('利用台数', 'sum'), 現金収入=('現金収入', 'sum')
+            ).reset_index()
+
+            # 全駐車場合計行
+            _total_grp = df_monthly.groupby('fiscal_year').agg(
+                利用台数=('利用台数', 'sum'), 現金収入=('現金収入', 'sum')
+            ).reset_index()
+            _total_grp['ParkingAreaName'] = '全駐車場'
+            _tbl_grp = pd.concat([_tbl_grp, _total_grp], ignore_index=True)
+
+            # ピボット
+            _pivot_cnt = _tbl_grp.pivot(index='ParkingAreaName', columns='fiscal_year', values='利用台数')
+            _pivot_cash = _tbl_grp.pivot(index='ParkingAreaName', columns='fiscal_year', values='現金収入')
+
+            # 表を構築
+            _parking_row_order = [p for p in PARKING_ORDER if p in _pivot_cnt.index] + ['全駐車場']
+            _fys = sorted(available_fy)
+
+            def _yoy_cell(curr, prev, color):
+                if prev is None or prev == 0:
+                    return "—"
+                pct = (curr - prev) / prev * 100
+                arrow = "▲" if pct >= 0 else "▼"
+                clr = "#39FF14" if pct >= 0 else "#FF4500"
+                return f'<span style="color:{clr};font-weight:700;">{arrow}{abs(pct):.1f}%</span>'
+
+            # HTMLテーブル生成
+            _th = '<th style="background:#1a2a3a;color:#00FFFF;padding:6px 10px;text-align:center;white-space:nowrap;">'
+            _th_left = '<th style="background:#1a2a3a;color:#00FFFF;padding:6px 10px;text-align:left;white-space:nowrap;">'
+
+            header = f'<tr>{_th_left}駐車場</th>'
+            for _fy in _fys:
+                header += f'{_th}FY{_fy}<br>台数</th>'
+                if _fys.index(_fy) > 0:
+                    header += f'{_th}前年比</th>'
+            for _fy in _fys:
+                header += f'{_th}FY{_fy}<br>収入</th>'
+                if _fys.index(_fy) > 0:
+                    header += f'{_th}前年比</th>'
+            header += '</tr>'
+
+            rows_html = ""
+            for _park in _parking_row_order:
+                if _park not in _pivot_cnt.index:
+                    continue
+                _is_total = _park == '全駐車場'
+                _row_style = 'background:#0d1f2d;font-weight:700;border-top:2px solid #00FFFF;' if _is_total else 'background:#111827;'
+                _td = '<td style="padding:6px 10px;text-align:right;color:#E0E0E0;white-space:nowrap;">'
+                _td_left = '<td style="padding:6px 10px;text-align:left;color:#00FFFF;font-weight:700;white-space:nowrap;">'
+                row = f'<tr style="{_row_style}">{_td_left}{_park}</td>'
+                for _i, _fy in enumerate(_fys):
+                    _val = _pivot_cnt.at[_park, _fy] if _fy in _pivot_cnt.columns else 0
+                    row += f'{_td}{_val/1000:.1f}</td>'
+                    if _i > 0:
+                        _prev_val = _pivot_cnt.at[_park, _fys[_i-1]] if _fys[_i-1] in _pivot_cnt.columns else 0
+                        row += f'<td style="padding:6px 10px;text-align:center;">{_yoy_cell(_val, _prev_val, fy_colors.get(str(_fy)))}</td>'
+                for _i, _fy in enumerate(_fys):
+                    _val = _pivot_cash.at[_park, _fy] if _fy in _pivot_cash.columns else 0
+                    row += f'{_td}{_val/1_000_000:.1f}</td>'
+                    if _i > 0:
+                        _prev_val = _pivot_cash.at[_park, _fys[_i-1]] if _fys[_i-1] in _pivot_cash.columns else 0
+                        row += f'<td style="padding:6px 10px;text-align:center;">{_yoy_cell(_val, _prev_val, fy_colors.get(str(_fy)))}</td>'
+                row += '</tr>'
+                rows_html += row
+
+            _table_html = f"""
+<div style="overflow-x:auto;">
+<table style="border-collapse:collapse;width:100%;font-size:14px;font-family:sans-serif;">
+<thead>{header}</thead>
+<tbody>{rows_html}</tbody>
+</table>
+</div>"""
+            st.markdown(_table_html, unsafe_allow_html=True)
+
 # ==========================================
 # ② 24時間稼働状況分析 (原本ロジック完全再現)
 # ==========================================
 else:
+    common_layout = dict(
+        font=dict(family="sans-serif", color="#E0E0E0"),
+        plot_bgcolor="rgba(17, 17, 17, 1)",
+        paper_bgcolor="rgba(17, 17, 17, 1)",
+        margin={'l': 30, 'r': 30, 't': 50, 'b': 30}
+    )
     PARKING_CAPACITY = {"南1駐車場": 918, "南2駐車場": 601, "南3駐車場": 690, "南4駐車場": 638, "北1駐車場": 622, "北2駐車場": 248, "北3駐車場": 192, "全駐車場": 3809}
     NEON_COLORS = {"一般在庫": "#22D3EE", "定期在庫": "#F0ABFC", "在庫合計": "#4ADE80", "一般入庫": "#60A5FA", "定期入庫": "#C084FC", "一般出庫": "#F87171", "定期出庫": "#FACC15", "収容台数": "#EF4444"}
 
@@ -589,9 +827,9 @@ else:
                 k_wd = calculate_kpis(d_wd, t_pk2); k_ho = calculate_kpis(d_ho, t_pk2)
                 if k_wd and k_ho:
                     m1, m2, m3 = st.columns(3); gap = k_ho["max_stock"] / k_wd["max_stock"] if k_wd["max_stock"] > 0 else 0
-                    m1.metric("平日最大稼動率", f"{k_wd['max_occ_rate']:.1f} %")
-                    m2.metric("休日最大稼動率", f"{k_ho['max_occ_rate']:.1f} %")
-                    m3.metric("平日・休日ギャップ", f"{gap:.2f}")
+                    m1.metric("平日最大稼動率", f"{k_wd['max_occ_rate']:.1f} %", help="【計算式】(平日在庫の最大値 / 収容台数) × 100 \n\n 平日において、その駐車場の収容キャパシティに対して、ピーク時にどれだけの車両が埋まっているかを示します。この値が高い（80〜90%超）場合は、平日のビジネス・通勤需要による満車リスクが高いと判断できます。")
+                    m2.metric("休日最大稼動率", f"{k_ho['max_occ_rate']:.1f} %", help="【計算式】(休日在庫の最大値 / 収容台数) × 100 \n\n 休日（土日祝）において、駐車場の収容キャパシティに対して、ピーク時にどれだけの車両が埋まっているかを示します。平日よりも高い数値を示す場合、商業施設や観光需要などのお出かけ客を主体とした運用特性であることを意味します。")
+                    m3.metric("平日・休日ギャップ", f"{gap:.2f}", help="【計算式】休日最大在庫実数 / 平日最大在庫実数 \n\n 休日のピークと平日のピークの比率です。1.0を超えれば『休日混雑型（商業・レジャー系）』、1.0を大きく下回れば『平日混雑型（ビジネス・都心型拠点）』と分類できます。運営方針や割引施策の対象日を検討する重要な切り分けとなります。")
                 df_t2 = pd.concat([d_wd, d_ho])
                 if not df_t2.empty:
                     fig2 = px.line(df_t2, x="時間帯", y=m_t2, color="曜日区分", markers=True, color_discrete_map={"平日平均": "#00FFFF", "休日平均": "#FF00FF"})
@@ -614,9 +852,9 @@ else:
                 k_t3 = calculate_kpis(df_t3, t_pk3)
                 if k_t3:
                     k1, k2, k3 = st.columns(3)
-                    k1.metric("全体ピーク時刻", k_t3["peak_time"])
-                    k2.metric("定期利用依存度", f"{k_t3['reg_dep_rate']:.1f} %")
-                    k3.metric("一般回転率", f"{k_t3['traffic_activity']:.2f}")
+                    k1.metric("全体ピーク時刻", k_t3["peak_time"], help="【算出方法】年間平均データのうち、一般+定期の在庫合計が最大となった時刻を表示します。これがその駐車場の『最も注意が必要な時間』となります。")
+                    k2.metric("定期利用依存度", f"{k_t3['reg_dep_rate']:.1f} %", help="【計算式】(ピーク時の定期在庫数 / ピーク時の在庫合計) × 100 \n\n 駐車場が満車に近づく瞬間、その利用者のうち何％が定期券利用者であるかを示します。この数値が高いほど、安定的な月極収入はあるものの、一般利用客を逃している可能性があるため、発行枚数やエリアの調整を検討する材料となります。")
+                    k3.metric("一般回転率", f"{k_t3['traffic_activity']:.2f}", help="【計算式】((一般入庫合計 + 一般出庫合計) ÷ 2) ÷ 収容台数\n\n1台分のスペースが1日に平均何回入れ替わったか（回転率）を示します。数値が「1.0」であれば、1車室につき1日1台の一般客が入れ替わったことを意味します。在庫が少なくてもこの値が高ければ、短時間利用が多く高収益な拠点と言えます。")
                 if not df_t3.empty:
                     fig3 = go.Figure()
                     fig3.add_trace(go.Scatter(x=df_t3["時間帯"], y=df_t3["定期在庫"] if "在庫" in mod_t3 else (df_t3["定期入庫"] if "入庫" in mod_t3 else df_t3["定期出庫"]), name="定期", mode='lines+markers', line=dict(color=NEON_COLORS["定期在庫"], width=3)))
@@ -652,10 +890,10 @@ else:
                 k_t5 = calculate_kpis(df_t5_data, t_pk5)
                 if k_t5:
                     d1, d2, d3, d4 = st.columns(4)
-                    d1.metric("最大稼動ポテンシャル", f"{k_t5['max_occ_rate']:.1f} %")
-                    d2.metric("総合ピーク在庫実数", f"{k_t5['max_stock']:,} 台")
-                    d3.metric("定期券利用シェア", f"{k_t5['reg_dep_rate']:.1f} %")
-                    d4.metric("一般回転率", f"{k_t5['traffic_activity']:.2f}")
+                    d1.metric("最大稼動ポテンシャル", f"{k_t5['max_occ_rate']:.1f} %", help="【計算式】(1日の在庫合計の最大値 ÷ 収容台数) × 100\n\n選択した駐車場・年度・曜日区分において、1日のうち最も車が多かった瞬間に、収容キャパシティの何％が埋まっていたかを示します。\n\n▶ 90%以上：満車リスクが高く、利用者が入れない機会損失が発生している可能性があります。定期券の発行枚数見直しや入庫制限の運用が検討されます。\n▶ 70〜90%：概ね適正な稼働状態です。ピーク時間帯の誘導対応が有効です。\n▶ 70%未満：余裕はあるものの、料金施策やPRによる集客強化の余地があります。")
+                    d2.metric("総合ピーク在庫実数", f"{k_t5['max_stock']:,} 台", help="【算出方法】1日の全時間帯のうち「一般在庫＋定期在庫」が最大となった時刻の実際の駐車台数です。\n\nこの数値は「最大稼動ポテンシャル（%）」の分子にあたる実数であり、グラフの最高点の台数を直接確認できます。\n\n▶ 収容台数と比較することで、あと何台余裕があったかを把握できます。\n▶ 年度を切り替えて比較すると、利用台数の経年トレンドを読み取ることができます。")
+                    d3.metric("定期券利用シェア", f"{k_t5['reg_dep_rate']:.1f} %", help="【計算式】(ピーク時の定期在庫台数 ÷ ピーク時の在庫合計台数) × 100\n\n駐車場が最も混雑する瞬間に、駐車している車のうち何％が定期券（月極）利用者かを示します。\n\n▶ 70%以上：月極収入は安定していますが、一般利用者を取り込む余地が少ない状態です。定期券の発行枚数を調整することで、一般収益を増やせる可能性があります。\n▶ 40〜70%：定期と一般がバランスよく共存しており、理想的な構成です。\n▶ 40%未満：一般利用主体の拠点です。利用者の入れ替わりが激しく、日によって大きく変動するリスクがあります。")
+                    d4.metric("一般回転率", f"{k_t5['traffic_activity']:.2f}", help="【計算式】((1日の一般入庫合計 ＋ 1日の一般出庫合計) ÷ 2) ÷ 収容台数\n\n1日あたりに1つの駐車スペースが何回入れ替わったか（回転率）を示す指標です。\n\n▶ 1.0以上：1日で全てのスペースが1回以上入れ替わっている高回転な状態です。時間貸し収益効率が高い拠点と判断できます。\n▶ 0.5〜1.0：標準的な回転率です。\n▶ 0.5未満：入れ替わりが少なく、長時間駐車が主体、または利用者の動きが少ない拠点です。")
                 if not df_t5_data.empty:
                     fig5 = make_subplots(specs=[[{"secondary_y": True}]])
                     fig5.add_trace(go.Bar(x=df_t5_data["時間帯"], y=df_t5_data["定期在庫"], name="定期在庫", marker_color="rgba(240, 171, 252, 0.5)"), secondary_y=False)
