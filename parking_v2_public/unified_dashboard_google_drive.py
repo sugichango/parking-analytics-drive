@@ -792,15 +792,17 @@ if "①" in mode:
                     return f'<span style="color:{clr};font-weight:700;">{val_str}</span>'
 
                 _th = '<th style="background:#1a2a3a;color:#00FFFF;padding:6px 10px;text-align:center;white-space:nowrap;">'
+                _th_div = '<th style="background:#1a2a3a;color:#00FFFF;padding:6px 10px;text-align:center;white-space:nowrap;border-left:2px solid #00FFFF;">'
                 _th_left = '<th style="background:#1a2a3a;color:#00FFFF;padding:6px 10px;text-align:left;white-space:nowrap;">'
                 header = f'<tr>{_th_left}駐車場</th>'
                 for _fy in _fys:
                     header += f'{_th}FY{_fy}<br>台数</th>'
                     if _fys.index(_fy) > 0:
                         header += f'{_th}前年比</th>'
-                for _fy in _fys:
-                    header += f'{_th}FY{_fy}<br>収入</th>'
-                    if _fys.index(_fy) > 0:
+                for _i_fy, _fy in enumerate(_fys):
+                    _th_cash = _th_div if _i_fy == 0 else _th
+                    header += f'{_th_cash}FY{_fy}<br>収入</th>'
+                    if _i_fy > 0:
                         header += f'{_th}前年比</th>'
                 header += '</tr>'
                 rows_html = ""
@@ -810,6 +812,7 @@ if "①" in mode:
                     _is_total = _park == '全駐車場'
                     _row_style = 'background:#0d1f2d;font-weight:700;border-top:2px solid #00FFFF;' if _is_total else 'background:#111827;'
                     _td = '<td style="padding:6px 10px;text-align:right;color:#E0E0E0;white-space:nowrap;">'
+                    _td_div = '<td style="padding:6px 10px;text-align:right;color:#E0E0E0;white-space:nowrap;border-left:2px solid #00FFFF;">'
                     _td_left = '<td style="padding:6px 10px;text-align:left;color:#00FFFF;font-weight:700;white-space:nowrap;">'
                     row = f'<tr style="{_row_style}">{_td_left}{_park}</td>'
                     for _i, _fy in enumerate(_fys):
@@ -819,8 +822,9 @@ if "①" in mode:
                             _prev_val = _pivot_cnt.at[_park, _fys[_i-1]] if _fys[_i-1] in _pivot_cnt.columns else 0
                             row += f'<td style="padding:6px 10px;text-align:center;">{_yoy_cell(_val, _prev_val, fy_colors.get(str(_fy)))}</td>'
                     for _i, _fy in enumerate(_fys):
+                        _td_cash = _td_div if _i == 0 else _td
                         _val = _pivot_cash.at[_park, _fy] if _fy in _pivot_cash.columns else 0
-                        row += f'{_td}{_val/1_000_000:.1f}</td>'
+                        row += f'{_td_cash}{_val/1_000_000:.1f}</td>'
                         if _i > 0:
                             _prev_val = _pivot_cash.at[_park, _fys[_i-1]] if _fys[_i-1] in _pivot_cash.columns else 0
                             row += f'<td style="padding:6px 10px;text-align:center;">{_yoy_cell(_val, _prev_val, fy_colors.get(str(_fy)))}</td>'
