@@ -285,28 +285,47 @@ if "①" in mode:
     @st.cache_data(show_spinner=False)
     def load_comparison_monthly(_file_keys):
         """全年度ファイルを(fiscal_year, ParkingAreaName, Month)で月次集計して返す。
-        集計済みの小DataFrameだけキャッシュするため高速。"""
+        必要3列のみ読み込み・即集計・即破棄でメモリを節約する。"""
         import re as _re2
+        import gc as _gc
+        _parking_areas = {440: "南１", 441: "南２", 442: "南３", 443: "南４", 444: "北１", 445: "北２", 446: "北３"}
+        _use_cols = ['ParkingArea', 'OnTime', 'Cash']
+        _dtypes = {'ParkingArea': 'Int16', 'Cash': 'Int32'}
         rows = []
-        for _fname, _mtime in _file_keys:
+        for _fname, _fid in _file_keys:
             _m = _re2.search(r'(202[0-9])', _fname)
             if not _m: continue
             _fy = int(_m.group(1))
-            _df = load_data_dashboard1_drive(_fname, _mtime)
-            if _df is None or _df.empty: continue
-            if 'Month' not in _df.columns or 'ParkingAreaName' not in _df.columns: continue
-            _cash_col = 'Cash' if 'Cash' in _df.columns else None
-            if _cash_col:
-                _agg = _df.groupby(['ParkingAreaName', 'Month']).agg(
-                    利用台数=('OnTime', 'count'), 現金収入=(_cash_col, 'sum')
-                ).reset_index()
-            else:
-                _agg = _df.groupby(['ParkingAreaName', 'Month']).agg(
-                    利用台数=('OnTime', 'count')
-                ).reset_index()
-                _agg['現金収入'] = 0
+            _fh = download_file_from_drive(_fid)
+            if not _fh: continue
+            _df = None
+            try:
+                if _fname.endswith(".gz"):
+                    with gzip.open(_fh, 'rt', encoding='utf-8') as _f:
+                        _df = pd.read_csv(_f, usecols=lambda c: c in _use_cols, dtype=_dtypes, parse_dates=['OnTime'])
+                else:
+                    _df = pd.read_csv(_fh, usecols=lambda c: c in _use_cols, dtype=_dtypes, parse_dates=['OnTime'])
+            except Exception:
+                _fh.seek(0)
+                try:
+                    if _fname.endswith(".gz"):
+                        with gzip.open(_fh, 'rt', encoding='cp932') as _f:
+                            _df = pd.read_csv(_f, usecols=lambda c: c in _use_cols, dtype=_dtypes, parse_dates=['OnTime'])
+                    else:
+                        _df = pd.read_csv(_fh, encoding='cp932', usecols=lambda c: c in _use_cols, dtype=_dtypes, parse_dates=['OnTime'])
+                except Exception:
+                    pass
+            if _df is None or _df.empty:
+                del _fh; _gc.collect(); continue
+            _df['ParkingAreaName'] = _df['ParkingArea'].map(_parking_areas).fillna('不明')
+            _df['OnTime'] = pd.to_datetime(_df['OnTime'], errors='coerce')
+            _df['Month'] = _df['OnTime'].dt.to_period('M').astype(str)
+            _agg = _df.groupby(['ParkingAreaName', 'Month']).agg(
+                利用台数=('OnTime', 'count'), 現金収入=('Cash', 'sum')
+            ).reset_index()
             _agg['fiscal_year'] = _fy
             rows.append(_agg)
+            del _df, _fh; _gc.collect()
         if not rows:
             return pd.DataFrame()
         return pd.concat(rows, ignore_index=True)
@@ -527,7 +546,7 @@ if "①" in mode:
         if show_cmp:
             import re as _re
             _file_keys = tuple(
-                (_f['name'], _f.get('modifiedTime', ''))
+                (_f['name'], _f['id'])
                 for _f in drive_files
                 if _re.search(r'202[0-9]', _f['name']) and _f['name'].endswith('.csv.gz')
             )
