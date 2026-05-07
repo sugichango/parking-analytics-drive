@@ -676,9 +676,9 @@ if "①" in mode:
                     if prev is None or prev == 0:
                         return "—"
                     pct = (curr - prev) / prev * 100
-                    arrow = "▲" if pct >= 0 else "▼"
                     clr = "#39FF14" if pct >= 0 else "#FF4500"
-                    return f'<span style="color:{clr};font-weight:700;">{arrow}{abs(pct):.1f}%</span>'
+                    val_str = f"+{pct:.1f}%" if pct >= 0 else f"▼{abs(pct):.1f}%"
+                    return f'<span style="color:{clr};font-weight:700;">{val_str}</span>'
 
                 _th = '<th style="background:#1a2a3a;color:#00FFFF;padding:6px 10px;text-align:center;white-space:nowrap;">'
                 _th_left = '<th style="background:#1a2a3a;color:#00FFFF;padding:6px 10px;text-align:left;white-space:nowrap;">'
