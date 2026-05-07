@@ -520,70 +520,73 @@ if "①" in mode:
         # ==========================================
         # 年度間比較分析セクション
         # ==========================================
-        st.subheader("📊 年度間比較分析")
+        st.markdown("---")
+        show_cmp = st.checkbox("📊 年度間比較分析を表示する（クリックでデータを読み込みます）", value=False, key="show_cmp")
+        if not show_cmp:
+            st.caption("⬆️ チェックを入れると年度間比較グラフ・表を表示します。")
+        if show_cmp:
+            import re as _re
+            _file_keys = tuple(
+                (_f['name'], _f.get('modifiedTime', ''))
+                for _f in drive_files
+                if _re.search(r'202[0-9]', _f['name']) and _f['name'].endswith('.csv.gz')
+            )
+            df_monthly = load_comparison_monthly(_file_keys)
 
-        import re as _re
-        _file_keys = tuple(
-            (_f['name'], _f.get('modifiedTime', ''))
-            for _f in drive_files
-            if _re.search(r'202[0-9]', _f['name']) and _f['name'].endswith('.csv.gz')
-        )
-        df_monthly = load_comparison_monthly(_file_keys)
-
-        if df_monthly.empty:
-            st.warning("比較用の複数年度データが見つかりませんでした。")
-        else:
-            available_fy = sorted(df_monthly['fiscal_year'].unique())
-            fy_colors = {str(y): c for y, c in zip(available_fy, ['#00FFFF', '#FF00FF', '#39FF14', '#FFFF00'])}
-
-            # --- 駐車場・指標セレクタ ---
-            _cmp_col1, _cmp_col2 = st.columns([2, 2])
-            with _cmp_col1:
-                _area_opts = ["全駐車場"] + [p for p in PARKING_ORDER if p in df_monthly['ParkingAreaName'].unique()]
-                cmp_area = st.selectbox("駐車場を選択", _area_opts, key="cmp_area")
-            with _cmp_col2:
-                cmp_metric = st.selectbox("比較指標（グラフ用）", ["利用台数", "現金収入"], key="cmp_metric")
-
-            # フィルター（集計済み小データへの操作なので瞬時）
-            if cmp_area != "全駐車場":
-                df_cmp = df_monthly[df_monthly['ParkingAreaName'] == cmp_area].copy()
+            if df_monthly.empty:
+                st.warning("比較用の複数年度データが見つかりませんでした。")
             else:
-                df_cmp = df_monthly.copy()
+                available_fy = sorted(df_monthly['fiscal_year'].unique())
+                fy_colors = {str(y): c for y, c in zip(available_fy, ['#00FFFF', '#FF00FF', '#39FF14', '#FFFF00'])}
 
-            # --- KPIパネル（年度合計） ---
-            st.markdown("#### 年度合計 KPI")
-            kpi_cols = st.columns(len(available_fy))
-            kpi_by_year = {}
-            for _fy in available_fy:
-                _dfy = df_cmp[df_cmp['fiscal_year'] == _fy]
-                kpi_by_year[_fy] = {
-                    '台数': int(_dfy['利用台数'].sum()),
-                    '現金収入': int(_dfy['現金収入'].sum())
-                }
+                # --- 駐車場・指標セレクタ ---
+                _cmp_col1, _cmp_col2 = st.columns([2, 2])
+                with _cmp_col1:
+                    _area_opts = ["全駐車場"] + [p for p in PARKING_ORDER if p in df_monthly['ParkingAreaName'].unique()]
+                    cmp_area = st.selectbox("駐車場を選択", _area_opts, key="cmp_area")
+                with _cmp_col2:
+                    cmp_metric = st.selectbox("比較指標（グラフ用）", ["利用台数", "現金収入"], key="cmp_metric")
 
-            for _i, _fy in enumerate(available_fy):
-                _prev_fy = available_fy[_i - 1] if _i > 0 else None
-                _cnt = kpi_by_year[_fy]['台数']
-                _cash = kpi_by_year[_fy]['現金収入']
-                _fy_color = fy_colors.get(str(_fy), '#00FFFF')
-                with kpi_cols[_i]:
-                    if _prev_fy:
-                        _prev_cnt = kpi_by_year[_prev_fy]['台数']
-                        _prev_cash = kpi_by_year[_prev_fy]['現金収入']
-                        _diff_cnt = ((_cnt - _prev_cnt) / _prev_cnt * 100) if _prev_cnt > 0 else 0
-                        _diff_cash = ((_cash - _prev_cash) / _prev_cash * 100) if _prev_cash > 0 else 0
-                        _ac = "▲" if _diff_cnt >= 0 else "▼"
-                        _ar = "▲" if _diff_cash >= 0 else "▼"
-                        _yoy = (
-                            f'<div style="color:{_fy_color};font-size:16px;font-weight:700;margin-top:8px;">'
-                            f'{_ac} 台数 {abs(_diff_cnt):.1f}%</div>'
-                            f'<div style="color:{_fy_color};font-size:16px;font-weight:700;">'
-                            f'{_ar} 収入 {abs(_diff_cash):.1f}%</div>'
-                            f'<div style="color:#888;font-size:13px;">（前年比）</div>'
-                        )
-                    else:
-                        _yoy = '<div style="color:#888;font-size:16px;margin-top:8px;">— 基準年</div>'
-                    st.markdown(f"""
+                # フィルター
+                if cmp_area != "全駐車場":
+                    df_cmp = df_monthly[df_monthly['ParkingAreaName'] == cmp_area].copy()
+                else:
+                    df_cmp = df_monthly.copy()
+
+                # --- KPIパネル（年度合計） ---
+                st.markdown("#### 年度合計 KPI")
+                kpi_cols = st.columns(len(available_fy))
+                kpi_by_year = {}
+                for _fy in available_fy:
+                    _dfy = df_cmp[df_cmp['fiscal_year'] == _fy]
+                    kpi_by_year[_fy] = {
+                        '台数': int(_dfy['利用台数'].sum()),
+                        '現金収入': int(_dfy['現金収入'].sum())
+                    }
+
+                for _i, _fy in enumerate(available_fy):
+                    _prev_fy = available_fy[_i - 1] if _i > 0 else None
+                    _cnt = kpi_by_year[_fy]['台数']
+                    _cash = kpi_by_year[_fy]['現金収入']
+                    _fy_color = fy_colors.get(str(_fy), '#00FFFF')
+                    with kpi_cols[_i]:
+                        if _prev_fy:
+                            _prev_cnt = kpi_by_year[_prev_fy]['台数']
+                            _prev_cash = kpi_by_year[_prev_fy]['現金収入']
+                            _diff_cnt = ((_cnt - _prev_cnt) / _prev_cnt * 100) if _prev_cnt > 0 else 0
+                            _diff_cash = ((_cash - _prev_cash) / _prev_cash * 100) if _prev_cash > 0 else 0
+                            _ac = "▲" if _diff_cnt >= 0 else "▼"
+                            _ar = "▲" if _diff_cash >= 0 else "▼"
+                            _yoy = (
+                                f'<div style="color:{_fy_color};font-size:16px;font-weight:700;margin-top:8px;">'
+                                f'{_ac} 台数 {abs(_diff_cnt):.1f}%</div>'
+                                f'<div style="color:{_fy_color};font-size:16px;font-weight:700;">'
+                                f'{_ar} 収入 {abs(_diff_cash):.1f}%</div>'
+                                f'<div style="color:#888;font-size:13px;">（前年比）</div>'
+                            )
+                        else:
+                            _yoy = '<div style="color:#888;font-size:16px;margin-top:8px;">— 基準年</div>'
+                        st.markdown(f"""
 <div style="background:rgba(0,255,255,0.07);border:1px solid {_fy_color};border-radius:10px;padding:16px;text-align:center;">
   <div style="color:{_fy_color};font-size:18px;font-weight:700;">FY{_fy}</div>
   <div style="color:#FFFFFF;font-size:28px;font-weight:800;text-shadow:0 0 8px {_fy_color};">{_cnt:,} 台</div>
@@ -592,133 +595,115 @@ if "①" in mode:
   {_yoy}
 </div>""", unsafe_allow_html=True)
 
-            st.markdown("<br>", unsafe_allow_html=True)
+                st.markdown("<br>", unsafe_allow_html=True)
 
-            # --- 年度比較折れ線グラフ ---
-            if 'Month' in df_cmp.columns:
-                _val_col = '利用台数' if cmp_metric == "利用台数" else '現金収入'
-                df_cmp_grp = df_cmp.groupby(['fiscal_year', 'Month'])[_val_col].sum().reset_index(name='値')
-                df_cmp_grp['fiscal_year'] = df_cmp_grp['fiscal_year'].astype(str)
+                # --- 年度比較折れ線グラフ ---
+                if 'Month' in df_cmp.columns:
+                    _val_col = '利用台数' if cmp_metric == "利用台数" else '現金収入'
+                    df_cmp_grp = df_cmp.groupby(['fiscal_year', 'Month'])[_val_col].sum().reset_index(name='値')
+                    df_cmp_grp['fiscal_year'] = df_cmp_grp['fiscal_year'].astype(str)
+                    _fy_month_order = [4, 5, 6, 7, 8, 9, 10, 11, 12, 1, 2, 3]
+                    _month_label_map = {m: f"{m}月" for m in range(1, 13)}
+                    df_cmp_grp['月番号'] = df_cmp_grp['Month'].str[-2:].astype(int)
+                    df_cmp_grp['月ラベル'] = df_cmp_grp['月番号'].map(_month_label_map)
+                    df_cmp_grp['月順'] = df_cmp_grp['月番号'].map({m: i for i, m in enumerate(_fy_month_order)})
+                    _x_labels = [f"{m}月" for m in _fy_month_order]
+                    fig_cmp = go.Figure()
+                    for _fy_s in sorted(df_cmp_grp['fiscal_year'].unique()):
+                        _d = df_cmp_grp[df_cmp_grp['fiscal_year'] == _fy_s].sort_values('月順')
+                        fig_cmp.add_trace(go.Scatter(
+                            x=_d['月ラベル'], y=_d['値'],
+                            name=f"FY{_fy_s}",
+                            mode='lines+markers',
+                            line=dict(color=fy_colors.get(_fy_s, '#FFFFFF'), width=3),
+                            marker=dict(size=8),
+                            hovertemplate=f"FY{_fy_s} %{{x}}<br>{cmp_metric}: %{{y:,}}<extra></extra>"
+                        ))
+                    _y_label = "利用台数（台）" if cmp_metric == "利用台数" else "現金収入（円）"
+                    fig_cmp.update_layout(
+                        title=dict(text=f"月別 {cmp_metric} 年度比較 — {cmp_area}", font=dict(size=18, color="#00FFFF")),
+                        xaxis=dict(title="月", showgrid=True, gridcolor='rgba(255,255,255,0.1)', type='category', categoryorder='array', categoryarray=_x_labels),
+                        yaxis=dict(title=_y_label, showgrid=True, gridcolor='rgba(255,255,255,0.1)', rangemode='normal'),
+                        font=dict(family="sans-serif", color="#E0E0E0"),
+                        plot_bgcolor="rgba(17,17,17,1)",
+                        paper_bgcolor="rgba(17,17,17,1)",
+                        height=550,
+                        margin={'l': 30, 'r': 30, 't': 50, 'b': 30},
+                        legend=dict(orientation="h", yanchor="top", y=-0.2, xanchor="center", x=0.5, font=dict(color="#E0E0E0"))
+                    )
+                    st.plotly_chart(fig_cmp, use_container_width=True)
+                else:
+                    st.info("Month 列が見つからないため、グラフを表示できません。")
 
-                _fy_month_order = [4, 5, 6, 7, 8, 9, 10, 11, 12, 1, 2, 3]
-                _month_label_map = {m: f"{m}月" for m in range(1, 13)}
-                df_cmp_grp['月番号'] = df_cmp_grp['Month'].str[-2:].astype(int)
-                df_cmp_grp['月ラベル'] = df_cmp_grp['月番号'].map(_month_label_map)
-                df_cmp_grp['月順'] = df_cmp_grp['月番号'].map({m: i for i, m in enumerate(_fy_month_order)})
-                _x_labels = [f"{m}月" for m in _fy_month_order]
+                st.markdown("<br>", unsafe_allow_html=True)
 
-                fig_cmp = go.Figure()
-                for _fy_s in sorted(df_cmp_grp['fiscal_year'].unique()):
-                    _d = df_cmp_grp[df_cmp_grp['fiscal_year'] == _fy_s].sort_values('月順')
-                    fig_cmp.add_trace(go.Scatter(
-                        x=_d['月ラベル'], y=_d['値'],
-                        name=f"FY{_fy_s}",
-                        mode='lines+markers',
-                        line=dict(color=fy_colors.get(_fy_s, '#FFFFFF'), width=3),
-                        marker=dict(size=8),
-                        hovertemplate=f"FY{_fy_s} %{{x}}<br>{cmp_metric}: %{{y:,}}<extra></extra>"
-                    ))
+                # --- 駐車場別年度比較表 ---
+                st.markdown("#### 駐車場別 年度比較表")
+                st.markdown('<p style="color:#AAAAAA;font-size:13px;margin-top:-8px;">※ 台数：千台　／　収入：百万円（消費税含む）</p>', unsafe_allow_html=True)
+                _tbl_grp = df_monthly.groupby(['ParkingAreaName', 'fiscal_year']).agg(
+                    利用台数=('利用台数', 'sum'), 現金収入=('現金収入', 'sum')
+                ).reset_index()
+                _total_grp = df_monthly.groupby('fiscal_year').agg(
+                    利用台数=('利用台数', 'sum'), 現金収入=('現金収入', 'sum')
+                ).reset_index()
+                _total_grp['ParkingAreaName'] = '全駐車場'
+                _tbl_grp = pd.concat([_tbl_grp, _total_grp], ignore_index=True)
+                _pivot_cnt = _tbl_grp.pivot(index='ParkingAreaName', columns='fiscal_year', values='利用台数')
+                _pivot_cash = _tbl_grp.pivot(index='ParkingAreaName', columns='fiscal_year', values='現金収入')
+                _parking_row_order = [p for p in PARKING_ORDER if p in _pivot_cnt.index] + ['全駐車場']
+                _fys = sorted(available_fy)
 
-                _y_label = "利用台数（台）" if cmp_metric == "利用台数" else "現金収入（円）"
-                fig_cmp.update_layout(
-                    title=dict(text=f"月別 {cmp_metric} 年度比較 — {cmp_area}", font=dict(size=18, color="#00FFFF")),
-                    xaxis=dict(title="月", showgrid=True, gridcolor='rgba(255,255,255,0.1)', type='category', categoryorder='array', categoryarray=_x_labels),
-                    yaxis=dict(title=_y_label, showgrid=True, gridcolor='rgba(255,255,255,0.1)', rangemode='normal'),
-                    font=dict(family="sans-serif", color="#E0E0E0"),
-                    plot_bgcolor="rgba(17,17,17,1)",
-                    paper_bgcolor="rgba(17,17,17,1)",
-                    height=550,
-                    margin={'l': 30, 'r': 30, 't': 50, 'b': 30},
-                    legend=dict(orientation="h", yanchor="top", y=-0.2, xanchor="center", x=0.5, font=dict(color="#E0E0E0"))
-                )
-                st.plotly_chart(fig_cmp, use_container_width=True)
-            else:
-                st.info("Month 列が見つからないため、グラフを表示できません。")
+                def _yoy_cell(curr, prev, color):
+                    if prev is None or prev == 0:
+                        return "—"
+                    pct = (curr - prev) / prev * 100
+                    arrow = "▲" if pct >= 0 else "▼"
+                    clr = "#39FF14" if pct >= 0 else "#FF4500"
+                    return f'<span style="color:{clr};font-weight:700;">{arrow}{abs(pct):.1f}%</span>'
 
-            st.markdown("<br>", unsafe_allow_html=True)
-
-            # --- 駐車場別年度比較表 ---
-            st.markdown("#### 駐車場別 年度比較表")
-            st.markdown(
-                '<p style="color:#AAAAAA;font-size:13px;margin-top:-8px;">※ 台数：千台　／　収入：百万円（消費税含む）</p>',
-                unsafe_allow_html=True
-            )
-
-            # 駐車場×年度の年間集計
-            _tbl_grp = df_monthly.groupby(['ParkingAreaName', 'fiscal_year']).agg(
-                利用台数=('利用台数', 'sum'), 現金収入=('現金収入', 'sum')
-            ).reset_index()
-
-            # 全駐車場合計行
-            _total_grp = df_monthly.groupby('fiscal_year').agg(
-                利用台数=('利用台数', 'sum'), 現金収入=('現金収入', 'sum')
-            ).reset_index()
-            _total_grp['ParkingAreaName'] = '全駐車場'
-            _tbl_grp = pd.concat([_tbl_grp, _total_grp], ignore_index=True)
-
-            # ピボット
-            _pivot_cnt = _tbl_grp.pivot(index='ParkingAreaName', columns='fiscal_year', values='利用台数')
-            _pivot_cash = _tbl_grp.pivot(index='ParkingAreaName', columns='fiscal_year', values='現金収入')
-
-            # 表を構築
-            _parking_row_order = [p for p in PARKING_ORDER if p in _pivot_cnt.index] + ['全駐車場']
-            _fys = sorted(available_fy)
-
-            def _yoy_cell(curr, prev, color):
-                if prev is None or prev == 0:
-                    return "—"
-                pct = (curr - prev) / prev * 100
-                arrow = "▲" if pct >= 0 else "▼"
-                clr = "#39FF14" if pct >= 0 else "#FF4500"
-                return f'<span style="color:{clr};font-weight:700;">{arrow}{abs(pct):.1f}%</span>'
-
-            # HTMLテーブル生成
-            _th = '<th style="background:#1a2a3a;color:#00FFFF;padding:6px 10px;text-align:center;white-space:nowrap;">'
-            _th_left = '<th style="background:#1a2a3a;color:#00FFFF;padding:6px 10px;text-align:left;white-space:nowrap;">'
-
-            header = f'<tr>{_th_left}駐車場</th>'
-            for _fy in _fys:
-                header += f'{_th}FY{_fy}<br>台数</th>'
-                if _fys.index(_fy) > 0:
-                    header += f'{_th}前年比</th>'
-            for _fy in _fys:
-                header += f'{_th}FY{_fy}<br>収入</th>'
-                if _fys.index(_fy) > 0:
-                    header += f'{_th}前年比</th>'
-            header += '</tr>'
-
-            rows_html = ""
-            for _park in _parking_row_order:
-                if _park not in _pivot_cnt.index:
-                    continue
-                _is_total = _park == '全駐車場'
-                _row_style = 'background:#0d1f2d;font-weight:700;border-top:2px solid #00FFFF;' if _is_total else 'background:#111827;'
-                _td = '<td style="padding:6px 10px;text-align:right;color:#E0E0E0;white-space:nowrap;">'
-                _td_left = '<td style="padding:6px 10px;text-align:left;color:#00FFFF;font-weight:700;white-space:nowrap;">'
-                row = f'<tr style="{_row_style}">{_td_left}{_park}</td>'
-                for _i, _fy in enumerate(_fys):
-                    _val = _pivot_cnt.at[_park, _fy] if _fy in _pivot_cnt.columns else 0
-                    row += f'{_td}{_val/1000:.1f}</td>'
-                    if _i > 0:
-                        _prev_val = _pivot_cnt.at[_park, _fys[_i-1]] if _fys[_i-1] in _pivot_cnt.columns else 0
-                        row += f'<td style="padding:6px 10px;text-align:center;">{_yoy_cell(_val, _prev_val, fy_colors.get(str(_fy)))}</td>'
-                for _i, _fy in enumerate(_fys):
-                    _val = _pivot_cash.at[_park, _fy] if _fy in _pivot_cash.columns else 0
-                    row += f'{_td}{_val/1_000_000:.1f}</td>'
-                    if _i > 0:
-                        _prev_val = _pivot_cash.at[_park, _fys[_i-1]] if _fys[_i-1] in _pivot_cash.columns else 0
-                        row += f'<td style="padding:6px 10px;text-align:center;">{_yoy_cell(_val, _prev_val, fy_colors.get(str(_fy)))}</td>'
-                row += '</tr>'
-                rows_html += row
-
-            _table_html = f"""
+                _th = '<th style="background:#1a2a3a;color:#00FFFF;padding:6px 10px;text-align:center;white-space:nowrap;">'
+                _th_left = '<th style="background:#1a2a3a;color:#00FFFF;padding:6px 10px;text-align:left;white-space:nowrap;">'
+                header = f'<tr>{_th_left}駐車場</th>'
+                for _fy in _fys:
+                    header += f'{_th}FY{_fy}<br>台数</th>'
+                    if _fys.index(_fy) > 0:
+                        header += f'{_th}前年比</th>'
+                for _fy in _fys:
+                    header += f'{_th}FY{_fy}<br>収入</th>'
+                    if _fys.index(_fy) > 0:
+                        header += f'{_th}前年比</th>'
+                header += '</tr>'
+                rows_html = ""
+                for _park in _parking_row_order:
+                    if _park not in _pivot_cnt.index:
+                        continue
+                    _is_total = _park == '全駐車場'
+                    _row_style = 'background:#0d1f2d;font-weight:700;border-top:2px solid #00FFFF;' if _is_total else 'background:#111827;'
+                    _td = '<td style="padding:6px 10px;text-align:right;color:#E0E0E0;white-space:nowrap;">'
+                    _td_left = '<td style="padding:6px 10px;text-align:left;color:#00FFFF;font-weight:700;white-space:nowrap;">'
+                    row = f'<tr style="{_row_style}">{_td_left}{_park}</td>'
+                    for _i, _fy in enumerate(_fys):
+                        _val = _pivot_cnt.at[_park, _fy] if _fy in _pivot_cnt.columns else 0
+                        row += f'{_td}{_val/1000:.1f}</td>'
+                        if _i > 0:
+                            _prev_val = _pivot_cnt.at[_park, _fys[_i-1]] if _fys[_i-1] in _pivot_cnt.columns else 0
+                            row += f'<td style="padding:6px 10px;text-align:center;">{_yoy_cell(_val, _prev_val, fy_colors.get(str(_fy)))}</td>'
+                    for _i, _fy in enumerate(_fys):
+                        _val = _pivot_cash.at[_park, _fy] if _fy in _pivot_cash.columns else 0
+                        row += f'{_td}{_val/1_000_000:.1f}</td>'
+                        if _i > 0:
+                            _prev_val = _pivot_cash.at[_park, _fys[_i-1]] if _fys[_i-1] in _pivot_cash.columns else 0
+                            row += f'<td style="padding:6px 10px;text-align:center;">{_yoy_cell(_val, _prev_val, fy_colors.get(str(_fy)))}</td>'
+                    row += '</tr>'
+                    rows_html += row
+                _table_html = f"""
 <div style="overflow-x:auto;">
 <table style="border-collapse:collapse;width:100%;font-size:14px;font-family:sans-serif;">
 <thead>{header}</thead>
 <tbody>{rows_html}</tbody>
 </table>
 </div>"""
-            st.markdown(_table_html, unsafe_allow_html=True)
+                st.markdown(_table_html, unsafe_allow_html=True)
 
 # ==========================================
 # ② 24時間稼働状況分析 (原本ロジック完全再現)
