@@ -387,6 +387,7 @@ if "①" in mode:
             for c in active_disc_cols:
                 mask_rb = mask_rb | df[c].isin(rb_codes); mask_ticket = mask_ticket | df[c].isin(ticket_codes); mask_any = mask_any | (df[c] > 0)
             df['PaymentType'] = 'その他'; df.loc[~mask_any, 'PaymentType'] = '現金'; df.loc[mask_ticket & ~mask_rb, 'PaymentType'] = '回数券'; df.loc[mask_rb, 'PaymentType'] = 'RB'
+            df.drop(columns=active_disc_cols, inplace=True)
             if 'OnTime' in df.columns:
                 df['OnTime'] = pd.to_datetime(df['OnTime'], errors='coerce'); df['Month'] = df['OnTime'].dt.to_period('M').astype(str); df['DayOfWeek'] = df['OnTime'].dt.dayofweek
                 df['is_holiday'] = df['DayOfWeek'].isin([5, 6]).map({True: '休日', False: '平日'})
