@@ -7,6 +7,7 @@ import os
 import io
 import json
 import gzip
+import jpholiday
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaIoBaseDownload
@@ -390,7 +391,9 @@ if "①" in mode:
             df.drop(columns=active_disc_cols, inplace=True)
             if 'OnTime' in df.columns:
                 df['OnTime'] = pd.to_datetime(df['OnTime'], errors='coerce'); df['Month'] = df['OnTime'].dt.to_period('M').astype(str); df['DayOfWeek'] = df['OnTime'].dt.dayofweek
-                df['is_holiday'] = df['DayOfWeek'].isin([5, 6]).map({True: '休日', False: '平日'})
+                is_weekend = df['DayOfWeek'].isin([5, 6])
+                is_national_holiday = df['OnTime'].dt.date.map(lambda d: jpholiday.is_holiday(d) if pd.notna(d) else False)
+                df['is_holiday'] = (is_weekend | is_national_holiday).map({True: '休日', False: '平日'})
         return df
 
 
